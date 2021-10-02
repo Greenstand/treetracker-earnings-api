@@ -1,0 +1,156 @@
+openapi: 3.1.0
+info:
+  title: earningss API
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /earnings/batch:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            text/csv:
+              schema:
+                type: CSV
+              examples:
+                columns: 'earnings_id,worker_id,phone,amount,currency,status'
+      operationId: get-earningss-batch
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: earnings_status
+        - schema:
+            type: string
+          in: query
+          name: organization
+        - schema:
+            type: string
+          in: query
+          name: planter_id
+        - schema:
+            type: string
+          in: query
+          name: contract_id
+        - schema:
+            type: string
+          in: query
+          name: start_date
+        - schema:
+            type: string
+          in: query
+          name: end_date
+    patch:
+      summary: ''
+      operationId: patch-earningss-batch
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+      requestBody:
+        content:
+          text/csv:
+            schema:
+              type: CSV
+            examples:
+              columns: 'earnings_id,worker_id,phone,amount,currency,earnings_system,earnings_confirmation_id'
+    parameters: []
+  /earnings:
+    patch:
+      summary: ''
+      operationId: patch-earnings
+      responses:
+        '200':
+          description: User Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples: {}
+        '400':
+          description: 'worker_id, amount, or currency in requre does not match those found in the database for the earnings id'
+        '409':
+          description: Earnings resource already has a payment confirmation.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                worker_id:
+                  type: string
+                  format: uuid
+                amount:
+                  type: number
+                currency:
+                  type: string
+                payment_confirmation_id:
+                  type: string
+                  format: date
+                payment_system:
+                  type: string
+              required:
+                - id
+                - worker_id
+                - amount
+                - currency
+                - payment_confirmation_id
+            examples: {}
+        description: 'Patch an earnings resource with the payment confirmation information.  '
+      description: Update an earnings resource with earnings information
+    parameters: []
+    get:
+      summary: Get list of earningss
+      operationId: get-earnings
+      produces:
+        - text/csv
+      responses:
+        '200':
+          description: OK
+          content:
+            text/csv:
+              schema:
+                type: CSV
+              examples:
+                columns: 'id,title 38,T-shirt'
+      description: ''
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: earnings_status
+        - schema:
+            type: string
+          in: query
+          name: organization
+        - schema:
+            type: string
+          in: query
+          name: planter_id
+        - schema:
+            type: string
+          in: query
+          name: contract_id
+        - schema:
+            type: string
+          in: query
+          name: start_date
+        - schema:
+            type: string
+          in: query
+          name: end_date
+components:
+  schemas: {}
+  securitySchemes:
+    Bearer Token:
+      name: API Key
+      type: apiKey
+      in: header
