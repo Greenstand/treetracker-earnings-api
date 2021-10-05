@@ -11,13 +11,26 @@ paths:
       tags: []
       responses:
         '200':
-          description: OK
+          description: |-
+            CSV 
+            Columns: earnings_id,worker_id,phone,amount,currency,status
           content:
             text/csv:
               schema:
                 type: CSV
               examples:
                 columns: 'earnings_id,worker_id,phone,amount,currency,status'
+        '400':
+          description: Bad Request - invalid query parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
       operationId: get-earningss-batch
       parameters:
         - schema:
@@ -44,14 +57,82 @@ paths:
             type: string
           in: query
           name: end_date
+      description: Get a CSV of earnings resources
     patch:
       summary: ''
       operationId: patch-earningss-batch
       responses:
         '200':
-          description: OK
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - completed
+                      - queued
+                    description: we will add 'queued' later when we implement a pipeline
+                  count:
+                    type: number
+                    description: the number of rows processed
+              examples: {}
         '400':
-          description: Bad Request
+          description: |
+            Validation:  payment confirmation id and payment system are required
+            Validation:  status must not be cancelled or paid for the earnings id of the request
+            Validation:  worker_id, amount, or currency in request must match those found in the database for the earnings id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  message:
+                    type: string
+                  row_errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        message:
+                          type: string
+        '406':
+          description: Bad file or wrong headers
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  message:
+                    type: string
+        '409':
+          description: Earnings resource already has a payment confirmation.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  message:
+                    type: string
+                  row_errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        message:
+                          type: string
       requestBody:
         content:
           text/csv:
@@ -59,6 +140,16 @@ paths:
               type: CSV
             examples:
               columns: 'earnings_id,worker_id,phone,amount,currency,earnings_system,earnings_confirmation_id'
+        description: |-
+          CSV
+
+          Columns:
+          earnings_id,worker_id,phone,amount,currency,payment_system,payment_confirmation_id,paid_at
+      description: |-
+        Patch an multiple earnings resources with the payment confirmation information.  
+        Validation: payment confirmation id and payment system are required
+        Validation:  status must not be cancelled or paid for the earnings id of the request
+        Validation:  worker_id, amount, or currency in request must match those found in the database for the earnings id
     parameters: []
   /earnings:
     patch:
@@ -66,16 +157,58 @@ paths:
       operationId: patch-earnings
       responses:
         '200':
-          description: User Created
+          description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - completed
+                      - queued
+                    description: we will add 'queued' later when we implement a pipeline
+                  count:
+                    type: number
+                    description: the number of rows processed
               examples: {}
         '400':
-          description: 'worker_id, amount, or currency in requre does not match those found in the database for the earnings id'
+          description: |
+            Validation:  payment confirmation id and payment system are required
+            Validation:  status must not be cancelled or paid for the earnings id of the request
+            Validation:  worker_id, amount, or currency in request must match those found in the database for the earnings id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  message:
+                    type: string
+        '406':
+          description: Bad file or wrong headers
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  message:
+                    type: string
         '409':
           description: Earnings resource already has a payment confirmation.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  message:
+                    type: string
       requestBody:
         content:
           application/json:
@@ -97,6 +230,8 @@ paths:
                   format: date
                 payment_system:
                   type: string
+                paid_at:
+                  type: string
               required:
                 - id
                 - worker_id
@@ -105,10 +240,14 @@ paths:
                 - payment_confirmation_id
             examples: {}
         description: 'Patch an earnings resource with the payment confirmation information.  '
-      description: Update an earnings resource with earnings information
+      description: |-
+        Patch an multiple earnings resources with the payment confirmation information.  
+        Validation:  payment confirmation id and payment system are required
+        Validation:  status must not be cancelled or paid for the earnings id of the request
+        Validation:  worker_id, amount, or currency in request must match those found in the database for the earnings id
     parameters: []
     get:
-      summary: Get list of earningss
+      summary: Get list of earnings
       operationId: get-earnings
       produces:
         - text/csv
@@ -116,12 +255,57 @@ paths:
         '200':
           description: OK
           content:
-            text/csv:
+            application/json:
               schema:
-                type: CSV
-              examples:
-                columns: 'id,title 38,T-shirt'
-      description: ''
+                type:
+                  - object
+                properties:
+                  worker_id:
+                    type: string
+                  funder_id:
+                    type: string
+                  amount:
+                    type: number
+                  currency:
+                    type: string
+                  calculated_at:
+                    type: string
+                  consolidation_rule:
+                    type: string
+                  consolidation_period_start:
+                    type: string
+                  consolidation_period_end:
+                    type: string
+                  payment_confirmation_id:
+                    type: string
+                  payment_system:
+                    type: string
+                  payment_confirmed_by:
+                    type: string
+                    format: uuid
+                  payment_confirmation_method:
+                    type: string
+                  paid_at:
+                    type: string
+                  payment_confirmed_at:
+                    type: string
+                  status:
+                    type: string
+                  batch_id:
+                    type: string
+              examples: {}
+        '400':
+          description: Bad Request - Invalid query parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  message:
+                    type: string
+      description: Get a list of earnings resources using the appropriate filters
       parameters:
         - schema:
             type: string
