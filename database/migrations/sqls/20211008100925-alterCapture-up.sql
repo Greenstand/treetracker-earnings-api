@@ -1,0 +1,1 @@
+ALTER TABLE treetracker.capture ADD earnings_id uuid REFERENCES public.earnings(id);
