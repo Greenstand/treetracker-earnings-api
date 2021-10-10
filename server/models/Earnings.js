@@ -55,7 +55,7 @@ const FilterCriteria = ({
 }) => {
   return Object.entries({
     status: earnings_status,
-    worker_id: planter_id, //confirm this
+    worker_id: planter_id, // confirm this
     consolidation_period_end: end_date ? new Date(end_date) : end_date,
     consolidation_period_start: start_date ? new Date(start_date) : start_date,
   })
@@ -110,7 +110,7 @@ const updateEarnings = async (earningsRepo, requestBody) => {
   const { worker_id, currency, amount } = body;
   // If data is coming from csv file
   if (body.earnings_id) {
-    body['id'] = body.earnings_id;
+    body.id = body.earnings_id;
     delete body.earnings_id;
   }
   delete body.phone;

@@ -1,5 +1,4 @@
 const BaseRepository = require('./BaseRepository');
-const HttpError = require('../utils/HttpError');
 
 class EarningsRepository extends BaseRepository {
   constructor(session) {
@@ -10,7 +9,7 @@ class EarningsRepository extends BaseRepository {
 
   async getEarnings(filter, { limit, offset }) {
     const whereBuilder = function (object, builder) {
-      let result = builder;
+      const result = builder;
       if (object.consolidation_period_start) {
         result.where(
           'consolidation_period_start',
