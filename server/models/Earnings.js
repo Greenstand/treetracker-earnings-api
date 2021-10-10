@@ -35,6 +35,16 @@ const Earning = ({
     batch_id,
   });
 
+const BatchEarning = ({ id, worker_id, phone, amount, currency, status }) =>
+  Object.freeze({
+    earnings_id: id,
+    worker_id,
+    phone: 'Not sure for now',
+    currency,
+    amount,
+    status,
+  });
+
 const FilterCriteria = ({
   earnings_status = undefined,
   organization = undefined,
@@ -96,11 +106,22 @@ const getEarnings =
   };
 
 const updateEarnings = async (earningsRepo, requestBody) => {
-  const { worker_id, currency, amount } = requestBody;
-  const earnings = await earningsRepo.getById(requestBody.id);
+  const body = { ...requestBody };
+  const { worker_id, currency, amount } = body;
+  // If data is coming from csv file
+  if (body.earnings_id) {
+    body['id'] = body.earnings_id;
+    delete body.earnings_id;
+  }
+  delete body.phone;
+
+  const earnings = await earningsRepo.getById(body.id);
 
   if (earnings.status !== 'calculated')
     throw new HttpError(409, 'Earnings have either been paid or cancelled');
+
+  if (earnings.payment_confirmation_id)
+    throw new HttpError(409, 'Earnings already have a payment_confirmation_id');
 
   if (earnings.worker_id !== worker_id)
     throw new HttpError(
@@ -114,13 +135,13 @@ const updateEarnings = async (earningsRepo, requestBody) => {
       'The currency specified does not match that of the earning',
     );
 
-  if (+earnings.amount !== amount)
+  if (+earnings.amount !== +amount)
     throw new HttpError(
       409,
       'The amount specified does not match that of the earning',
     );
 
-  await earningsRepo.update(requestBody);
+  await earningsRepo.update({ ...body, status: 'paid' });
 
   return {
     status: 'completed',
@@ -128,7 +149,24 @@ const updateEarnings = async (earningsRepo, requestBody) => {
   };
 };
 
+const getBatchEarnings =
+  (earningsRepo) =>
+  async (filterCriteria = undefined) => {
+    let filter = {};
+    filter = FilterCriteria({
+      ...filterCriteria,
+    });
+
+    const earnings = await earningsRepo.getByFilter(filter);
+    return {
+      earnings: earnings.map((row) => {
+        return BatchEarning({ ...row });
+      }),
+    };
+  };
+
 module.exports = {
   getEarnings,
   updateEarnings,
+  getBatchEarnings,
 };
