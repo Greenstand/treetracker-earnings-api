@@ -1,3 +1,4 @@
+/* Replace with your SQL commands */
 CREATE TYPE earning_status_enum AS ENUM ('calculated', 'cancelled', 'paid');
 CREATE TYPE confirmation_method_enum AS ENUM ('single', 'batch');
 CREATE TYPE currency_enum AS ENUM ('USD');
@@ -16,7 +17,7 @@ CREATE TABLE public.earnings
     payment_confirmation_id varchar,
     payment_system varchar,
     payment_confirmed_by uuid NOT NULL,
-    payment_confirmation_method uuid NOT NULL,
+    payment_confirmation_method confirmation_method_enum NOT NULL,
     paid_at timestamptz,
     status earning_status_enum NOT NULL,
     active boolean NOT NULL,

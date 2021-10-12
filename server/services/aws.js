@@ -1,9 +1,4 @@
-const AWS = require('aws-sdk');
-
-const s3 = new AWS.S3({
-  accessKeyId: process.env.ACCESS_KEY_ID,
-  secretAccessKey: process.env.SECRET_ACCESS_KEY,
-});
+const s3 = require('../services/s3');
 
 const upload_csv = async (csv, Key) => {
   const params = {

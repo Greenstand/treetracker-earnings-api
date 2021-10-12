@@ -26,25 +26,16 @@ const earningsGetQuerySchema = Joi.object({
 }).unknown(false);
 
 const earningsPatchSchema = Joi.object({
-  id: Joi.string().uuid().required(),
+  id: Joi.string().uuid(),
+  earnings_id: Joi.string().uuid(),
   worker_id: Joi.string().uuid().required(),
   amount: Joi.number().required(),
   currency: Joi.string().required(),
   payment_confirmation_id: Joi.string().required(),
   payment_system: Joi.string().required(),
   paid_at: Joi.date().iso(),
-});
-
-const earningsBatchPatchSchema = Joi.object({
-  earnings_id: Joi.string().uuid().required(),
-  worker_id: Joi.string().uuid().required(),
-  amount: Joi.number().required(),
-  currency: Joi.string().required(),
-  payment_confirmation_id: Joi.string().required(),
-  payment_system: Joi.string().required(),
-  paid_at: Joi.date().iso(),
-  phone: Joi.string().required(),
-});
+  phone: Joi.string(),
+}).xor('id', 'earnings_id');
 
 const earningsGet = async (req, res, next) => {
   await earningsGetQuerySchema.validateAsync(req.query, { abortEarly: false });
@@ -90,7 +81,7 @@ const earningsBatchGet = async (req, res, next) => {
   const result = await executeGetBatchEarnings(req.query);
   const json2csv = new Parser();
   const csv = json2csv.parse(result.earnings);
-  res.header('Content-Type', 'text/csv');
+  res.header('Content-Type', 'text/csv; charset=utf-8');
   res.attachment('batchEarnings.csv');
   res.send(csv);
   res.end();
@@ -110,7 +101,7 @@ const earningsBatchPatch = async (req, res, next) => {
     let count = 0;
     await session.beginTransaction();
     for (const row of jsonArray) {
-      await earningsBatchPatchSchema.validateAsync(row, { abortEarly: false });
+      await earningsPatchSchema.validateAsync(row, { abortEarly: false });
       await updateEarnings(earningsRepo, row);
       count++;
     }
