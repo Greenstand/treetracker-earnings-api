@@ -40,15 +40,18 @@ paths:
         - schema:
             type: string
           in: query
-          name: organization
+          name: funder_id
+          description: The stackholder id that is funding these earnings via the contract
         - schema:
             type: string
           in: query
-          name: planter_id
+          name: worker_id
+          description: The stackholder id that is being paid (a person normally)
         - schema:
             type: string
           in: query
           name: contract_id
+          description: A reference to a contract in the contract microservice
         - schema:
             type: string
           in: query
@@ -314,23 +317,36 @@ paths:
         - schema:
             type: string
           in: query
-          name: organization
+          name: funder_id
+          description: The stackholder id that is funding these earnings via the contract
         - schema:
             type: string
           in: query
-          name: planter_id
+          name: worker_id
+          description: The stackholder id that is being paid (a person normally)
         - schema:
             type: string
           in: query
           name: contract_id
+          description: A reference to a contract in the contract microservice
         - schema:
             type: string
           in: query
           name: start_date
+          description: Spans calculated_at
         - schema:
             type: string
           in: query
           name: end_date
+          description: Spans calculated_at
+        - schema:
+            type: string
+          in: query
+          name: limit
+        - schema:
+            type: string
+          in: query
+          name: offset
 components:
   schemas: {}
   securitySchemes:
