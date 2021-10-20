@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.0.1...v1.1.0) (2021-10-20)
+
+
+### Features
+
+* update to node 16 alpine image ([f07148b](https://github.com/Greenstand/treetracker-earnings/commit/f07148b618dd9d5d54038f36094b9242ae9ad2da))
+
 ## [1.0.1](https://github.com/Greenstand/treetracker-earnings/compare/v1.0.0...v1.0.1) (2021-10-20)
 
 
