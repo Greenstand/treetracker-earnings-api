@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/Greenstand/treetracker-earnings/compare/v1.1.3...v1.1.4) (2021-10-20)
+
+
+### Bug Fixes
+
+* correct name of secret ([b5b4a3a](https://github.com/Greenstand/treetracker-earnings/commit/b5b4a3a6c9695f8c2b8ae57916002a85040eae2a))
+
 ## [1.1.3](https://github.com/Greenstand/treetracker-earnings/compare/v1.1.2...v1.1.3) (2021-10-20)
 
 
