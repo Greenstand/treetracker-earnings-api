@@ -1,8 +1,8 @@
 apiVersion: getambassador.io/v2
 kind: Mapping
 metadata:
-  name: SERVICE
+  name: treetracker-earnings-api
 spec:
-  prefix: /MAPPING_PREFIX/
-  service: SERVICE
+  prefix: /earnings/
+  service: treetracker-earnings-api
   rewrite: /
