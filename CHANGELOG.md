@@ -1,3 +1,12 @@
+## [1.1.1](https://github.com/Greenstand/treetracker-earnings/compare/v1.1.0...v1.1.1) (2021-10-20)
+
+
+### Bug Fixes
+
+* add namespace ([e91cf93](https://github.com/Greenstand/treetracker-earnings/commit/e91cf93ebe64d4da8a282c638424981a4577759b))
+* add service name ([7430fa3](https://github.com/Greenstand/treetracker-earnings/commit/7430fa3fd3d59a97e76b1200eccb697ad3e25f34))
+* update database secret ([fb6025c](https://github.com/Greenstand/treetracker-earnings/commit/fb6025c716528b8a751bf1c155e5ff648a761061))
+
 # [1.1.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.0.1...v1.1.0) (2021-10-20)
 
 
