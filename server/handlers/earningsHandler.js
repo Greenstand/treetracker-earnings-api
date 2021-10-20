@@ -112,12 +112,12 @@ const earningsBatchGet = async (req, res, next) => {
   const parsingProcessor = asyncParser.fromInput(earningsStream);
 
   try {
+    const csv = await parsingProcessor.promise();
     // parsingProcessor.throughTransform(earningTransform);
     parsingProcessor
       .on('data', (chunk) => console.log(chunk))
       .on('end', () => console.log(csv))
       .on('error', (err) => console.error(err));
-    const csv = await parsingProcessor.promise();
     console.log(csv);
     // res.header('Content-Type', 'text/csv; charset=utf-8');
     // res.attachment('batchEarnings.csv');
