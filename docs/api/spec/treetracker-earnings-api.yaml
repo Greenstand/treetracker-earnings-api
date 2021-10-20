@@ -81,7 +81,11 @@ paths:
                   count:
                     type: number
                     description: the number of rows processed
-              examples: {}
+              examples:
+                example-1:
+                  value:
+                    status: completed
+                    count: 0
         '400':
           description: |
             Validation:  payment confirmation id and payment system are required
