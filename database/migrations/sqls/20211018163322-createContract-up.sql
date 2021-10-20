@@ -1,0 +1,4 @@
+CREATE SCHEMA IF NOT EXISTS contract;
+CREATE TABLE IF NOT EXISTS contract.contract(
+    id uuid NOT NULL PRIMARY KEY
+)
