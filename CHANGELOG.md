@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/Greenstand/treetracker-earnings/compare/v1.1.4...v1.1.5) (2021-10-20)
+
+
+### Bug Fixes
+
+* do not use public schema ([8980263](https://github.com/Greenstand/treetracker-earnings/commit/8980263e7fa5afcb389b7cb695ce9f2914f89d6e))
+
 ## [1.1.4](https://github.com/Greenstand/treetracker-earnings/compare/v1.1.3...v1.1.4) (2021-10-20)
 
 
