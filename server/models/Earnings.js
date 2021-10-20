@@ -20,7 +20,7 @@ const Earning = ({
   batch_id,
 }) => {
   // make a call to the contract microservice and get the consolidation_rule
-  let consolidation_rule = 'mock value';
+  const consolidation_rule = 'mock value';
   return Object.freeze({
     worker_id,
     funder_id,
@@ -93,7 +93,7 @@ const getEarnings =
     filter = FilterCriteria({
       ...filterCriteria,
     });
-    let queryObject = {
+    const queryObject = {
       ...QueryOptions({ ...filterCriteria }),
       ...filterCriteria,
     };
@@ -103,7 +103,7 @@ const getEarnings =
     delete queryObject.offset;
 
     const query = Object.keys(queryObject)
-      .map((key) => key + '=' + queryObject[key])
+      .map((key) => `${key  }=${  queryObject[key]}`)
       .join('&');
 
     const urlWithLimitAndOffset = `${url}?${query}&offset=`;

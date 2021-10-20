@@ -134,7 +134,7 @@ const earningsBatchPatch = async (req, res, next) => {
     throw new HttpError(406, 'Only text/csv is supported');
 
   const key = `treetracker_earnings/${uuid()}.csv`;
-  let batch_id = uuid();
+  const batch_id = uuid();
   const fileBuffer = await fs.readFile(req.file.path);
   await upload_csv(fileBuffer, key);
   const session = new Session();

@@ -1,4 +1,4 @@
-const s3 = require('../services/s3');
+const s3 = require("./s3");
 
 const upload_csv = async (csv, Key) => {
   const params = {
