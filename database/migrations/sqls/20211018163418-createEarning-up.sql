@@ -3,7 +3,7 @@ CREATE TYPE earning_status_enum AS ENUM ('calculated', 'cancelled', 'paid');
 CREATE TYPE confirmation_method_enum AS ENUM ('single', 'batch');
 CREATE TYPE currency_enum AS ENUM ('USD');
 
-CREATE TABLE public.earnings
+CREATE TABLE earnings
 (
     id uuid NOT NULL PRIMARY KEY,
     worker_id uuid NOT NULL REFERENCES stakeholder.stakeholder(id),
