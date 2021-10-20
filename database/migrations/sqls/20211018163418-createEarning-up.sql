@@ -7,7 +7,8 @@ CREATE TABLE public.earnings
 (
     id uuid NOT NULL PRIMARY KEY,
     worker_id uuid NOT NULL REFERENCES stakeholder.stakeholder(id),
-    funder_id uuid NOT NULL,
+    contract_id uuid NOT NULL REFERENCES contract.contract(id),
+    funder_id uuid NOT NULL REFERENCES stakeholder.stakeholder(id),
     amount numeric NOT NULL,
     currency currency_enum NOT NULL,
     calculated_at timestamptz NOT NULL,
@@ -16,10 +17,11 @@ CREATE TABLE public.earnings
     consolidation_period_end timestamptz NOT NULL,
     payment_confirmation_id varchar,
     payment_system varchar,
-    payment_confirmed_by uuid NOT NULL,
+    payment_confirmed_by uuid,
     payment_confirmation_method confirmation_method_enum NOT NULL,
     paid_at timestamptz,
+    payment_confirmed_at timestamptz,
     status earning_status_enum NOT NULL,
     active boolean NOT NULL,
-    batch_id uuid NOT NULL REFERENCES batch(id)
+    batch_id uuid REFERENCES batch(id)
 );

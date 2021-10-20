@@ -1,9 +1,11 @@
 const Joi = require('joi');
-const { Parser } = require('json2csv');
+const { Parser, AsyncParser } = require('json2csv');
 const csv = require('csvtojson');
 const fs = require('fs').promises;
 const { v4: uuid } = require('uuid');
+const { Readable, Transform } = require('stream');
 
+const { BatchEarning } = require('../models/Earnings');
 const { upload_csv } = require('../services/aws');
 const Session = require('../models/Session');
 const EarningsRepository = require('../repositories/EarningsRepository');
@@ -16,9 +18,9 @@ const HttpError = require('../utils/HttpError');
 
 const earningsGetQuerySchema = Joi.object({
   earnings_status: Joi.string(),
-  organization: Joi.string(),
-  planter_id: Joi.string(),
-  contract_id: Joi.string(),
+  funder_id: Joi.string().uuid(),
+  worker_id: Joi.string().uuid(),
+  contract_id: Joi.string().uuid(),
   start_date: Joi.date().iso(),
   end_date: Joi.date().iso(),
   limit: Joi.number().integer().greater(0).less(101),
@@ -42,9 +44,7 @@ const earningsGet = async (req, res, next) => {
   const session = new Session();
   const earningsRepo = new EarningsRepository(session);
 
-  const url = `${req.protocol}://${req.get('host')}/message?author_handle=${
-    req.query.author_handle
-  }`;
+  const url = `${req.protocol}://${req.get('host')}/earnings`;
 
   const executeGetEarnings = getEarnings(earningsRepo);
   const result = await executeGetEarnings(req.query, url);
@@ -78,13 +78,55 @@ const earningsBatchGet = async (req, res, next) => {
   const earningsRepo = new EarningsRepository(session);
 
   const executeGetBatchEarnings = getBatchEarnings(earningsRepo);
-  const result = await executeGetBatchEarnings(req.query);
-  const json2csv = new Parser();
-  const csv = json2csv.parse(result.earnings);
-  res.header('Content-Type', 'text/csv; charset=utf-8');
-  res.attachment('batchEarnings.csv');
-  res.send(csv);
-  res.end();
+  const { earningsStream } = await executeGetBatchEarnings(req.query);
+  // const input = new Readable({ objectMode: true });
+  // input._read = () => {};
+  // earningsStream
+  //   .on('data', (row) => {
+  //     console.log(row);
+  //     input.push(BatchEarning({ ...row }));
+  //   })
+  //   .on('error', (error) => {
+  //     console.log('error', error.message);
+  //     throw new HttpError(500, error.message);
+  //   })
+  //   .on('end', () => input.push(null));
+  const earningTransform = new Transform({
+    objectMode: true,
+    transform(chunk, encoding, callback) {
+      console.log(BatchEarning(chunk));
+      this.push(BatchEarning(chunk).toString());
+      callback();
+    },
+  });
+  // const transformedReadableStream = new Readable({
+  //   objectMode: true,
+  //   read(size) {
+  //     console.log(size);
+  //     this.push(size);
+  //   },
+  // });
+
+  const asyncParser = new AsyncParser({}, { objectMode: true });
+  asyncParser.throughTransform(earningTransform);
+  const parsingProcessor = asyncParser.fromInput(earningsStream);
+
+  try {
+    // parsingProcessor.throughTransform(earningTransform);
+    parsingProcessor
+      .on('data', (chunk) => console.log(chunk))
+      .on('end', () => console.log(csv))
+      .on('error', (err) => console.error(err));
+    const csv = await parsingProcessor.promise();
+    console.log(csv);
+    // res.header('Content-Type', 'text/csv; charset=utf-8');
+    // res.attachment('batchEarnings.csv');
+    // res.send(csv);
+    // res.end();
+  } catch (err) {
+    console.error(err);
+    throw new HttpError(422, err.message);
+  }
 };
 
 const earningsBatchPatch = async (req, res, next) => {
@@ -92,6 +134,7 @@ const earningsBatchPatch = async (req, res, next) => {
     throw new HttpError(406, 'Only text/csv is supported');
 
   const key = `treetracker_earnings/${uuid()}.csv`;
+  let batch_id = uuid();
   const fileBuffer = await fs.readFile(req.file.path);
   await upload_csv(fileBuffer, key);
   const session = new Session();
@@ -102,7 +145,7 @@ const earningsBatchPatch = async (req, res, next) => {
     await session.beginTransaction();
     for (const row of jsonArray) {
       await earningsPatchSchema.validateAsync(row, { abortEarly: false });
-      await updateEarnings(earningsRepo, row);
+      await updateEarnings(earningsRepo, { ...row, batch_id });
       count++;
     }
     // delete temp file

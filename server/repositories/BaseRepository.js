@@ -27,6 +27,7 @@ class BaseRepository {
    * support: and / or
    * options:
    *  limit: number
+   *  offset: number
    */
   async getByFilter(filter, options) {
     const whereBuilder = function (object, builder) {
@@ -72,6 +73,9 @@ class BaseRepository {
       .where((builder) => whereBuilder(filter, builder));
     if (options && options.limit) {
       promise = promise.limit(options && options.limit);
+    }
+    if (options && options.offset) {
+      promise = promise.offset(options && options.offset);
     }
     const result = await promise;
     expect(result).a(expect.any(Array));

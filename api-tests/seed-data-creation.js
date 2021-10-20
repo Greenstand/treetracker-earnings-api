@@ -46,8 +46,6 @@ before(async () => {
   stub = sinon.stub(s3, 'putObject').returns({ promise: () => 'a' });
   // prettier-ignore
   await knex.raw(`
-    ALTER TABLE earnings ALTER COLUMN batch_id DROP NOT NULL;
-
     INSERT INTO stakeholder.stakeholder(id)
       VALUES ('${workerId}');
 
@@ -72,8 +70,6 @@ after(async () => {
 
     DELETE FROM stakeholder.stakeholder
     WHERE id = '${workerId}';
-
-    ALTER TABLE earnings ALTER COLUMN batch_id SET NOT NULL;
   `);
 });
 

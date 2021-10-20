@@ -7,33 +7,37 @@ class EarningsRepository extends BaseRepository {
     this._session = session;
   }
 
-  async getEarnings(filter, { limit, offset }) {
+  // supports knex streams
+  async getEarnings(filter, { limit, offset, stream }) {
     const whereBuilder = function (object, builder) {
       const result = builder;
-      if (object.consolidation_period_start) {
-        result.where(
-          'consolidation_period_start',
-          '>=',
-          object.consolidation_period_start,
-        );
-        delete object.consolidation_period_start;
+      if (object.calculated_at_start) {
+        result.where('calculated_at', '>=', object.calculated_at_start);
+        delete object.calculated_at_start;
       }
-      if (object.consolidation_period_end) {
-        result.where(
-          'consolidation_period_end',
-          '<=',
-          object.consolidation_period_end,
-        );
-        delete object.consolidation_period_end;
+      if (object.calculated_at_end) {
+        result.where('calculated_at', '<=', object.calculated_at_end);
+        delete object.calculated_at_end;
       }
       result.where(object);
     };
-    return await this._session
+    let promise = this._session
       .getDB()(this._tableName)
-      .limit(limit)
-      .offset(offset)
       .where((builder) => whereBuilder(filter, builder));
+    if (stream) {
+      return await promise.stream();
+    }
+    if (limit) {
+      promise = promise.limit(limit);
+    }
+    if (offset) {
+      promise = promise.offset(offset);
+    }
+
+    return await promise;
   }
+
+  async getBatchEarningsStream(filter) {}
 }
 
 module.exports = EarningsRepository;

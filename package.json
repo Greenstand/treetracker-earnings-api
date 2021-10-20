@@ -45,6 +45,7 @@
     "loglevel": "^1.6.8",
     "multer": "^1.4.3",
     "pg": "^8.0.3",
+    "pg-query-stream": "^4.2.1",
     "uuid": "^8.2.0"
   },
   "devDependencies": {
