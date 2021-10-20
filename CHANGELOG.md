@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/Greenstand/treetracker-earnings/compare/v1.1.2...v1.1.3) (2021-10-20)
+
+
+### Bug Fixes
+
+* set up service name ([66c1817](https://github.com/Greenstand/treetracker-earnings/commit/66c1817e05fb859db151c109116b999e98cfb10a))
+
 ## [1.1.2](https://github.com/Greenstand/treetracker-earnings/compare/v1.1.1...v1.1.2) (2021-10-20)
 
 
