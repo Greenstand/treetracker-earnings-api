@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/Greenstand/treetracker-earnings/compare/v1.0.0...v1.0.1) (2021-10-20)
+
+
+### Bug Fixes
+
+* run npm ci without silent to debug ([f23eb61](https://github.com/Greenstand/treetracker-earnings/commit/f23eb6163a893a9589db96a4090c063df37c9da8))
+
 # 1.0.0 (2021-10-20)
 
 
