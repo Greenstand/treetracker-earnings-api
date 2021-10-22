@@ -1,5 +1,6 @@
 CREATE TYPE status AS ENUM ('created', 'completed', 'failed');
 
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE SCHEMA IF NOT EXISTS earnings;
 
 CREATE TABLE IF NOT EXISTS earnings.batch (
