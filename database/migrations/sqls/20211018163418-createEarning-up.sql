@@ -2,6 +2,7 @@
 CREATE TYPE earning_status_enum AS ENUM ('calculated', 'cancelled', 'paid');
 CREATE TYPE confirmation_method_enum AS ENUM ('single', 'batch');
 CREATE TYPE currency_enum AS ENUM ('USD');
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE earnings.earnings
 (
