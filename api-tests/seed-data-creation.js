@@ -43,21 +43,23 @@ const earningsWithCancelledStatus = {
 let stub;
 
 before(async () => {
-  stub = sinon.stub(s3, 'putObject').returns({ promise: () => 'a' });
+  stub = sinon.stub(s3, 'upload').returns({
+    promise: () => {
+      return { Location: 'https://location.com' };
+    },
+  });
   // prettier-ignore
   await knex.raw(`
-    INSERT INTO stakeholder.stakeholder(id)
-      VALUES ('${workerId}');
 
-    INSERT INTO public.earnings(
-      id, worker_id, funder_id, amount, currency, calculated_at, consolidation_id, consolidation_period_start, consolidation_period_end, payment_confirmed_by, payment_confirmation_method, status, active)
+    INSERT INTO earnings.earnings(
+      id, worker_id, funder_id, amount, currency, calculated_at, consolidation_id, consolidation_period_start, consolidation_period_end, payment_confirmed_by, payment_confirmation_method, status, active, contract_id)
 	    VALUES 
-        ('${earningsOne.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), '${uuid()}','single', '${earningsOne.status}', true),
-        ('${earningsTwo.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), '${uuid()}','single', '${earningsTwo.status}', true),
-        ('${earningsThree.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), '${uuid()}','single', '${earningsThree.status}', true),
-        ('${earningsFour.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), '${uuid()}','batch', '${earningsFour.status}', true),
-        ('${earningsWithCancelledStatus.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), '${uuid()}','single', '${earningsWithCancelledStatus.status}', true),
-        ('${earningsWithPaidStatus.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), '${uuid()}','single', '${earningsWithPaidStatus.status}', true);
+        ('${earningsOne.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), '${uuid()}','single', '${earningsOne.status}', true, '${uuid()}'),
+        ('${earningsTwo.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), '${uuid()}','single', '${earningsTwo.status}', true, '${uuid()}'),
+        ('${earningsThree.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), '${uuid()}','single', '${earningsThree.status}', true, '${uuid()}'),
+        ('${earningsFour.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), '${uuid()}','batch', '${earningsFour.status}', true, '${uuid()}'),
+        ('${earningsWithCancelledStatus.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), '${uuid()}','single', '${earningsWithCancelledStatus.status}', true, '${uuid()}'),
+        ('${earningsWithPaidStatus.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), '${uuid()}','single', '${earningsWithPaidStatus.status}', true, '${uuid()}');
   `);
 });
 
@@ -65,11 +67,8 @@ after(async () => {
   stub.restore();
   await knex.raw(`
 
-    DELETE FROM public.earnings
+    DELETE FROM earnings.earnings
     WHERE worker_id = '${workerId}';
-
-    DELETE FROM stakeholder.stakeholder
-    WHERE id = '${workerId}';
   `);
 });
 

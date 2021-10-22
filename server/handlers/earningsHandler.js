@@ -1,14 +1,15 @@
 const Joi = require('joi');
 const { Parser, AsyncParser } = require('json2csv');
 const csv = require('csvtojson');
-const fs = require('fs').promises;
+const fs = require('fs');
 const { v4: uuid } = require('uuid');
 const { Readable, Transform } = require('stream');
 
 const { BatchEarning } = require('../models/Earnings');
-const { upload_csv } = require('../services/aws');
+const { uploadCsv } = require('../services/aws');
 const Session = require('../models/Session');
 const EarningsRepository = require('../repositories/EarningsRepository');
+const BatchRepository = require('../repositories/BatchRepository');
 const {
   getEarnings,
   updateEarnings,
@@ -134,22 +135,60 @@ const earningsBatchPatch = async (req, res, next) => {
     throw new HttpError(406, 'Only text/csv is supported');
 
   const key = `treetracker_earnings/${uuid()}.csv`;
-  const batch_id = uuid();
-  const fileBuffer = await fs.readFile(req.file.path);
-  await upload_csv(fileBuffer, key);
+  const fileBuffer = await fs.promises.readFile(req.file.path);
+  const csvReadStream = fs.createReadStream(req.file.path);
   const session = new Session();
+  // Don't want to roll back batch updates if system errors out
+  const batchSession = new Session();
+  const batchRepo = new BatchRepository(batchSession);
   const earningsRepo = new EarningsRepository(session);
-  try {
-    const jsonArray = await csv().fromFile(req.file.path);
+  let batch_id = '';
+
+  const batchUpdateEarnings = (batch_id) => {
     let count = 0;
+    return new Promise((resolve, reject) => {
+      csv()
+        .fromStream(csvReadStream)
+        .subscribe(
+          async (json) => {
+            await earningsPatchSchema.validateAsync(json, {
+              abortEarly: false,
+            });
+            await updateEarnings(earningsRepo, {
+              ...json,
+              batch_id,
+            });
+            count++;
+          },
+          function (e) {
+            reject(e);
+          },
+          function () {
+            resolve(count);
+          },
+        );
+    });
+  };
+  try {
+    let uploadResult = await uploadCsv(fileBuffer, key);
+
+    const batch = await batchRepo.create({
+      url: uploadResult.Location,
+      status: 'created',
+      active: true,
+    });
+    batch_id = batch.id;
+
     await session.beginTransaction();
-    for (const row of jsonArray) {
-      await earningsPatchSchema.validateAsync(row, { abortEarly: false });
-      await updateEarnings(earningsRepo, { ...row, batch_id });
-      count++;
-    }
+
+    const count = await batchUpdateEarnings(batch.id);
+
     // delete temp file
-    await fs.unlink(req.file.path);
+    await fs.promises.unlink(req.file.path);
+
+    // update batch status to completed
+    await batchRepo.update({ id: batch.id, status: 'completed' });
+
     await session.commitTransaction();
     res.status(200).send({
       status: 'completed',
@@ -158,11 +197,16 @@ const earningsBatchPatch = async (req, res, next) => {
     res.end();
   } catch (e) {
     console.log(e);
+    // update batch status to successful, if code errors out after batch was created
+    if (batch_id) {
+      await batchRepo.update({ id: batch_id, status: 'failed', active: false });
+    }
     if (session.isTransactionInProgress()) {
       await session.rollbackTransaction();
     }
     // delete temp file
-    await fs.unlink(req.file.path);
+    await fs.promises.unlink(req.file.path);
+
     next(e);
   }
 };

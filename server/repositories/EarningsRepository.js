@@ -36,8 +36,6 @@ class EarningsRepository extends BaseRepository {
 
     return await promise;
   }
-
- // async getBatchEarningsStream(filter) {}
 }
 
 module.exports = EarningsRepository;

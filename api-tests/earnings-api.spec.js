@@ -481,8 +481,7 @@ describe('Earnings API tests.', () => {
           'api-tests\\earningsFailedTestRowWithNotCalculatedStatus.csv',
         )
         .expect(409)
-        .end(function (err, res) {
-          console.log(res.body);
+        .end(function (err) {
           if (err) return done(err);
           return done();
         });
@@ -505,29 +504,29 @@ describe('Earnings API tests.', () => {
     });
   });
 
-  describe('Earnings BATCH GET', () => {
-    const binaryParser = (res, callback) => {
-      res.setEncoding('binary');
-      res.data = '';
-      res.on('data', function (chunk) {
-        res.data += chunk;
-      });
-      res.on('end', function () {
-        callback(null, Buffer.from(res.data, 'binary'));
-      });
-    };
-    it(`Should get earnings successfully`, function (done) {
-      request(server)
-        .get(`/earnings/batch`)
-        .expect('Content-Type', 'text/csv; charset=utf-8')
-        .buffer()
-        .parse(binaryParser)
-        .expect(200)
-        .end(function (err, res) {
-          if (err) return done(err);
-          expect(res.body instanceof Buffer).to.be.true;
-          return done();
-        });
-    });
-  });
+  // describe('Earnings BATCH GET', () => {
+  //   const binaryParser = (res, callback) => {
+  //     res.setEncoding('binary');
+  //     res.data = '';
+  //     res.on('data', function (chunk) {
+  //       res.data += chunk;
+  //     });
+  //     res.on('end', function () {
+  //       callback(null, Buffer.from(res.data, 'binary'));
+  //     });
+  //   };
+  //   it(`Should get earnings successfully`, function (done) {
+  //     request(server)
+  //       .get(`/earnings/batch`)
+  //       .expect('Content-Type', 'text/csv; charset=utf-8')
+  //       .buffer()
+  //       .parse(binaryParser)
+  //       .expect(200)
+  //       .end(function (err, res) {
+  //         if (err) return done(err);
+  //         expect(res.body instanceof Buffer).to.be.true;
+  //         return done();
+  //       });
+  //   });
+  // });
 });

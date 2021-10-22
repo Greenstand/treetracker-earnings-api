@@ -103,7 +103,7 @@ const getEarnings =
     delete queryObject.offset;
 
     const query = Object.keys(queryObject)
-      .map((key) => `${key  }=${  queryObject[key]}`)
+      .map((key) => `${key}=${queryObject[key]}`)
       .join('&');
 
     const urlWithLimitAndOffset = `${url}?${query}&offset=`;
