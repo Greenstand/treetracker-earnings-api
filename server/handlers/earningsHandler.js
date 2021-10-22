@@ -170,7 +170,7 @@ const earningsBatchPatch = async (req, res, next) => {
     });
   };
   try {
-    let uploadResult = await uploadCsv(fileBuffer, key);
+    const uploadResult = await uploadCsv(fileBuffer, key);
 
     const batch = await batchRepo.create({
       url: uploadResult.Location,
