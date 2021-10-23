@@ -392,7 +392,7 @@ describe('Earnings API tests.', () => {
       request(server)
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
-        .attach('csv', '.\\api-tests\\earningsFailedTestInvalidRow.csv')
+        .attach('csv', './api-tests/earningsFailedTestInvalidRow.csv')
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -404,7 +404,7 @@ describe('Earnings API tests.', () => {
       request(server)
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
-        .attach('csv', '.\\api-tests\\earningsFailedTestInvalidHeader.csv')
+        .attach('csv', './api-tests/earningsFailedTestInvalidHeader.csv')
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -416,7 +416,7 @@ describe('Earnings API tests.', () => {
       request(server)
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
-        .attach('csv', '.\\api-tests\\earningsFailedTestInvalidHeader2.csv')
+        .attach('csv', './api-tests/earningsFailedTestInvalidHeader2.csv')
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -428,7 +428,7 @@ describe('Earnings API tests.', () => {
       request(server)
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
-        .attach('csv', '.\\api-tests\\earningsFailedTestInvalidHeader3.csv')
+        .attach('csv', './api-tests/earningsFailedTestInvalidHeader3.csv')
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -440,7 +440,7 @@ describe('Earnings API tests.', () => {
       request(server)
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
-        .attach('csv', '.\\api-tests\\earningsFailedTestInvalidHeader4.csv')
+        .attach('csv', './api-tests/earningsFailedTestInvalidHeader4.csv')
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -452,7 +452,7 @@ describe('Earnings API tests.', () => {
       request(server)
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
-        .attach('csv', '.\\api-tests\\earningsFailedTestInvalidHeader5.csv')
+        .attach('csv', './api-tests/earningsFailedTestInvalidHeader5.csv')
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -464,7 +464,7 @@ describe('Earnings API tests.', () => {
       request(server)
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
-        .attach('csv', '.\\api-tests\\earningsFailedTestInvalidHeader6.csv')
+        .attach('csv', './api-tests/earningsFailedTestInvalidHeader6.csv')
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -478,7 +478,7 @@ describe('Earnings API tests.', () => {
         .set('Accept', 'multipart/form-data')
         .attach(
           'csv',
-          '.\\api-tests\\earningsFailedTestRowWithNotCalculatedStatus.csv',
+          './api-tests/earningsFailedTestRowWithNotCalculatedStatus.csv',
         )
         .expect(409)
         .end(function (err) {
@@ -491,7 +491,7 @@ describe('Earnings API tests.', () => {
       request(server)
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
-        .attach('csv', '.\\api-tests\\earningsSuccessfulTest.csv')
+        .attach('csv', './api-tests/earningsSuccessfulTest.csv')
         .expect(200)
         .end(function (err, res) {
           expect(res.body).eql({
