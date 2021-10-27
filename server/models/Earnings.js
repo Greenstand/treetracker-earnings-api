@@ -6,6 +6,7 @@ const Earning = ({
   amount,
   currency,
   calculated_at,
+  consolidation_rule_id,
   consolidation_period_start,
   consolidation_period_end,
   payment_confirmation_id,
@@ -18,7 +19,7 @@ const Earning = ({
   batch_id,
 }) => {
   // make a call to the contract microservice and get the consolidation_rule
-  const consolidation_rule = 'mock value';
+  const consolidation_rule = `CONSOLIDATION_RULE_${consolidation_rule_id}`;
   return Object.freeze({
     worker_id,
     funder_id,
