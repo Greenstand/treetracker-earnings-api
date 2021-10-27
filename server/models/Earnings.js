@@ -1,5 +1,3 @@
-const { HttpRequest } = require('aws-sdk');
-const knex = require('../database/knex');
 const HttpError = require('../utils/HttpError');
 
 const Earning = ({

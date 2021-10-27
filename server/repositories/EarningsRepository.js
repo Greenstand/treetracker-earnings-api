@@ -11,21 +11,22 @@ class EarningsRepository extends BaseRepository {
   async getEarnings(filter, { limit, offset, stream }) {
     const whereBuilder = function (object, builder) {
       const result = builder;
-      if (object.calculated_at_start) {
-        result.where('calculated_at', '>=', object.calculated_at_start);
-        delete object.calculated_at_start;
+      const filterObject = object;
+      if (filterObject.calculated_at_start) {
+        result.where('calculated_at', '>=', filterObject.calculated_at_start);
+        delete filterObject.calculated_at_start;
       }
-      if (object.calculated_at_end) {
-        result.where('calculated_at', '<=', object.calculated_at_end);
-        delete object.calculated_at_end;
+      if (filterObject.calculated_at_end) {
+        result.where('calculated_at', '<=', filterObject.calculated_at_end);
+        delete filterObject.calculated_at_end;
       }
-      result.where(object);
+      result.where(filterObject);
     };
     let promise = this._session
       .getDB()(this._tableName)
       .where((builder) => whereBuilder(filter, builder));
     if (stream) {
-      return await promise.stream();
+      return promise.stream();
     }
     if (limit) {
       promise = promise.limit(limit);
@@ -34,7 +35,7 @@ class EarningsRepository extends BaseRepository {
       promise = promise.offset(offset);
     }
 
-    return await promise;
+    return promise;
   }
 }
 

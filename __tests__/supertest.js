@@ -4,10 +4,9 @@
 require('dotenv').config();
 const request = require('supertest');
 const { expect } = require('chai');
-const log = require('loglevel');
 const sinon = require('sinon');
 const seed = require('./seed-example');
-const server = require('./server/app');
+const server = require('../server/app');
 
 describe('microservice integration tests', () => {
   beforeEach(async () => {

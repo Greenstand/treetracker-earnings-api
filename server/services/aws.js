@@ -10,7 +10,7 @@ const uploadCsv = async (csv, Key) => {
   };
 
   const uploadPromise = s3.upload(params).promise();
-  return await uploadPromise;
+  return uploadPromise;
 };
 
 module.exports = {

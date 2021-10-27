@@ -39,7 +39,7 @@ const earningsPatchSchema = Joi.object({
   phone: Joi.string(),
 }).xor('id', 'earnings_id');
 
-const earningsGet = async (req, res, next) => {
+const earningsGet = async (req, res) => {
   await earningsGetQuerySchema.validateAsync(req.query, { abortEarly: false });
   const session = new Session();
   const earningsRepo = new EarningsRepository(session);
@@ -72,7 +72,7 @@ const earningsPatch = async (req, res, next) => {
   }
 };
 
-const earningsBatchGet = async (req, res, next) => {
+const earningsBatchGet = async (req, res) => {
   await earningsGetQuerySchema.validateAsync(req.query, { abortEarly: false });
   const session = new Session();
   const earningsRepo = new EarningsRepository(session);
