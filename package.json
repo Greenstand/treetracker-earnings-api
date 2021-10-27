@@ -42,7 +42,7 @@
     "express-async-handler": "^1.1.4",
     "express-validator": "^6.4.0",
     "joi": "^17.4.2",
-    "knex": "^0.21.5",
+    "knex": "^0.95.11",
     "loglevel": "^1.6.8",
     "multer": "^1.4.3",
     "pg": "^8.0.3",
