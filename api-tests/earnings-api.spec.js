@@ -504,29 +504,34 @@ describe('Earnings API tests.', () => {
     });
   });
 
-  // describe('Earnings BATCH GET', () => {
-  //   const binaryParser = (res, callback) => {
-  //     res.setEncoding('binary');
-  //     res.data = '';
-  //     res.on('data', function (chunk) {
-  //       res.data += chunk;
-  //     });
-  //     res.on('end', function () {
-  //       callback(null, Buffer.from(res.data, 'binary'));
-  //     });
-  //   };
-  //   it(`Should get earnings successfully`, function (done) {
-  //     request(server)
-  //       .get(`/earnings/batch`)
-  //       .expect('Content-Type', 'text/csv; charset=utf-8')
-  //       .buffer()
-  //       .parse(binaryParser)
-  //       .expect(200)
-  //       .end(function (err, res) {
-  //         if (err) return done(err);
-  //         expect(res.body instanceof Buffer).to.be.true;
-  //         return done();
-  //       });
-  //   });
-  // });
+  describe('Earnings BATCH GET', () => {
+    const binaryParser = (res, callback) => {
+      console.log('here');
+      res.setEncoding('binary');
+      res.data = '';
+      const headers = 'earnings_id,worker_id,phone,currency,amount,status';
+      let returnedHeadersEqlExpectedHeaders = false;
+      res.on('data', function (chunk) {
+        if (chunk === headers) returnedHeadersEqlExpectedHeaders = true;
+        res.data += chunk;
+      });
+      res.on('end', function () {
+        expect(returnedHeadersEqlExpectedHeaders).to.be.true;
+        callback(null, Buffer.from(res.data, 'binary'));
+      });
+    };
+    it(`Should get earnings successfully`, function (done) {
+      request(server)
+        .get(`/earnings/batch`)
+        .expect('Content-Type', 'text/csv; charset=utf-8')
+        .buffer()
+        .parse(binaryParser)
+        .expect(200)
+        .end(function (err, res) {
+          if (err) return done(err);
+          expect(res.body instanceof Buffer).to.be.true;
+          return done();
+        });
+    });
+  });
 });

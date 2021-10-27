@@ -1,9 +1,8 @@
 const Joi = require('joi');
-const { Parser, AsyncParser } = require('json2csv');
 const csv = require('csvtojson');
 const fs = require('fs');
 const { v4: uuid } = require('uuid');
-const { Readable, Transform } = require('stream');
+const { format } = require('@fast-csv/format');
 
 const { BatchEarning } = require('../models/Earnings');
 const { uploadCsv } = require('../services/aws');
@@ -78,52 +77,26 @@ const earningsBatchGet = async (req, res, next) => {
   const session = new Session();
   const earningsRepo = new EarningsRepository(session);
 
-  const executeGetBatchEarnings = getBatchEarnings(earningsRepo);
-  const { earningsStream } = await executeGetBatchEarnings(req.query);
-  // const input = new Readable({ objectMode: true });
-  // input._read = () => {};
-  // earningsStream
-  //   .on('data', (row) => {
-  //     console.log(row);
-  //     input.push(BatchEarning({ ...row }));
-  //   })
-  //   .on('error', (error) => {
-  //     console.log('error', error.message);
-  //     throw new HttpError(500, error.message);
-  //   })
-  //   .on('end', () => input.push(null));
-  const earningTransform = new Transform({
-    objectMode: true,
-    transform(chunk, encoding, callback) {
-      console.log(BatchEarning(chunk));
-      this.push(BatchEarning(chunk).toString());
-      callback();
-    },
-  });
-  // const transformedReadableStream = new Readable({
-  //   objectMode: true,
-  //   read(size) {
-  //     console.log(size);
-  //     this.push(size);
-  //   },
-  // });
-
-  const asyncParser = new AsyncParser({}, { objectMode: true });
-  asyncParser.throughTransform(earningTransform);
-  const parsingProcessor = asyncParser.fromInput(earningsStream);
-
   try {
-    const csv = await parsingProcessor.promise();
-    // parsingProcessor.throughTransform(earningTransform);
-    parsingProcessor
-      .on('data', (chunk) => console.log(chunk))
-      .on('end', () => console.log(csv))
-      .on('error', (err) => console.error(err));
-    console.log(csv);
-    // res.header('Content-Type', 'text/csv; charset=utf-8');
-    // res.attachment('batchEarnings.csv');
-    // res.send(csv);
-    // res.end();
+    const executeGetBatchEarnings = getBatchEarnings(earningsRepo);
+    const { earningsStream } = await executeGetBatchEarnings(req.query);
+    const csvStream = format({ headers: true });
+
+    earningsStream
+      .on('data', async (row) => {
+        csvStream.write(BatchEarning({ ...row }));
+      })
+      .on('error', (error) => {
+        console.log('error', error.message);
+        throw new HttpError(422, error.message);
+      })
+      .on('end', () => csvStream.end());
+
+    res.writeHead(200, {
+      'Content-Type': 'text/csv; charset=utf-8',
+      'Content-Disposition': 'attachment; filename=batchEarnings.csv',
+    });
+    csvStream.pipe(res).on('end', () => {});
   } catch (err) {
     console.error(err);
     throw new HttpError(422, err.message);
