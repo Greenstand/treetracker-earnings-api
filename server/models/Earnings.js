@@ -18,7 +18,6 @@ const Earning = ({
   status,
   batch_id,
 }) => {
-  // make a call to the contract microservice and get the consolidation_rule
   const consolidation_rule = `CONSOLIDATION_RULE_${consolidation_rule_id}`;
   return Object.freeze({
     worker_id,
