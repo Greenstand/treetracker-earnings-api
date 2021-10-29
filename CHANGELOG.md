@@ -1,3 +1,10 @@
+## [1.1.7](https://github.com/Greenstand/treetracker-earnings/compare/v1.1.6...v1.1.7) (2021-10-29)
+
+
+### Bug Fixes
+
+* correct the mapping file ([de68150](https://github.com/Greenstand/treetracker-earnings/commit/de6815002fc2302897c3ba28cdd3d3248ec3f40c))
+
 ## [1.1.6](https://github.com/Greenstand/treetracker-earnings/compare/v1.1.5...v1.1.6) (2021-10-29)
 
 
