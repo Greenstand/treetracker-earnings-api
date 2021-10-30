@@ -253,11 +253,67 @@ describe('Earnings API tests.', () => {
         });
     });
 
+    it(`Should raise validation error with error code 422 -- 'funder_id' query parameter should be a uuid  `, function (done) {
+      request(server)
+        .get(`/earnings`)
+        .query({
+          funder_id: 'funder_id',
+        })
+        .set('Accept', 'application/json')
+        .expect(422)
+        .end(function (err) {
+          if (err) return done(err);
+          return done();
+        });
+    });
+
+    it(`Should raise validation error with error code 422 -- 'worker_id' query parameter should be a uuid  `, function (done) {
+      request(server)
+        .get(`/earnings`)
+        .query({
+          worker_id: 'worker_id',
+        })
+        .set('Accept', 'application/json')
+        .expect(422)
+        .end(function (err) {
+          if (err) return done(err);
+          return done();
+        });
+    });
+
+    it(`Should raise validation error with error code 422 -- 'contract_id' query parameter should be a uuid  `, function (done) {
+      request(server)
+        .get(`/earnings`)
+        .query({
+          contract_id: 'contract_id',
+        })
+        .set('Accept', 'application/json')
+        .expect(422)
+        .end(function (err) {
+          if (err) return done(err);
+          return done();
+        });
+    });
+
     it(`Should raise validation error with error code 422 -- 'end_date' query parameter should be a date  `, function (done) {
       request(server)
         .get(`/earnings`)
         .query({
           end_date: 'end_date',
+        })
+        .set('Accept', 'application/json')
+        .expect(422)
+        .end(function (err) {
+          if (err) return done(err);
+          return done();
+        });
+    });
+
+    it(`Should raise validation error with error code 422 -- 'unknown' query parameter should not be allowed  `, function (done) {
+      request(server)
+        .get(`/earnings`)
+        .query({
+          unknown: 'unknown',
         })
         .set('Accept', 'application/json')
         .expect(422)
@@ -344,8 +400,9 @@ describe('Earnings API tests.', () => {
         .expect(200)
         .end(function (err, res) {
           if (err) return done(err);
-          expect(res.body).to.have.keys(['earnings', 'links']);
+          expect(res.body).to.have.keys(['earnings', 'links', 'totalCount']);
           expect(res.body.links).to.have.keys(['prev', 'next']);
+          expect(res.body.totalCount).to.eq(6);
 
           // test if surveys were added successfully
           const earnings = new GenericObject(earningsOne);
@@ -382,6 +439,21 @@ describe('Earnings API tests.', () => {
 
           expect(earnings_updated).to.be.true;
 
+          return done();
+        });
+    });
+
+    it(`Should get earnings successfully -- with query earnings_status`, function (done) {
+      request(server)
+        .get(`/earnings`)
+        .query({ earnings_status: 'paid' })
+        .set('Accept', 'application/json')
+        .expect(200)
+        .end(function (err, res) {
+          if (err) return done(err);
+          expect(res.body).to.have.keys(['earnings', 'links', 'totalCount']);
+          expect(res.body.links).to.have.keys(['prev', 'next']);
+          expect(res.body.totalCount).to.eq(2);
           return done();
         });
     });

@@ -44,7 +44,7 @@ const BatchEarning = ({ id, worker_id, amount, currency, status }) => {
   return Object.freeze({
     earnings_id: id,
     worker_id,
-    phone: 'Not sure for now',
+    phone: 'EXTERNAL API CALL',
     currency,
     amount,
     status,
@@ -112,11 +112,12 @@ const getEarnings =
       prev = `${urlWithLimitAndOffset}${+options.offset - 1}`;
     }
 
-    const earnings = await earningsRepo.getEarnings(filter, options);
+    const { earnings, count } = await earningsRepo.getEarnings(filter, options);
     return {
       earnings: earnings.map((row) => {
         return Earning({ ...row });
       }),
+      totalCount: count,
       links: {
         prev,
         next,
@@ -181,22 +182,9 @@ const getBatchEarnings =
       ...filterCriteria,
     });
 
-    // knex stream not being 'awaited'
     const earningsStream = await earningsRepo.getEarnings(filter, {
       stream: true,
     });
-    // let earnings = [];
-    // earningsStream
-    //   .on('data', function (row) {
-    //     earnings.push(BatchEarning({ ...row }));
-    //   })
-    //   .on('error', function (error) {
-    //     console.log('error', error.message);
-    //     throw new HttpError(500, error.message);
-    //   })
-    //   .on('end', function () {
-    //     console.log('end');
-    //   });
 
     return { earningsStream };
   };
