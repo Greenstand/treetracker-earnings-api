@@ -18,10 +18,10 @@ CREATE TABLE earnings.earnings
     payment_confirmation_id varchar,
     payment_system varchar,
     payment_confirmed_by uuid,
-    payment_confirmation_method confirmation_method_enum NOT NULL,
+    payment_confirmation_method confirmation_method_enum,
     paid_at timestamptz,
     payment_confirmed_at timestamptz,
     status earning_status_enum NOT NULL,
-    active boolean NOT NULL,
+    active boolean DEFAULT true NOT NULL,
     batch_id uuid REFERENCES earnings.batch(id)
 );
