@@ -393,6 +393,34 @@ describe('Earnings API tests.', () => {
         });
     });
 
+    it(`Should raise validation error with error code 422 -- 'sort_by' query parameter should be one of the defined ones  `, function (done) {
+      request(server)
+        .get(`/earnings`)
+        .query({
+          sort_by: 'sort_by',
+        })
+        .set('Accept', 'application/json')
+        .expect(422)
+        .end(function (err) {
+          if (err) return done(err);
+          return done();
+        });
+    });
+
+    it(`Should raise validation error with error code 422 -- 'order' query parameter should be one of asc or desc  `, function (done) {
+      request(server)
+        .get(`/earnings`)
+        .query({
+          order: 'order',
+        })
+        .set('Accept', 'application/json')
+        .expect(422)
+        .end(function (err) {
+          if (err) return done(err);
+          return done();
+        });
+    });
+
     it(`Should get earnings successfully`, function (done) {
       request(server)
         .get(`/earnings`)

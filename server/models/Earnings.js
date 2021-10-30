@@ -58,7 +58,28 @@ const FilterCriteria = ({
   contract_id = undefined,
   start_date = undefined,
   end_date = undefined,
+  sort_by = undefined,
+  order = 'asc',
 }) => {
+  let orderBy = '';
+
+  switch (sort_by) {
+    case 'id':
+      orderBy = 'id';
+      break;
+    case 'amount':
+      orderBy = 'amount';
+      break;
+    case 'payment_system':
+      orderBy = 'payment_system';
+      break;
+    case 'effective_payment_date':
+      orderBy = 'payment_confirmed_at';
+      break;
+    default:
+      orderBy = undefined;
+      break;
+  }
   return Object.entries({
     status: earnings_status,
     worker_id,
@@ -66,6 +87,8 @@ const FilterCriteria = ({
     contract_id,
     calculated_at_end: end_date ? new Date(end_date) : end_date,
     calculated_at_start: start_date ? new Date(start_date) : start_date,
+    orderBy,
+    order,
   })
     .filter((entry) => entry[1] !== undefined)
     .reduce((result, item) => {

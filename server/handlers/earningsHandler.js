@@ -25,6 +25,15 @@ const earningsGetQuerySchema = Joi.object({
   end_date: Joi.date().iso(),
   limit: Joi.number().integer().greater(0).less(101),
   offset: Joi.number().integer().greater(-1),
+  sort_by: Joi.string().valid(
+    'id',
+    'grower',
+    'funder',
+    'amount',
+    'payment_system',
+    'effective_payment_date',
+  ),
+  order: Joi.string().valid('asc', 'desc'),
 }).unknown(false);
 
 const earningsPatchSchema = Joi.object({

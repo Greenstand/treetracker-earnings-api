@@ -13,7 +13,10 @@ class EarningsRepository extends BaseRepository {
   async getEarnings(filter, { limit, offset, stream }) {
     const whereBuilder = function (object, builder) {
       const result = builder;
-      const filterObject = object;
+      const filterObject = { ...object };
+      // remove sorting details from filterObject
+      delete filterObject.orderBy;
+      delete filterObject.order;
       if (filterObject.calculated_at_start) {
         result.where('calculated_at', '>=', filterObject.calculated_at_start);
         delete filterObject.calculated_at_start;
@@ -35,6 +38,9 @@ class EarningsRepository extends BaseRepository {
     }
     if (offset) {
       promise = promise.offset(offset);
+    }
+    if (filter.orderBy) {
+      promise = promise.orderBy(filter.orderBy, filter.order);
     }
 
     const optionalFilterQuery = [];
