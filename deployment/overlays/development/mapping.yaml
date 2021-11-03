@@ -7,3 +7,5 @@ spec:
   cors:
     origins: 
     - '*'
+    headers:
+    - Authorization
