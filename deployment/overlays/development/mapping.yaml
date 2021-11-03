@@ -5,7 +5,11 @@ metadata:
   name: treetracker-earnings-api
 spec:
   cors:
-    origins: 
+    cors:
+    origins:
     - '*'
     headers:
+    - Content-Type
     - Authorization
+    methods:
+    - 'GET, POST, PATCH, PUT, OPTIONS, DELETE'
