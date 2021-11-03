@@ -1,3 +1,10 @@
+## [1.1.10](https://github.com/Greenstand/treetracker-earnings/compare/v1.1.9...v1.1.10) (2021-11-03)
+
+
+### Bug Fixes
+
+* update CORS settings ([98d8205](https://github.com/Greenstand/treetracker-earnings/commit/98d8205bc138bb0a8ab676579d32f5be6b4e57bd))
+
 ## [1.1.9](https://github.com/Greenstand/treetracker-earnings/compare/v1.1.8...v1.1.9) (2021-11-03)
 
 
