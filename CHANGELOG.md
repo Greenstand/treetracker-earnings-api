@@ -1,3 +1,10 @@
+## [1.1.9](https://github.com/Greenstand/treetracker-earnings/compare/v1.1.8...v1.1.9) (2021-11-03)
+
+
+### Bug Fixes
+
+* add authorization header to CORS ([302c4a0](https://github.com/Greenstand/treetracker-earnings/commit/302c4a00b4517106d62fb9bd20aeb0e7b5be9fe8))
+
 ## [1.1.8](https://github.com/Greenstand/treetracker-earnings/compare/v1.1.7...v1.1.8) (2021-11-02)
 
 
