@@ -1,5 +1,3 @@
-const { HttpRequest } = require('aws-sdk');
-const knex = require('../database/knex');
 const HttpError = require('../utils/HttpError');
 
 const Earning = ({
@@ -8,6 +6,7 @@ const Earning = ({
   amount,
   currency,
   calculated_at,
+  consolidation_rule_id,
   consolidation_period_start,
   consolidation_period_end,
   payment_confirmation_id,
@@ -19,8 +18,7 @@ const Earning = ({
   status,
   batch_id,
 }) => {
-  // make a call to the contract microservice and get the consolidation_rule
-  const consolidation_rule = 'mock value';
+  const consolidation_rule = `CONSOLIDATION_RULE_${consolidation_rule_id}`;
   return Object.freeze({
     worker_id,
     funder_id,
@@ -46,7 +44,7 @@ const BatchEarning = ({ id, worker_id, amount, currency, status }) => {
   return Object.freeze({
     earnings_id: id,
     worker_id,
-    phone: 'Not sure for now',
+    phone: 'EXTERNAL API CALL',
     currency,
     amount,
     status,
@@ -60,7 +58,28 @@ const FilterCriteria = ({
   contract_id = undefined,
   start_date = undefined,
   end_date = undefined,
+  sort_by = undefined,
+  order = 'asc',
 }) => {
+  let orderBy = '';
+
+  switch (sort_by) {
+    case 'id':
+      orderBy = 'id';
+      break;
+    case 'amount':
+      orderBy = 'amount';
+      break;
+    case 'payment_system':
+      orderBy = 'payment_system';
+      break;
+    case 'effective_payment_date':
+      orderBy = 'payment_confirmed_at';
+      break;
+    default:
+      orderBy = undefined;
+      break;
+  }
   return Object.entries({
     status: earnings_status,
     worker_id,
@@ -68,6 +87,8 @@ const FilterCriteria = ({
     contract_id,
     calculated_at_end: end_date ? new Date(end_date) : end_date,
     calculated_at_start: start_date ? new Date(start_date) : start_date,
+    orderBy,
+    order,
   })
     .filter((entry) => entry[1] !== undefined)
     .reduce((result, item) => {
@@ -103,7 +124,7 @@ const getEarnings =
     delete queryObject.offset;
 
     const query = Object.keys(queryObject)
-      .map((key) => `${key  }=${  queryObject[key]}`)
+      .map((key) => `${key}=${queryObject[key]}`)
       .join('&');
 
     const urlWithLimitAndOffset = `${url}?${query}&offset=`;
@@ -114,11 +135,12 @@ const getEarnings =
       prev = `${urlWithLimitAndOffset}${+options.offset - 1}`;
     }
 
-    const earnings = await earningsRepo.getEarnings(filter, options);
+    const { earnings, count } = await earningsRepo.getEarnings(filter, options);
     return {
       earnings: earnings.map((row) => {
         return Earning({ ...row });
       }),
+      totalCount: count,
       links: {
         prev,
         next,
@@ -183,22 +205,9 @@ const getBatchEarnings =
       ...filterCriteria,
     });
 
-    // knex stream not being 'awaited'
     const earningsStream = await earningsRepo.getEarnings(filter, {
       stream: true,
     });
-    // let earnings = [];
-    // earningsStream
-    //   .on('data', function (row) {
-    //     earnings.push(BatchEarning({ ...row }));
-    //   })
-    //   .on('error', function (error) {
-    //     console.log('error', error.message);
-    //     throw new HttpError(500, error.message);
-    //   })
-    //   .on('end', function () {
-    //     console.log('end');
-    //   });
 
     return { earningsStream };
   };

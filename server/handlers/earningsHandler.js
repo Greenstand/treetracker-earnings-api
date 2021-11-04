@@ -1,14 +1,14 @@
 const Joi = require('joi');
-const { Parser, AsyncParser } = require('json2csv');
 const csv = require('csvtojson');
-const fs = require('fs').promises;
+const fs = require('fs');
 const { v4: uuid } = require('uuid');
-const { Readable, Transform } = require('stream');
+const { format } = require('@fast-csv/format');
 
 const { BatchEarning } = require('../models/Earnings');
-const { upload_csv } = require('../services/aws');
+const { uploadCsv } = require('../services/aws');
 const Session = require('../models/Session');
 const EarningsRepository = require('../repositories/EarningsRepository');
+const BatchRepository = require('../repositories/BatchRepository');
 const {
   getEarnings,
   updateEarnings,
@@ -25,6 +25,15 @@ const earningsGetQuerySchema = Joi.object({
   end_date: Joi.date().iso(),
   limit: Joi.number().integer().greater(0).less(101),
   offset: Joi.number().integer().greater(-1),
+  sort_by: Joi.string().valid(
+    'id',
+    'grower',
+    'funder',
+    'amount',
+    'payment_system',
+    'effective_payment_date',
+  ),
+  order: Joi.string().valid('asc', 'desc'),
 }).unknown(false);
 
 const earningsPatchSchema = Joi.object({
@@ -39,7 +48,7 @@ const earningsPatchSchema = Joi.object({
   phone: Joi.string(),
 }).xor('id', 'earnings_id');
 
-const earningsGet = async (req, res, next) => {
+const earningsGet = async (req, res) => {
   await earningsGetQuerySchema.validateAsync(req.query, { abortEarly: false });
   const session = new Session();
   const earningsRepo = new EarningsRepository(session);
@@ -72,57 +81,31 @@ const earningsPatch = async (req, res, next) => {
   }
 };
 
-const earningsBatchGet = async (req, res, next) => {
+const earningsBatchGet = async (req, res) => {
   await earningsGetQuerySchema.validateAsync(req.query, { abortEarly: false });
   const session = new Session();
   const earningsRepo = new EarningsRepository(session);
 
-  const executeGetBatchEarnings = getBatchEarnings(earningsRepo);
-  const { earningsStream } = await executeGetBatchEarnings(req.query);
-  // const input = new Readable({ objectMode: true });
-  // input._read = () => {};
-  // earningsStream
-  //   .on('data', (row) => {
-  //     console.log(row);
-  //     input.push(BatchEarning({ ...row }));
-  //   })
-  //   .on('error', (error) => {
-  //     console.log('error', error.message);
-  //     throw new HttpError(500, error.message);
-  //   })
-  //   .on('end', () => input.push(null));
-  const earningTransform = new Transform({
-    objectMode: true,
-    transform(chunk, encoding, callback) {
-      console.log(BatchEarning(chunk));
-      this.push(BatchEarning(chunk).toString());
-      callback();
-    },
-  });
-  // const transformedReadableStream = new Readable({
-  //   objectMode: true,
-  //   read(size) {
-  //     console.log(size);
-  //     this.push(size);
-  //   },
-  // });
-
-  const asyncParser = new AsyncParser({}, { objectMode: true });
-  asyncParser.throughTransform(earningTransform);
-  const parsingProcessor = asyncParser.fromInput(earningsStream);
-
   try {
-    const csv = await parsingProcessor.promise();
-    // parsingProcessor.throughTransform(earningTransform);
-    parsingProcessor
-      .on('data', (chunk) => console.log(chunk))
-      .on('end', () => console.log(csv))
-      .on('error', (err) => console.error(err));
-    console.log(csv);
-    // res.header('Content-Type', 'text/csv; charset=utf-8');
-    // res.attachment('batchEarnings.csv');
-    // res.send(csv);
-    // res.end();
+    const executeGetBatchEarnings = getBatchEarnings(earningsRepo);
+    const { earningsStream } = await executeGetBatchEarnings(req.query);
+    const csvStream = format({ headers: true });
+
+    earningsStream
+      .on('data', async (row) => {
+        csvStream.write(BatchEarning({ ...row }));
+      })
+      .on('error', (error) => {
+        console.log('error', error.message);
+        throw new HttpError(422, error.message);
+      })
+      .on('end', () => csvStream.end());
+
+    res.writeHead(200, {
+      'Content-Type': 'text/csv; charset=utf-8',
+      'Content-Disposition': 'attachment; filename=batchEarnings.csv',
+    });
+    csvStream.pipe(res).on('end', () => {});
   } catch (err) {
     console.error(err);
     throw new HttpError(422, err.message);
@@ -134,22 +117,60 @@ const earningsBatchPatch = async (req, res, next) => {
     throw new HttpError(406, 'Only text/csv is supported');
 
   const key = `treetracker_earnings/${uuid()}.csv`;
-  const batch_id = uuid();
-  const fileBuffer = await fs.readFile(req.file.path);
-  await upload_csv(fileBuffer, key);
+  const fileBuffer = await fs.promises.readFile(req.file.path);
+  const csvReadStream = fs.createReadStream(req.file.path);
   const session = new Session();
+  // Don't want to roll back batch updates if system errors out
+  const batchSession = new Session();
+  const batchRepo = new BatchRepository(batchSession);
   const earningsRepo = new EarningsRepository(session);
-  try {
-    const jsonArray = await csv().fromFile(req.file.path);
+  let batch_id = '';
+
+  const batchUpdateEarnings = (batch_id) => {
     let count = 0;
+    return new Promise((resolve, reject) => {
+      csv()
+        .fromStream(csvReadStream)
+        .subscribe(
+          async (json) => {
+            await earningsPatchSchema.validateAsync(json, {
+              abortEarly: false,
+            });
+            await updateEarnings(earningsRepo, {
+              ...json,
+              batch_id,
+            });
+            count++;
+          },
+          function (e) {
+            reject(e);
+          },
+          function () {
+            resolve(count);
+          },
+        );
+    });
+  };
+  try {
+    const uploadResult = await uploadCsv(fileBuffer, key);
+
+    const batch = await batchRepo.create({
+      url: uploadResult.Location,
+      status: 'created',
+      active: true,
+    });
+    batch_id = batch.id;
+
     await session.beginTransaction();
-    for (const row of jsonArray) {
-      await earningsPatchSchema.validateAsync(row, { abortEarly: false });
-      await updateEarnings(earningsRepo, { ...row, batch_id });
-      count++;
-    }
+
+    const count = await batchUpdateEarnings(batch.id);
+
     // delete temp file
-    await fs.unlink(req.file.path);
+    await fs.promises.unlink(req.file.path);
+
+    // update batch status to completed
+    await batchRepo.update({ id: batch.id, status: 'completed' });
+
     await session.commitTransaction();
     res.status(200).send({
       status: 'completed',
@@ -158,11 +179,16 @@ const earningsBatchPatch = async (req, res, next) => {
     res.end();
   } catch (e) {
     console.log(e);
+    // update batch status to successful, if code errors out after batch was created
+    if (batch_id) {
+      await batchRepo.update({ id: batch_id, status: 'failed', active: false });
+    }
     if (session.isTransactionInProgress()) {
       await session.rollbackTransaction();
     }
     // delete temp file
-    await fs.unlink(req.file.path);
+    await fs.promises.unlink(req.file.path);
+
     next(e);
   }
 };

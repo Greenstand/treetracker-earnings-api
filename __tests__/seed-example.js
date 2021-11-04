@@ -1,14 +1,13 @@
 /*
  * seed data to DB for testing
  */
-const pool = require('./server/database/knex');
 const uuid = require('uuid');
 const log = require('loglevel');
 const assert = require('assert');
 const knex = require('knex')({
   client: 'pg',
   //  debug: true,
-  connection: require('./config/config').connectionString,
+  connection: require('../config/config').connectionString,
 });
 
 // Example of a database seed using knex

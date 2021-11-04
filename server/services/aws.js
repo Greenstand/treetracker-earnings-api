@@ -1,6 +1,6 @@
-const s3 = require("./s3");
+const s3 = require('./s3');
 
-const upload_csv = async (csv, Key) => {
+const uploadCsv = async (csv, Key) => {
   const params = {
     Bucket: process.env.BUCKET,
     ContentType: 'text/csv',
@@ -9,10 +9,10 @@ const upload_csv = async (csv, Key) => {
     ACL: 'private',
   };
 
-  const putObjectPromise = s3.putObject(params).promise();
-  await putObjectPromise;
+  const uploadPromise = s3.upload(params).promise();
+  return uploadPromise;
 };
 
 module.exports = {
-  upload_csv,
+  uploadCsv,
 };

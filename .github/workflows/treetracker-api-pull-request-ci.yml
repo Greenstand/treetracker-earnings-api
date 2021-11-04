@@ -68,7 +68,7 @@ jobs:
           CI: true
 
       - name: run repository tests
-        run: npm run test-repository
+        run: npm run test-repository-ci
         working-directory: ${{ env.project-directory }}
         env:
           DATABASE_URL: postgresql://postgres:postgres@postgres/postgres
