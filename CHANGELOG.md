@@ -1,3 +1,19 @@
+# [1.2.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.1.10...v1.2.0) (2021-11-04)
+
+
+### Bug Fixes
+
+* add earnings schema to batch repository ([6563b9b](https://github.com/Greenstand/treetracker-earnings/commit/6563b9b99f92f37efb7369851e3a660225ff230a))
+* change earnings/batch GET to use streams ([0980970](https://github.com/Greenstand/treetracker-earnings/commit/0980970be784aa9135b41a8ceb86b1aa6e283b42))
+* rename column consolidation_id to consolidation_rule_id ([526c45b](https://github.com/Greenstand/treetracker-earnings/commit/526c45b036f0ede71f25f0846b8a6057d5b61a3e))
+
+
+### Features
+
+* port earning/batch PATCH to using streams ([d109d10](https://github.com/Greenstand/treetracker-earnings/commit/d109d10f7df3087a71de730a5be1d4cc425ad701))
+* put add sorting support for id, amount, effective_payment_date, payment_system ([3c6536c](https://github.com/Greenstand/treetracker-earnings/commit/3c6536c547fdf3b288b27f0877fe2dba535be00f))
+* return total count ([748f993](https://github.com/Greenstand/treetracker-earnings/commit/748f99366fe567a3bf2583cba3a9b4bfd3dbe24e))
+
 ## [1.1.10](https://github.com/Greenstand/treetracker-earnings/compare/v1.1.9...v1.1.10) (2021-11-03)
 
 
