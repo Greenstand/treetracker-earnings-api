@@ -116,7 +116,7 @@ const earningsBatchPatch = async (req, res, next) => {
   if (req.file.mimetype !== 'text/csv')
     throw new HttpError(406, 'Only text/csv is supported');
 
-  const key = `treetracker_earnings/${uuid()}.csv`;
+  const key = `treetracker_earnings/${new Date().toISOString()}_${uuid()}.csv`;
   const fileBuffer = await fs.promises.readFile(req.file.path);
   const csvReadStream = fs.createReadStream(req.file.path);
   const session = new Session();
