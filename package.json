@@ -18,7 +18,7 @@
     "server-test": "DEBUG=express:* NODE_LOG_LEVEL=debug nodemon server/serverTest.js",
     "server": "nodemon server/server.js",
     "test-seedDB": "NODE_ENV=test mocha -r dotenv/config dotenv_config_path=.env.test --timeout 10000  './**/*.spec.js'",
-    "test-integration-ci": "NODE_ENV=test mocha -r dotenv/config --dotenv_config_path=.env.test --exit --timeout 30000  './__tests__/api-tests'",
+    "test-integration-ci": "mocha -r dotenv/config --dotenv_config_path=.env.test --exit --timeout 30000  './__tests__/api-tests'",
     "test-watch": "NODE_ENV=test NODE_LOG_LEVEL=info mocha -r dotenv/config dotenv_config_path=.env.test --timeout 10000  -w -b --ignore './server/repositories/**/*.spec.js'  './server/setup.js' './server/**/*.spec.js' './__tests__/seed.spec.js' './__tests__/supertest.js'",
     "test-watch-debug": "NODE_ENV=test NODE_LOG_LEVEL=debug mocha -r dotenv/config dotenv_config_path=.env.test --timeout 10000  -w -b --ignore './server/repositories/**/*.spec.js'  './server/setup.js' './server/**/*.spec.js' './__tests__/seed.spec.js' './__tests__/supertest.js'",
     "prettier-fix": "prettier ./ --write",

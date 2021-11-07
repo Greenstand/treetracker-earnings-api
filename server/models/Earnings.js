@@ -1,7 +1,7 @@
 const HttpError = require('../utils/HttpError');
 const axios = require('axios').default;
 
-const Earning = ({
+const Earning = async ({
   worker_id,
   funder_id,
   amount,
@@ -20,9 +20,18 @@ const Earning = ({
   batch_id,
 }) => {
   const consolidation_rule = `CONSOLIDATION_RULE_${consolidation_rule_id}`;
+  const growerResponse = await axios.get(
+    `${process.env.TREETRACKER_ENTITIES_URL}?stakeholder_uuid=${worker_id}`,
+  );
+  const funderResponse = await axios.get(
+    `${process.env.TREETRACKER_ENTITIES_URL}?stakeholder_uuid=${funder_id}`,
+  );
+
   return Object.freeze({
     worker_id,
+    grower: growerResponse.data[0]?.name,
     funder_id,
+    funder: funderResponse.data[0]?.name,
     amount,
     currency,
     calculated_at,
@@ -79,7 +88,7 @@ const FilterCriteria = ({
       orderBy = 'payment_system';
       break;
     case 'effective_payment_date':
-      orderBy = 'payment_confirmed_at';
+      orderBy = 'calculated_at';
       break;
     default:
       orderBy = undefined;
@@ -134,17 +143,52 @@ const getEarnings =
 
     const urlWithLimitAndOffset = `${url}?${query}&offset=`;
 
-    const next = `${urlWithLimitAndOffset}${+options.offset + 1}`;
+    const next = `${urlWithLimitAndOffset}${+options.offset + +options.limit}`;
     let prev = null;
-    if (options.offset - 1 >= 0) {
-      prev = `${urlWithLimitAndOffset}${+options.offset - 1}`;
+    if (options.offset - +options.limit >= 0) {
+      prev = `${urlWithLimitAndOffset}${+options.offset - +options.limit}`;
     }
 
     const { earnings, count } = await earningsRepo.getEarnings(filter, options);
-    return {
-      earnings: earnings.map((row) => {
+
+    const formattedEarnings = await Promise.all(
+      earnings.map((row) => {
         return Earning({ ...row });
       }),
+    );
+
+    const { sort_by, order = 'asc' } = filterCriteria;
+
+    if (sort_by === 'grower') {
+      formattedEarnings.sort((a, b) => {
+        const nameA = a.grower?.toUpperCase(); // ignore upper and lowercase
+        const nameB = b.grower?.toUpperCase(); // ignore upper and lowercase
+
+        if (nameA < nameB) {
+          return order === 'asc' ? -1 : 1;
+        }
+        if (nameA > nameB) {
+          return order === 'asc' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    if (filterCriteria.sort_by === 'funder') {
+      formattedEarnings.sort((a, b) => {
+        const nameA = a.funder?.toUpperCase(); // ignore upper and lowercase
+        const nameB = b.funder?.toUpperCase(); // ignore upper and lowercase
+        if (nameA < nameB) {
+          return order === 'asc' ? -1 : 1;
+        }
+        if (nameA > nameB) {
+          return order === 'asc' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+
+    return {
+      earnings: formattedEarnings,
       totalCount: count,
       links: {
         prev,
