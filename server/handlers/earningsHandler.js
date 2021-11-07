@@ -91,15 +91,13 @@ const earningsBatchGet = async (req, res) => {
     const { earningsStream } = await executeGetBatchEarnings(req.query);
     const csvStream = format({ headers: true });
 
-    earningsStream
-      .on('data', async (row) => {
-        csvStream.write(BatchEarning({ ...row }));
-      })
-      .on('error', (error) => {
-        console.log('error', error.message);
-        throw new HttpError(422, error.message);
-      })
-      .on('end', () => csvStream.end());
+    // using for await due to the async call that is made
+    for await (const row of earningsStream) {
+      const earningRow = await BatchEarning({ ...row });
+      csvStream.write(earningRow);
+    }
+
+    csvStream.end();
 
     res.writeHead(200, {
       'Content-Type': 'text/csv; charset=utf-8',

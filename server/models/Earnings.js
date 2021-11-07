@@ -1,4 +1,5 @@
 const HttpError = require('../utils/HttpError');
+const axios = require('axios').default;
 
 const Earning = ({
   worker_id,
@@ -39,12 +40,16 @@ const Earning = ({
   });
 };
 
-const BatchEarning = ({ id, worker_id, amount, currency, status }) => {
-  // Get the phone value from a call to an external api entity || stakeholder API
+const BatchEarning = async ({ id, worker_id, amount, currency, status }) => {
+  // Get the phone value from the entities API
+  const response = await axios.get(
+    `${process.env.TREETRACKER_ENTITIES_URL}?stakeholder_uuid=${worker_id}`,
+  );
+
   return Object.freeze({
     earnings_id: id,
     worker_id,
-    phone: 'EXTERNAL API CALL',
+    phone: response.data[0]?.phone,
     currency,
     amount,
     status,
