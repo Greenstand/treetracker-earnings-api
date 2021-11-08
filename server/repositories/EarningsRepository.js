@@ -42,7 +42,7 @@ class EarningsRepository extends BaseRepository {
     }
 
     const count = await this._session
-      .getDB()('earnings.earnings')
+      .getDB()(this._tableName)
       .count('*')
       .where((builder) => whereBuilder(filter, builder));
 
