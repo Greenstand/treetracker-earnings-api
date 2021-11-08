@@ -130,7 +130,6 @@ const getEarnings =
     });
     const queryObject = {
       ...QueryOptions({ ...filterCriteria }),
-      ...filterCriteria,
     };
     options = { ...options, ...queryObject };
 
