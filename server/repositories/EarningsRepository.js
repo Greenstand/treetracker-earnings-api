@@ -1,7 +1,5 @@
 const BaseRepository = require('./BaseRepository');
 
-const knex = require('../database/knex');
-
 class EarningsRepository extends BaseRepository {
   constructor(session) {
     super('earnings.earnings', session);
@@ -43,7 +41,8 @@ class EarningsRepository extends BaseRepository {
       promise = promise.orderBy(filter.orderBy, filter.order);
     }
 
-    const count = await knex('earnings.earnings')
+    const count = await this._session
+      .getDB()('earnings.earnings')
       .count('*')
       .where((builder) => whereBuilder(filter, builder));
 
