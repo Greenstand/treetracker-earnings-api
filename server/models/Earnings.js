@@ -136,6 +136,8 @@ const getEarnings =
     // remove offset property, as it is calculated later
     delete queryObject.offset;
 
+    queryObject.limit = options.limit;
+
     const query = Object.keys(queryObject)
       .map((key) => `${key}=${queryObject[key]}`)
       .join('&');
