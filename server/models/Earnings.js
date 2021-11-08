@@ -128,30 +128,19 @@ const getEarnings =
     filter = FilterCriteria({
       ...filterCriteria,
     });
-    const queryObject = {
-      ...QueryOptions({ ...filterCriteria }),
-    };
-    options = { ...options, ...queryObject };
-
-    // remove offset property, as it is calculated later
-    delete queryObject.offset;
-
-    queryObject.limit = options.limit;
-
-    const query = Object.keys(queryObject)
-      .map((key) => `${key}=${queryObject[key]}`)
-      .join('&');
+    options = { ...options, ...QueryOptions({ ...filterCriteria }) };
 
     const queryFilterObjects = { ...filterCriteria };
+    queryFilterObjects.limit = options.limit;
 
-    delete queryFilterObjects.limit;
+    // remove offset property, as it is calculated later
     delete queryFilterObjects.offset;
 
-    const queryFilter = Object.keys(queryFilterObjects)
-      .map((key) => `${key}=${queryFilterObjects[key]}`)
+    const query = Object.keys(queryFilterObjects)
+      .map((key) => `${key}=${encodeURIComponent(queryFilterObjects[key])}`)
       .join('&');
 
-    const urlWithLimitAndOffset = `${url}?${queryFilter}&${query}&offset=`;
+    const urlWithLimitAndOffset = `${url}?${query}&offset=`;
 
     const next = `${urlWithLimitAndOffset}${+options.offset + +options.limit}`;
     let prev = null;
