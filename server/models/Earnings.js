@@ -142,7 +142,16 @@ const getEarnings =
       .map((key) => `${key}=${queryObject[key]}`)
       .join('&');
 
-    const urlWithLimitAndOffset = `${url}?${query}&offset=`;
+    const queryFilterObjects = { ...filterCriteria };
+
+    delete queryFilterObjects.limit;
+    delete queryFilterObjects.offset;
+
+    const queryFilter = Object.keys(queryFilterObjects)
+      .map((key) => `${key}=${queryFilterObjects[key]}`)
+      .join('&');
+
+    const urlWithLimitAndOffset = `${url}?${queryFilter}&${query}&offset=`;
 
     const next = `${urlWithLimitAndOffset}${+options.offset + +options.limit}`;
     let prev = null;
