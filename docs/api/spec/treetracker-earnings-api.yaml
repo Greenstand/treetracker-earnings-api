@@ -267,39 +267,66 @@ paths:
                 type:
                   - object
                 properties:
-                  worker_id:
-                    type: string
-                  funder_id:
-                    type: string
-                  amount:
+                  earnings:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      type: object
+                      properties:
+                        worker_id:
+                          type: string
+                        grower:
+                          type: string
+                        funder_id:
+                          type: string
+                        funder:
+                          type: string
+                        amount:
+                          type: number
+                        currency:
+                          type: string
+                        calculated_at:
+                          type: string
+                        consolidation_rule:
+                          type: string
+                        consolidation_period_start:
+                          type: string
+                        consolidation_period_end:
+                          type: string
+                        payment_confirmation_id:
+                          type: string
+                        payment_system:
+                          type: string
+                        payment_confirmed_by:
+                          type: string
+                          format: uuid
+                        payment_confirmation_method:
+                          type: string
+                        paid_at:
+                          type: string
+                        payment_confirmed_at:
+                          type: string
+                        status:
+                          type: string
+                        batch_id:
+                          type: string
+                  totalCount: 
                     type: number
-                  currency:
-                    type: string
-                  calculated_at:
-                    type: string
-                  consolidation_rule:
-                    type: string
-                  consolidation_period_start:
-                    type: string
-                  consolidation_period_end:
-                    type: string
-                  payment_confirmation_id:
-                    type: string
-                  payment_system:
-                    type: string
-                  payment_confirmed_by:
-                    type: string
-                    format: uuid
-                  payment_confirmation_method:
-                    type: string
-                  paid_at:
-                    type: string
-                  payment_confirmed_at:
-                    type: string
-                  status:
-                    type: string
-                  batch_id:
-                    type: string
+                  links:
+                    type: object
+                    required:
+                      - prev
+                      - next
+                    properties:
+                      prev:
+                        type: string
+                        minLength: 1
+                        description: Complete link with query string to the previous page of earnings
+                      next:
+                        type: string
+                        minLength: 1
+                        description: Complete link with query string to the next page of earnings        
               examples: {}
         '400':
           description: Bad Request - Invalid query parameters
