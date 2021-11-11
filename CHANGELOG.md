@@ -1,3 +1,17 @@
+# [1.3.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.2.0...v1.3.0) (2021-11-11)
+
+
+### Bug Fixes
+
+* lint fix ([cc8eac1](https://github.com/Greenstand/treetracker-earnings/commit/cc8eac107d3c385c9285b4a3078ee574f42ea0a7))
+* remove schema creationg from migrations ([41479e6](https://github.com/Greenstand/treetracker-earnings/commit/41479e6e0ab4692d95479ea8e462e594d413e158))
+
+
+### Features
+
+* add database secrets for test and prod ([5bcd255](https://github.com/Greenstand/treetracker-earnings/commit/5bcd255f3b8b5b9b2091642b80becad0d77b744e))
+* add Sierra Leone currency to enum ([513d285](https://github.com/Greenstand/treetracker-earnings/commit/513d285e8bae8aac767b7ff74c0fe828e7819f53))
+
 # [1.2.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.1.10...v1.2.0) (2021-11-04)
 
 
