@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/Greenstand/treetracker-earnings/compare/v1.3.0...v1.3.1) (2021-11-11)
+
+
+### Bug Fixes
+
+* rename overlay dir ([814eed0](https://github.com/Greenstand/treetracker-earnings/commit/814eed0883d5bb29ad63d62566fffdcd1e33663d))
+
 # [1.3.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.2.0...v1.3.0) (2021-11-11)
 
 
