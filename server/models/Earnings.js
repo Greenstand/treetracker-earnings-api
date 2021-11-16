@@ -1,6 +1,8 @@
 const HttpError = require('../utils/HttpError');
 const axios = require('axios').default;
 
+const stakeholderUrl = `${process.env.TREETRACKER_ENTITIES_URL}/stakeholder`;
+
 const Earning = async ({
   worker_id,
   funder_id,
@@ -21,10 +23,10 @@ const Earning = async ({
 }) => {
   const consolidation_rule = `CONSOLIDATION_RULE_${consolidation_rule_id}`;
   const growerResponse = await axios.get(
-    `${process.env.TREETRACKER_ENTITIES_URL}?stakeholder_uuid=${worker_id}`,
+    `${stakeholderUrl}?stakeholder_uuid=${worker_id}`,
   );
   const funderResponse = await axios.get(
-    `${process.env.TREETRACKER_ENTITIES_URL}?stakeholder_uuid=${funder_id}`,
+    `${stakeholderUrl}?stakeholder_uuid=${funder_id}`,
   );
 
   return Object.freeze({
@@ -52,7 +54,7 @@ const Earning = async ({
 const BatchEarning = async ({ id, worker_id, amount, currency, status }) => {
   // Get the phone value from the entities API
   const response = await axios.get(
-    `${process.env.TREETRACKER_ENTITIES_URL}?stakeholder_uuid=${worker_id}`,
+    `${stakeholderUrl}?stakeholder_uuid=${worker_id}`,
   );
 
   return Object.freeze({
