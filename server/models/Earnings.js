@@ -58,7 +58,7 @@ const BatchEarning = async ({ id, worker_id, amount, currency, status }) => {
   return Object.freeze({
     earnings_id: id,
     worker_id,
-    phone: response.data[0]?.phone,
+    phone: response.data.stakeholders[0]?.phone,
     currency,
     amount,
     status,

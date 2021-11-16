@@ -52,7 +52,7 @@ before(async () => {
   });
 
   axiosStub = sinon.stub(axios, 'get').resolves({
-    data: [{ phone: '344412585', name: 'name' }],
+    data: { stakeholders: [{ phone: '344412585', name: 'name' }] },
   });
 
   // prettier-ignore
