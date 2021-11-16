@@ -1,3 +1,3 @@
 /* Replace with your SQL commands */
-DROP TABLE earnings.batch;
+DROP TABLE batch;
 DROP TYPE status;
