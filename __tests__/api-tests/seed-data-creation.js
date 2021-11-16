@@ -58,7 +58,7 @@ before(async () => {
   // prettier-ignore
   await knex.raw(`
 
-    INSERT INTO earnings.earnings(
+    INSERT INTO earnings(
       id, worker_id, funder_id, amount, currency, calculated_at, consolidation_rule_id, consolidation_period_start, consolidation_period_end, payment_confirmed_by, payment_confirmation_method, status, active, contract_id)
 	    VALUES 
         ('${earningsOne.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), '${uuid()}','single', '${earningsOne.status}', true, '${uuid()}'),
@@ -75,7 +75,7 @@ after(async () => {
   axiosStub.restore();
   await knex.raw(`
 
-    DELETE FROM earnings.earnings
+    DELETE FROM earnings
     WHERE worker_id = '${workerId}';
   `);
 });

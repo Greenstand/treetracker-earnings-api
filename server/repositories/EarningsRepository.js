@@ -2,8 +2,8 @@ const BaseRepository = require('./BaseRepository');
 
 class EarningsRepository extends BaseRepository {
   constructor(session) {
-    super('earnings.earnings', session);
-    this._tableName = 'earnings.earnings';
+    super('earnings', session);
+    this._tableName = 'earnings';
     this._session = session;
   }
 
