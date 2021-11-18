@@ -311,7 +311,7 @@ paths:
                           type: string
                         batch_id:
                           type: string
-                  totalCount: 
+                  totalCount:
                     type: number
                   links:
                     type: object
@@ -326,7 +326,7 @@ paths:
                       next:
                         type: string
                         minLength: 1
-                        description: Complete link with query string to the next page of earnings        
+                        description: Complete link with query string to the next page of earnings
               examples: {}
         '400':
           description: Bad Request - Invalid query parameters
@@ -378,6 +378,27 @@ paths:
             type: string
           in: query
           name: offset
+        - schema:
+            type: string
+            enum:
+              [
+                'id',
+                'grower',
+                'funder',
+                'amount',
+                'payment_system',
+                'effective_payment_date',
+              ]
+          in: query
+          name: sort_by
+          description: column with which to sort by
+        - schema:
+            type: string
+            enum: ['asc', 'desc']
+            default: 'asc'
+          in: query
+          name: order
+          description: order by which sorting is done
 components:
   schemas: {}
   securitySchemes:
