@@ -1,3 +1,18 @@
+# [1.4.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.3.1...v1.4.0) (2021-11-23)
+
+
+### Bug Fixes
+
+* add external api call to get phone value for batch requests ([7826245](https://github.com/Greenstand/treetracker-earnings/commit/7826245a8fc8083ab92687de39adb5679da6bec9))
+* add filter params to next/prev links ([66596e0](https://github.com/Greenstand/treetracker-earnings/commit/66596e04f86c5de7e98bd508fd7762ee8e0400fe))
+* external api call issue ([86def0d](https://github.com/Greenstand/treetracker-earnings/commit/86def0dc3ab07fa81239d38ca9b35c911b7220d5))
+* returning correct query in the links ([6420713](https://github.com/Greenstand/treetracker-earnings/commit/642071385a11fddae676c3435791090c3f763768))
+
+
+### Features
+
+* return and add sorting by grower and funder ([a0d7a24](https://github.com/Greenstand/treetracker-earnings/commit/a0d7a24bdc0c17119daed9e4daa8e9bacf1a71cd))
+
 ## [1.3.1](https://github.com/Greenstand/treetracker-earnings/compare/v1.3.0...v1.3.1) (2021-11-11)
 
 
