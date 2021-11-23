@@ -91,15 +91,13 @@ const earningsBatchGet = async (req, res) => {
     const { earningsStream } = await executeGetBatchEarnings(req.query);
     const csvStream = format({ headers: true });
 
-    earningsStream
-      .on('data', async (row) => {
-        csvStream.write(BatchEarning({ ...row }));
-      })
-      .on('error', (error) => {
-        console.log('error', error.message);
-        throw new HttpError(422, error.message);
-      })
-      .on('end', () => csvStream.end());
+    // using for await due to the async call that is made
+    for await (const row of earningsStream) {
+      const earningRow = await BatchEarning({ ...row });
+      csvStream.write(earningRow);
+    }
+
+    csvStream.end();
 
     res.writeHead(200, {
       'Content-Type': 'text/csv; charset=utf-8',
@@ -116,7 +114,7 @@ const earningsBatchPatch = async (req, res, next) => {
   if (req.file.mimetype !== 'text/csv')
     throw new HttpError(406, 'Only text/csv is supported');
 
-  const key = `treetracker_earnings/${uuid()}.csv`;
+  const key = `treetracker_earnings/${new Date().toISOString()}_${uuid()}.csv`;
   const fileBuffer = await fs.promises.readFile(req.file.path);
   const csvReadStream = fs.createReadStream(req.file.path);
   const session = new Session();

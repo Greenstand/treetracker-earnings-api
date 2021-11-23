@@ -1,6 +1,9 @@
 const HttpError = require('../utils/HttpError');
+const axios = require('axios').default;
 
-const Earning = ({
+const stakeholderUrl = `${process.env.TREETRACKER_ENTITIES_URL}/stakeholder`;
+
+const Earning = async ({
   worker_id,
   funder_id,
   amount,
@@ -19,9 +22,18 @@ const Earning = ({
   batch_id,
 }) => {
   const consolidation_rule = `CONSOLIDATION_RULE_${consolidation_rule_id}`;
+  const growerResponse = await axios.get(
+    `${stakeholderUrl}?stakeholder_uuid=${worker_id}`,
+  );
+  const funderResponse = await axios.get(
+    `${stakeholderUrl}?stakeholder_uuid=${funder_id}`,
+  );
+
   return Object.freeze({
     worker_id,
+    grower: growerResponse.data.stakeholders[0]?.name,
     funder_id,
+    funder: funderResponse.data.stakeholders[0]?.name,
     amount,
     currency,
     calculated_at,
@@ -39,12 +51,16 @@ const Earning = ({
   });
 };
 
-const BatchEarning = ({ id, worker_id, amount, currency, status }) => {
-  // Get the phone value from a call to an external api entity || stakeholder API
+const BatchEarning = async ({ id, worker_id, amount, currency, status }) => {
+  // Get the phone value from the entities API
+  const response = await axios.get(
+    `${stakeholderUrl}?stakeholder_uuid=${worker_id}`,
+  );
+
   return Object.freeze({
     earnings_id: id,
     worker_id,
-    phone: 'EXTERNAL API CALL',
+    phone: response.data.stakeholders[0]?.phone,
     currency,
     amount,
     status,
@@ -74,7 +90,7 @@ const FilterCriteria = ({
       orderBy = 'payment_system';
       break;
     case 'effective_payment_date':
-      orderBy = 'payment_confirmed_at';
+      orderBy = 'calculated_at';
       break;
     default:
       orderBy = undefined;
@@ -114,32 +130,66 @@ const getEarnings =
     filter = FilterCriteria({
       ...filterCriteria,
     });
-    const queryObject = {
-      ...QueryOptions({ ...filterCriteria }),
-      ...filterCriteria,
-    };
-    options = { ...options, ...queryObject };
+    options = { ...options, ...QueryOptions({ ...filterCriteria }) };
+
+    const queryFilterObjects = { ...filterCriteria };
+    queryFilterObjects.limit = options.limit;
 
     // remove offset property, as it is calculated later
-    delete queryObject.offset;
+    delete queryFilterObjects.offset;
 
-    const query = Object.keys(queryObject)
-      .map((key) => `${key}=${queryObject[key]}`)
+    const query = Object.keys(queryFilterObjects)
+      .map((key) => `${key}=${encodeURIComponent(queryFilterObjects[key])}`)
       .join('&');
 
     const urlWithLimitAndOffset = `${url}?${query}&offset=`;
 
-    const next = `${urlWithLimitAndOffset}${+options.offset + 1}`;
+    const next = `${urlWithLimitAndOffset}${+options.offset + +options.limit}`;
     let prev = null;
-    if (options.offset - 1 >= 0) {
-      prev = `${urlWithLimitAndOffset}${+options.offset - 1}`;
+    if (options.offset - +options.limit >= 0) {
+      prev = `${urlWithLimitAndOffset}${+options.offset - +options.limit}`;
     }
 
     const { earnings, count } = await earningsRepo.getEarnings(filter, options);
-    return {
-      earnings: earnings.map((row) => {
+
+    const formattedEarnings = await Promise.all(
+      earnings.map((row) => {
         return Earning({ ...row });
       }),
+    );
+
+    const { sort_by, order = 'asc' } = filterCriteria;
+
+    if (sort_by === 'grower') {
+      formattedEarnings.sort((a, b) => {
+        const nameA = a.grower?.toUpperCase(); // ignore upper and lowercase
+        const nameB = b.grower?.toUpperCase(); // ignore upper and lowercase
+
+        if (nameA < nameB) {
+          return order === 'asc' ? -1 : 1;
+        }
+        if (nameA > nameB) {
+          return order === 'asc' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    if (filterCriteria.sort_by === 'funder') {
+      formattedEarnings.sort((a, b) => {
+        const nameA = a.funder?.toUpperCase(); // ignore upper and lowercase
+        const nameB = b.funder?.toUpperCase(); // ignore upper and lowercase
+        if (nameA < nameB) {
+          return order === 'asc' ? -1 : 1;
+        }
+        if (nameA > nameB) {
+          return order === 'asc' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+
+    return {
+      earnings: formattedEarnings,
       totalCount: count,
       links: {
         prev,

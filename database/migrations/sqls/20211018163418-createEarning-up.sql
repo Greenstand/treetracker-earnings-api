@@ -3,7 +3,7 @@ CREATE TYPE earning_status_enum AS ENUM ('calculated', 'cancelled', 'paid');
 CREATE TYPE confirmation_method_enum AS ENUM ('single', 'batch');
 CREATE TYPE currency_enum AS ENUM ('USD');
 
-CREATE TABLE earnings.earnings
+CREATE TABLE earnings
 (
     id uuid NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
     worker_id uuid NOT NULL ,
@@ -23,5 +23,5 @@ CREATE TABLE earnings.earnings
     payment_confirmed_at timestamptz,
     status earning_status_enum NOT NULL,
     active boolean DEFAULT true NOT NULL,
-    batch_id uuid REFERENCES earnings.batch(id)
+    batch_id uuid REFERENCES batch(id)
 );

@@ -2,6 +2,7 @@ const { v4: uuid } = require('uuid');
 const sinon = require('sinon');
 const knex = require('../../server/database/knex');
 const s3 = require('../../server/services/s3');
+const axios = require('axios').default;
 
 const workerId = '71be6266-81fe-476f-a563-9bc1c61fc037';
 const earningsPaymentObject = {
@@ -41,6 +42,7 @@ const earningsWithCancelledStatus = {
   status: 'cancelled',
 };
 let stub;
+let axiosStub;
 
 before(async () => {
   stub = sinon.stub(s3, 'upload').returns({
@@ -48,10 +50,15 @@ before(async () => {
       return { Location: 'https://location.com' };
     },
   });
+
+  axiosStub = sinon.stub(axios, 'get').resolves({
+    data: { stakeholders: [{ phone: '344412585', name: 'name' }] },
+  });
+
   // prettier-ignore
   await knex.raw(`
 
-    INSERT INTO earnings.earnings(
+    INSERT INTO earnings(
       id, worker_id, funder_id, amount, currency, calculated_at, consolidation_rule_id, consolidation_period_start, consolidation_period_end, payment_confirmed_by, payment_confirmation_method, status, active, contract_id)
 	    VALUES 
         ('${earningsOne.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), '${uuid()}','single', '${earningsOne.status}', true, '${uuid()}'),
@@ -65,9 +72,10 @@ before(async () => {
 
 after(async () => {
   stub.restore();
+  axiosStub.restore();
   await knex.raw(`
 
-    DELETE FROM earnings.earnings
+    DELETE FROM earnings
     WHERE worker_id = '${workerId}';
   `);
 });

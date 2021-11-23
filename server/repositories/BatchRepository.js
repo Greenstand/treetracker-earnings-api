@@ -2,8 +2,8 @@ const BaseRepository = require('./BaseRepository');
 
 class BatchRepository extends BaseRepository {
   constructor(session) {
-    super('earnings.batch', session);
-    this._tableName = 'earnings.batch';
+    super('batch', session);
+    this._tableName = 'batch';
     this._session = session;
   }
 }

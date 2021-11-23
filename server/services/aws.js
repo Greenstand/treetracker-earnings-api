@@ -2,7 +2,7 @@ const s3 = require('./s3');
 
 const uploadCsv = async (csv, Key) => {
   const params = {
-    Bucket: process.env.BUCKET,
+    Bucket: process.env.S3_BUCKET,
     ContentType: 'text/csv',
     Key,
     Body: csv,
