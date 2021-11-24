@@ -53,7 +53,7 @@ const earningsGet = async (req, res) => {
   const session = new Session();
   const earningsRepo = new EarningsRepository(session);
 
-  const url = `${req.protocol}://${req.get('host')}/earnings`;
+  const url = `earnings`;
 
   const executeGetEarnings = getEarnings(earningsRepo);
   const result = await executeGetEarnings(req.query, url);
