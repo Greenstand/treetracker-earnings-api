@@ -4,6 +4,7 @@ const axios = require('axios').default;
 const stakeholderUrl = `${process.env.TREETRACKER_ENTITIES_URL}/stakeholder`;
 
 const Earning = async ({
+  id,
   worker_id,
   funder_id,
   amount,
@@ -30,6 +31,7 @@ const Earning = async ({
   );
 
   return Object.freeze({
+    id,
     worker_id,
     grower: growerResponse.data.stakeholders[0]?.name,
     funder_id,
