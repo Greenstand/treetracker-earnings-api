@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/Greenstand/treetracker-earnings/compare/v1.4.0...v1.4.1) (2021-12-14)
+
+
+### Bug Fixes
+
+* update sealed secret ([c9fd173](https://github.com/Greenstand/treetracker-earnings/commit/c9fd173b27fd5103cbbd5e40d7cf9e6a30193c2c))
+
 # [1.4.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.3.1...v1.4.0) (2021-11-23)
 
 
