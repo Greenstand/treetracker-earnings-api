@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/Greenstand/treetracker-earnings/compare/v1.4.1...v1.4.2) (2022-01-18)
+
+
+### Bug Fixes
+
+* include blank template fields ([3224abc](https://github.com/Greenstand/treetracker-earnings/commit/3224abc4b6251522078d59aa268af5800f4f2f28))
+
 ## [1.4.1](https://github.com/Greenstand/treetracker-earnings/compare/v1.4.0...v1.4.1) (2021-12-14)
 
 
