@@ -13,7 +13,9 @@ paths:
         '200':
           description: |-
             CSV 
-            Columns: earnings_id,worker_id,phone,amount,currency,status
+            Columns: earnings_id,worker_id,phone,amount,currency,status,payment_system,payment_confirmation_id,paid_at
+
+            payment_system,payment_confirmation_id, and paid_at are not populated when downloaded, they are template columns
           content:
             text/csv:
               schema:
@@ -381,21 +383,21 @@ paths:
         - schema:
             type: string
             enum:
-              [
-                'id',
-                'grower',
-                'funder',
-                'amount',
-                'payment_system',
-                'effective_payment_date',
-              ]
+              - id
+              - grower
+              - funder
+              - amount
+              - payment_system
+              - effective_payment_date
           in: query
           name: sort_by
           description: column with which to sort by
         - schema:
             type: string
-            enum: ['asc', 'desc']
-            default: 'asc'
+            enum:
+              - asc
+              - desc
+            default: asc
           in: query
           name: order
           description: order by which sorting is done
