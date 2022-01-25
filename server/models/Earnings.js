@@ -33,7 +33,7 @@ const Earning = async ({
   return Object.freeze({
     id,
     worker_id,
-    grower: growerResponse.data.stakeholders[0]?.name,
+    grower: `${growerResponse.data.stakeholders[0]?.first_name}  ${growerResponse.data.stakeholders[0]?.last_name}`,
     funder_id,
     funder: funderResponse.data.stakeholders[0]?.name,
     amount,
