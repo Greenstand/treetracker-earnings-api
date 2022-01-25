@@ -70,7 +70,7 @@ const earningsPatch = async (req, res, next) => {
 
   try {
     await session.beginTransaction();
-    const result = await updateEarnings(earningsRepo, req.body);
+    const result = await updateEarnings(earningsRepo, { payment_confirmation_method: 'single', ...req.body});
     await session.commitTransaction();
     res.status(200).send(result);
     res.end();
@@ -139,6 +139,7 @@ const earningsBatchPatch = async (req, res, next) => {
             await updateEarnings(earningsRepo, {
               ...json,
               batch_id,
+              payment_confirmation_method: 'batch'
             });
             count++;
           },
