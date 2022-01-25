@@ -18,6 +18,8 @@ const HttpError = require('../utils/HttpError');
 
 const earningsGetQuerySchema = Joi.object({
   earnings_status: Joi.string(),
+  grower: Joi.string(),
+  phone: Joi.string(),
   funder_id: Joi.string().uuid(),
   worker_id: Joi.string().uuid(),
   contract_id: Joi.string().uuid(),
