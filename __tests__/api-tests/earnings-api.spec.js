@@ -430,7 +430,7 @@ describe('Earnings API tests.', () => {
           if (err) return done(err);
           expect(res.body).to.have.keys(['earnings', 'links', 'totalCount']);
           expect(res.body.links).to.have.keys(['prev', 'next']);
-          expect(res.body.totalCount).to.eq(11);
+          expect(res.body.totalCount).to.eq(12);
 
           // test if surveys were added successfully
           const earnings = new GenericObject(earningsOne);
@@ -441,6 +441,7 @@ describe('Earnings API tests.', () => {
                 'id',
               'grower',
               'funder',
+              'phone',
               'worker_id',
               'funder_id',
               'amount',
@@ -484,7 +485,7 @@ describe('Earnings API tests.', () => {
           if (err) return done(err);
           expect(res.body).to.have.keys(['earnings', 'links', 'totalCount']);
           expect(res.body.links).to.have.keys(['prev', 'next']);
-          expect(res.body.totalCount).to.eq(5);
+          expect(res.body.totalCount).to.eq(7);
           return done();
         });
     });
