@@ -438,6 +438,7 @@ describe('Earnings API tests.', () => {
           let earnings_updated = false;
           for (const earning of res.body.earnings) {
             expect(earning).to.have.keys([
+                'id',
               'grower',
               'funder',
               'worker_id',
