@@ -4,23 +4,24 @@ const axios = require('axios').default;
 const stakeholderUrl = `${process.env.TREETRACKER_ENTITIES_URL}/stakeholder`;
 
 const Earning = async ({
-  worker_id,
-  funder_id,
-  amount,
-  currency,
-  calculated_at,
-  consolidation_rule_id,
-  consolidation_period_start,
-  consolidation_period_end,
-  payment_confirmation_id,
-  payment_system,
-  payment_confirmed_by,
-  payment_confirmation_method,
-  payment_confirmed_at,
-  paid_at,
-  status,
-  batch_id,
-}) => {
+                         id,
+                         worker_id,
+                         funder_id,
+                         amount,
+                         currency,
+                         calculated_at,
+                         consolidation_rule_id,
+                         consolidation_period_start,
+                         consolidation_period_end,
+                         payment_confirmation_id,
+                         payment_system,
+                         payment_confirmed_by,
+                         payment_confirmation_method,
+                         payment_confirmed_at,
+                         paid_at,
+                         status,
+                         batch_id,
+                       }) => {
   const consolidation_rule = `CONSOLIDATION_RULE_${consolidation_rule_id}`;
   const growerResponse = await axios.get(
     `${stakeholderUrl}?stakeholder_uuid=${worker_id}`,
@@ -30,6 +31,7 @@ const Earning = async ({
   );
 
   return Object.freeze({
+    id,
     worker_id,
     grower: growerResponse.data.stakeholders[0]?.name,
     funder_id,
