@@ -19,6 +19,8 @@ const HttpError = require('../utils/HttpError');
 
 const earningsGetQuerySchema = Joi.object({
   earnings_status: Joi.string(),
+  grower: Joi.string(),
+  phone: Joi.string(),
   funder_id: Joi.string().uuid(),
   worker_id: Joi.string().uuid(),
   contract_id: Joi.string().uuid(),
@@ -69,7 +71,7 @@ const earningsPatch = async (req, res, next) => {
 
   try {
     await session.beginTransaction();
-    const result = await updateEarnings(earningsRepo, req.body);
+    const result = await updateEarnings(earningsRepo, { payment_confirmation_method: 'single', ...req.body});
     await session.commitTransaction();
     res.status(200).send(result);
     res.end();

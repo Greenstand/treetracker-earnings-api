@@ -191,6 +191,25 @@ const getEarnings =
                 });
             }
 
+            if (filterCriteria?.grower || filterCriteria?.phone) {
+                const filterFormattedEarnings = formattedEarnings
+                    .filter(({grower}) => filterCriteria?.grower ?
+                        grower.toLowerCase().includes(filterCriteria?.grower.toLowerCase()): true)
+                    .filter(({phone}) => filterCriteria?.phone ?
+                        phone.toLowerCase().includes(filterCriteria?.phone.toLowerCase()) : true)
+
+                return {
+                    earnings: filterFormattedEarnings,
+                    totalCount: filterFormattedEarnings.length,
+                    links: {
+                        prev,
+                        next,
+                    },
+                };
+
+            }
+
+
             return {
                 earnings: formattedEarnings,
                 totalCount: count,
