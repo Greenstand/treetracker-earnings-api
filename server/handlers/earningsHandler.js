@@ -1,5 +1,5 @@
 const Joi = require('joi');
-// const jwt_decode = require('jwt-decode');
+const jwt_decode = require('jwt-decode');
 const csv = require('csvtojson');
 const fs = require('fs');
 const { v4: uuid } = require('uuid');
@@ -129,8 +129,15 @@ const earningsBatchPatch = async (req, res, next) => {
 
   const batchUpdateEarnings = (batch_id) => {
     let count = 0;
-    // const authorizationHeader = req.get('authorization');
-    // const adminPanelUser = jwt_decode(authorizationHeader);
+    const authorizationHeader = req.get('authorization');
+    const adminPanelUser =  authorizationHeader ? jwt_decode(authorizationHeader) : null;
+    const isAdmin = adminPanelUser?.roleNames.includes('Admin');
+
+    if (!authorizationHeader || !isAdmin)  throw new HttpError(
+        401,
+        'Unauthorized!',
+    );
+
     return new Promise((resolve, reject) => {
       csv()
         .fromStream(csvReadStream)
@@ -143,7 +150,7 @@ const earningsBatchPatch = async (req, res, next) => {
               ...json,
               batch_id,
               payment_confirmation_method: 'batch',
-              // payment_confirmed_by: adminPanelUser?.id,
+              payment_confirmed_by: adminPanelUser?.id,
             });
             count++;
           },
