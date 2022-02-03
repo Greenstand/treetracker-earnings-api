@@ -10,6 +10,9 @@ const {
 } = require('./seed-data-creation');
 const { GenericObject } = require('./generic-class');
 
+const jwtToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlck5hbWUiOiJhZG1pbiIsImZpcnN0TmFtZSI6IkFkbWluIiwibGFzdE5hbWUiOiJQYW5lbCIsInBhc3N3b3JkSGFzaCI6IjQ0ZDE0MmNkMjBhMWQxZTE1YzQxOWZhOThkZTc5Y2U5OTc0MWNjNDY4NjZhYzI2MjY4N2ViNDQ2MGM0Y2NiNDIzZTdjMzU2ZDlmYzQwYjMxYWVjZmU2ODYyMzYyNjMzOWNmZmQ4YTg5YzYxYjMyOTdlY2I1YzRiZTYzZDFkMDY5Iiwic2FsdCI6IkQ4OFdDcCIsImVtYWlsIjoiYWRtaW5AZ3JlZW5zdGFuZC5vcmciLCJhY3RpdmUiOnRydWUsImNyZWF0ZWRBdCI6IjIwMjAtMDgtMDNUMTg6NDc6NDcuMjU4WiIsImVuYWJsZWQiOnRydWUsInJvbGUiOls0NiwxLDJdLCJyb2xlTmFtZXMiOlsiRWFybmluZ3MgTWFuYWdlciIsIkFkbWluIiwiVHJlZSBNYW5hZ2VyIl0sInBvbGljeSI6eyJwb2xpY2llcyI6W3sibmFtZSI6Imxpc3RfZWFybmluZ3MiLCJkZXNjcmlwdGlvbiI6IkNhbiB2aWV3IGVhcm5pbmdzIn0seyJuYW1lIjoibWFuYWdlX2Vhcm5pbmdzIiwiZGVzY3JpcHRpb24iOiJDYW4gbW9kaWZ5L2V4cG9ydCBlYXJuaW5ncyJ9LHsibmFtZSI6InN1cGVyX3Blcm1pc3Npb24iLCJkZXNjcmlwdGlvbiI6IkNhbiBkbyBhbnl0aGluZyJ9LHsibmFtZSI6Imxpc3RfdXNlciIsImRlc2NyaXB0aW9uIjoiQ2FuIHZpZXcgYWRtaW4gdXNlcnMifSx7Im5hbWUiOiJtYW5hZ2VyX3VzZXIiLCJkZXNjcmlwdGlvbiI6IkNhbiBjcmVhdGUvbW9kaWZ5IGFkbWluIHVzZXIifSx7Im5hbWUiOiJsaXN0X3RyZWUiLCJkZXNjcmlwdGlvbiI6IkNhbiB2aWV3IHRyZWVzIn0seyJuYW1lIjoiYXBwcm92ZV90cmVlIiwiZGVzY3JpcHRpb24iOiJDYW4gYXBwcm92ZS9yZWplY3QgdHJlZXMifV19LCJpYXQiOjE2NDI4NzIyNjV9.JYWYUo7B6y2jNyoaaw9uA0jTU4AYIZLXg0oGwF3XoVE'
+
+
 describe('Earnings API tests.', () => {
   describe('Earnings PATCH', () => {
     it(`Should raise validation error with error code 422 -- id is required `, function (done) {
@@ -438,8 +441,10 @@ describe('Earnings API tests.', () => {
           let earnings_updated = false;
           for (const earning of res.body.earnings) {
             expect(earning).to.have.keys([
+                'id',
               'grower',
               'funder',
+              'phone',
               'worker_id',
               'funder_id',
               'amount',
@@ -494,6 +499,7 @@ describe('Earnings API tests.', () => {
       request(server)
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
+          .set('authorization', jwtToken)
         .attach('csv', './__tests__/api-tests/earningsFailedTestInvalidRow.csv')
         .expect(422)
         .end(function (err) {
@@ -506,6 +512,7 @@ describe('Earnings API tests.', () => {
       request(server)
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
+          .set('authorization', jwtToken)
         .attach(
           'csv',
           './__tests__/api-tests/earningsFailedTestInvalidHeader.csv',
@@ -521,6 +528,7 @@ describe('Earnings API tests.', () => {
       request(server)
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
+          .set('authorization', jwtToken)
         .attach(
           'csv',
           './__tests__/api-tests/earningsFailedTestInvalidHeader2.csv',
@@ -536,6 +544,7 @@ describe('Earnings API tests.', () => {
       request(server)
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
+          .set('authorization', jwtToken)
         .attach(
           'csv',
           './__tests__/api-tests/earningsFailedTestInvalidHeader3.csv',
@@ -550,6 +559,7 @@ describe('Earnings API tests.', () => {
     it(`Should raise validation error with error code 422 -- invalid headers; amount does not exist `, function (done) {
       request(server)
         .patch(`/earnings/batch`)
+          .set('authorization', jwtToken)
         .set('Accept', 'multipart/form-data')
         .attach(
           'csv',
@@ -566,6 +576,7 @@ describe('Earnings API tests.', () => {
       request(server)
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
+          .set('authorization', jwtToken)
         .attach(
           'csv',
           './__tests__/api-tests/earningsFailedTestInvalidHeader5.csv',
@@ -581,6 +592,7 @@ describe('Earnings API tests.', () => {
       request(server)
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
+          .set('authorization', jwtToken)
         .attach(
           'csv',
           './__tests__/api-tests/earningsFailedTestInvalidHeader6.csv',
@@ -596,6 +608,7 @@ describe('Earnings API tests.', () => {
       request(server)
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
+          .set('authorization', jwtToken)
         .attach(
           'csv',
           './__tests__/api-tests/earningsFailedTestRowWithNotCalculatedStatus.csv',
@@ -611,6 +624,7 @@ describe('Earnings API tests.', () => {
       request(server)
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
+          .set('authorization', jwtToken)
         .attach('csv', './__tests__/api-tests/earningsSuccessfulTest.csv')
         .expect(200)
         .end(function (err, res) {

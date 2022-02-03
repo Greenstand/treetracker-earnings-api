@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const jwt_decode = require('jwt-decode');
 const csv = require('csvtojson');
 const fs = require('fs');
 const { v4: uuid } = require('uuid');
@@ -18,6 +19,8 @@ const HttpError = require('../utils/HttpError');
 
 const earningsGetQuerySchema = Joi.object({
   earnings_status: Joi.string(),
+  grower: Joi.string(),
+  phone: Joi.string(),
   funder_id: Joi.string().uuid(),
   worker_id: Joi.string().uuid(),
   contract_id: Joi.string().uuid(),
@@ -68,7 +71,7 @@ const earningsPatch = async (req, res, next) => {
 
   try {
     await session.beginTransaction();
-    const result = await updateEarnings(earningsRepo, req.body);
+    const result = await updateEarnings(earningsRepo, { payment_confirmation_method: 'single', ...req.body});
     await session.commitTransaction();
     res.status(200).send(result);
     res.end();
@@ -126,6 +129,15 @@ const earningsBatchPatch = async (req, res, next) => {
 
   const batchUpdateEarnings = (batch_id) => {
     let count = 0;
+    const authorizationHeader = req.get('authorization');
+    const adminPanelUser =  authorizationHeader ? jwt_decode(authorizationHeader) : null;
+    const isAdmin = adminPanelUser?.roleNames.includes('Admin');
+
+    if (!authorizationHeader || !isAdmin)  throw new HttpError(
+        401,
+        'Unauthorized!',
+    );
+
     return new Promise((resolve, reject) => {
       csv()
         .fromStream(csvReadStream)
@@ -137,6 +149,8 @@ const earningsBatchPatch = async (req, res, next) => {
             await updateEarnings(earningsRepo, {
               ...json,
               batch_id,
+              payment_confirmation_method: 'batch',
+              payment_confirmed_by: adminPanelUser?.id,
             });
             count++;
           },
