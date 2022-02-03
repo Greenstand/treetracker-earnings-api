@@ -1,3 +1,16 @@
+# [1.5.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.4.2...v1.5.0) (2022-02-03)
+
+
+### Features
+
+* **batch update earnings:** set payment comfirmed by field ([2c52c90](https://github.com/Greenstand/treetracker-earnings/commit/2c52c90afe4457e2b1bd3665a2243a7ddea4905d))
+* **earnings model:** include id field in earnings model ([bd78348](https://github.com/Greenstand/treetracker-earnings/commit/bd78348bfa447bc9d1c31606a81282f18d0b2a3b))
+* **earnings model:** return concatenated first name and last name as grower name ([180b849](https://github.com/Greenstand/treetracker-earnings/commit/180b8493ed630c43dea2f33e0d342ea8fc231c62))
+* **earnings patch:** set confirmation method in processing single earning ([04e247a](https://github.com/Greenstand/treetracker-earnings/commit/04e247ab4592a9ba46addfc4f80fcaab5a6fab0c))
+* **earnings:** improve grower and phone filters ([9532d4a](https://github.com/Greenstand/treetracker-earnings/commit/9532d4ad3eb484d1c910a97307520cea09d3ca40))
+* **earnings:** undo including payment confirmed by in processing payments ([c64b1a5](https://github.com/Greenstand/treetracker-earnings/commit/c64b1a551138478a2ce5d0055f812b4b2c382e01))
+* **migrations:** add migration to change confirmed by data type to bigint ([5c2400c](https://github.com/Greenstand/treetracker-earnings/commit/5c2400ca9db264d85692fb05a7c23995085339f6))
+
 ## [1.4.2](https://github.com/Greenstand/treetracker-earnings/compare/v1.4.1...v1.4.2) (2022-01-18)
 
 
