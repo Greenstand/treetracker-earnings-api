@@ -1,0 +1,1 @@
+ALTER TABLE earnings.earnings DROP COLUMN captures_count;
