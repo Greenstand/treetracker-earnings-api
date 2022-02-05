@@ -1,7 +1,7 @@
 const HttpError = require('../utils/HttpError');
 const axios = require('axios').default;
 
-const stakeholderUrl = `${process.env.TREETRACKER_ENTITIES_URL}/stakeholder`;
+const stakeholderUrl = `${process.env.TREETRACKER_ENTITIES_URL}/stakeholders`;
 
 const Earning = async ({
                            id,
@@ -24,10 +24,10 @@ const Earning = async ({
                        }) => {
     const consolidation_rule = `CONSOLIDATION_RULE_${consolidation_rule_id}`;
     const growerResponse = await axios.get(
-        `${stakeholderUrl}?stakeholder_uuid=${worker_id}`,
+        `${stakeholderUrl}?id=${worker_id}`,
     );
     const funderResponse = await axios.get(
-        `${stakeholderUrl}?stakeholder_uuid=${funder_id}`,
+        `${stakeholderUrl}?id=${funder_id}`,
     );
 
     return Object.freeze({
