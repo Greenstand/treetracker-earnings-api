@@ -25,7 +25,7 @@ spec:
                       - microservices-node-pool
       containers:
         - name: treetracker-earnings-api
-          image: greenstand/treetracker-earnings:TAG
+          image: greenstand/treetracker-earnings-api:TAG
           ports:
             - containerPort: 80
           env:
