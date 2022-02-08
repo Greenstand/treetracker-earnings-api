@@ -1,3 +1,12 @@
+## [1.7.1](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.0...v1.7.1) (2022-02-08)
+
+
+### Bug Fixes
+
+* add capture count column ([c0e5c18](https://github.com/Greenstand/treetracker-earnings/commit/c0e5c184460732e60001e2391e3b8f429fa968b4))
+* move expect-runtime to dependencies ([ccda0b6](https://github.com/Greenstand/treetracker-earnings/commit/ccda0b6ea6ea96e13acca482c97e5a311a4a4536))
+* remove schema from migration ([7bbf926](https://github.com/Greenstand/treetracker-earnings/commit/7bbf92694e0f323d259350d07e21a184935c8766))
+
 # [1.7.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.6.0...v1.7.0) (2022-02-08)
 
 
