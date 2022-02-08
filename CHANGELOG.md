@@ -1,3 +1,17 @@
+# [1.7.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.6.0...v1.7.0) (2022-02-08)
+
+
+### Bug Fixes
+
+* add logic to manage cors for dev env ([c56219b](https://github.com/Greenstand/treetracker-earnings/commit/c56219b3d35570e5dfe7d6e78a3fd016679217dc))
+* linted ([84d0232](https://github.com/Greenstand/treetracker-earnings/commit/84d0232710b1fd4a3bdd2eb7249e0837e88c760b))
+* update api request to stakeholder tool ([08b9819](https://github.com/Greenstand/treetracker-earnings/commit/08b98197030f63e8c8320955a9db82442475f1f7))
+
+
+### Features
+
+* default sort by paid_at ([d90b147](https://github.com/Greenstand/treetracker-earnings/commit/d90b14788f62c084c4aadc1af13c51b8e09ff1bc))
+
 # [1.6.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.5.0...v1.6.0) (2022-02-08)
 
 ### Bug Fixes
