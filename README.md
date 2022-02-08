@@ -1,21 +1,25 @@
 # Name of this microservice
-   
+
 Description of this microservice
 
 # Development toolkit
 
-This repository was created from Greenstand's template for microservice projects.  This means it comes with many development tools that we use for development and deployment.  As a contributor to this repository, you should learn and use these tools.  They are outlined below.
+This repository was created from Greenstand's template for microservice projects. This means it comes with many development tools that we use for development and deployment. As a contributor to this repository, you should learn and use these tools. They are outlined below.
 
 ## db-migrate
+
 ## Conventional Commits
+
 ## husky
+
 ## prettier / lint
+
 ## github actions
+
 ## mocha
 
-
 # Getting Started
-  
+
 ## Project Setup
 
 Open terminal and navigate to a folder to install this project:
@@ -24,13 +28,12 @@ Open terminal and navigate to a folder to install this project:
 git clone https://github.com/Greenstand/treetracker-repository-name.git
 
 ```
-Install all necessary dependencies: 
+
+Install all necessary dependencies:
 
 ```
 npm install
 ```
-
-
 
 ### Database Setup
 
@@ -52,36 +55,33 @@ Documentation for db-migrate: https://db-migrate.readthedocs.io/en/latest/
 
 This project use multiple layer structure to build the whole system. Similar with MVC structure:
 
-![layers](/layers.png "layers")
+![layers](/layers.png 'layers')
 
-
-* **Protocol layer**
+- **Protocol layer**
 
 Wallet API offers RESTFul API interace based on HTTP protocol. We use Express to handle all HTTP requests.
 
 The Express-routers work like the controller role in MVC, they receive the requests and parameters from client, and translate it and dispatch tasks to appropriate business objects. Then receive the result from them, translate to the 'view', the JSON response, to client.
 
-* **Service layer**
+- **Service layer**
 
-Both service layer and model layer are where all the business logic is located. Comparing to the Model , `service` object don't have state (stateless).  
+Both service layer and model layer are where all the business logic is located. Comparing to the Model , `service` object don't have state (stateless).
 
 Please put business logic code into service object when it is hard to put them into the `Model` object.
 
 Because we didn't use Factory or dependency injection to create object, so service layer also can be used as Factory to create `model` object.
 
-* **Model layer**
+- **Model layer**
 
-The business model, major business logic is here. They are real object, in the perspective of object oriented programming: they have states, they have the method to do stuff. 
+The business model, major business logic is here. They are real object, in the perspective of object oriented programming: they have states, they have the method to do stuff.
 
 There are more discussion about this, check below selection.
 
-* **Repository layer**
+- **Repository layer**
 
 Repository is responsible for communicate with the real database, this isolation brings flexibility for us, for example, we can consider replace the implementation of the storage infrastructure in the future.
 
 All the SQL statements should be here.
-
-
 
 # How to test
 
@@ -106,6 +106,7 @@ npm run test-integration
 ```
 
 ## Database seeding test
+
 In order to efficiently run our integration tests, we rely on automated database seeding/clearing functions to mock database entries. To test these functions, run:
 
 ```
@@ -135,7 +136,3 @@ npm run server-test
 ```
 
 This command would run a API server locally, and seed some basic data into DB (the same with the data we used in the integration test).
-
-
-
-

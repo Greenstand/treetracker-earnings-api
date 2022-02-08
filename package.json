@@ -9,7 +9,7 @@
   "main": "server/server.js",
   "scripts": {
     "lint": "npm run eslint",
-    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "lint:fix": "npm run eslint:fix && npm run prettier-fix",
     "eslint": "eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
     "test-unit-ci": "NODE_ENV=test mocha -r dotenv/config dotenv_config_path=.env.test --exit ./server/models/**/*.spec.js ./server/routes/**/*.spec.js",
@@ -35,6 +35,7 @@
     "aws-sdk": "^2.1004.0",
     "axios": "^0.24.0",
     "body-parser": "^1.18.2",
+    "cors": "^2.8.5",
     "csvtojson": "^2.0.10",
     "dotenv": "^8.2.0",
     "expect": "^26.4.2",

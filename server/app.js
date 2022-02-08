@@ -1,5 +1,6 @@
 const express = require('express');
 const Sentry = require('@sentry/node');
+const cors = require('cors');
 const HttpError = require('./utils/HttpError');
 
 const router = require('./routes');
@@ -7,6 +8,11 @@ const { sentryDSN } = require('../config/config');
 const { errorHandler, handlerWrapper } = require('./utils/utils');
 
 const app = express();
+
+if (process.env.NODE_ENV === 'development') {
+  console.log('disable cors');
+  app.use(cors());
+}
 
 Sentry.init({ dsn: sentryDSN });
 
