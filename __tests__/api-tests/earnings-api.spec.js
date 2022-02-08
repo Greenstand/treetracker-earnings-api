@@ -22,6 +22,7 @@ describe('Earnings API tests.', () => {
         .patch(`/earnings`)
         .send(earnings._object)
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -36,6 +37,7 @@ describe('Earnings API tests.', () => {
         .patch(`/earnings`)
         .send(earnings._object)
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -50,6 +52,7 @@ describe('Earnings API tests.', () => {
         .patch(`/earnings`)
         .send(earnings._object)
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -64,6 +67,7 @@ describe('Earnings API tests.', () => {
         .patch(`/earnings`)
         .send(earnings._object)
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -78,6 +82,7 @@ describe('Earnings API tests.', () => {
         .patch(`/earnings`)
         .send(earnings._object)
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -92,6 +97,7 @@ describe('Earnings API tests.', () => {
         .patch(`/earnings`)
         .send(earnings._object)
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -106,6 +112,7 @@ describe('Earnings API tests.', () => {
         .patch(`/earnings`)
         .send(earnings._object)
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -120,6 +127,7 @@ describe('Earnings API tests.', () => {
         .patch(`/earnings`)
         .send(earnings._object)
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -134,6 +142,7 @@ describe('Earnings API tests.', () => {
         .patch(`/earnings`)
         .send(earnings._object)
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -148,6 +157,7 @@ describe('Earnings API tests.', () => {
         .patch(`/earnings`)
         .send(earnings._object)
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -161,6 +171,7 @@ describe('Earnings API tests.', () => {
         .patch(`/earnings`)
         .send(earnings._object)
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(409)
         .end(function (err) {
           if (err) return done(err);
@@ -174,6 +185,7 @@ describe('Earnings API tests.', () => {
         .patch(`/earnings`)
         .send(earnings._object)
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(409)
         .end(function (err) {
           if (err) return done(err);
@@ -188,6 +200,7 @@ describe('Earnings API tests.', () => {
         .patch(`/earnings`)
         .send(earnings._object)
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(409)
         .end(function (err, res) {
           if (err) return done(err);
@@ -202,6 +215,7 @@ describe('Earnings API tests.', () => {
         .patch(`/earnings`)
         .send(earnings._object)
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(409)
         .end(function (err) {
           if (err) return done(err);
@@ -216,6 +230,7 @@ describe('Earnings API tests.', () => {
         .patch(`/earnings`)
         .send(earnings._object)
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(409)
         .end(function (err) {
           if (err) return done(err);
@@ -229,6 +244,7 @@ describe('Earnings API tests.', () => {
         .patch(`/earnings`)
         .send(earnings._object)
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(200)
         .end(function (err, res) {
           expect(res.body).eql({
@@ -249,6 +265,7 @@ describe('Earnings API tests.', () => {
           start_date: 'start_date',
         })
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -263,6 +280,7 @@ describe('Earnings API tests.', () => {
           funder_id: 'funder_id',
         })
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -277,6 +295,7 @@ describe('Earnings API tests.', () => {
           worker_id: 'worker_id',
         })
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -291,6 +310,7 @@ describe('Earnings API tests.', () => {
           contract_id: 'contract_id',
         })
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -305,6 +325,7 @@ describe('Earnings API tests.', () => {
           end_date: 'end_date',
         })
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -319,6 +340,7 @@ describe('Earnings API tests.', () => {
           unknown: 'unknown',
         })
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -333,6 +355,7 @@ describe('Earnings API tests.', () => {
           limit: 'limit',
         })
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -347,6 +370,7 @@ describe('Earnings API tests.', () => {
           limit: 0,
         })
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -361,6 +385,7 @@ describe('Earnings API tests.', () => {
           limit: 101,
         })
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -375,6 +400,7 @@ describe('Earnings API tests.', () => {
           offset: 'offset',
         })
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -389,6 +415,7 @@ describe('Earnings API tests.', () => {
           offset: -1,
         })
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -403,6 +430,7 @@ describe('Earnings API tests.', () => {
           sort_by: 'sort_by',
         })
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -417,6 +445,7 @@ describe('Earnings API tests.', () => {
           order: 'order',
         })
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -428,6 +457,7 @@ describe('Earnings API tests.', () => {
       request(server)
         .get(`/earnings`)
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(200)
         .end(function (err, res) {
           if (err) return done(err);
@@ -483,6 +513,7 @@ describe('Earnings API tests.', () => {
         .get(`/earnings`)
         .query({ earnings_status: 'paid' })
         .set('Accept', 'application/json')
+        .set('Authorization', jwtToken)
         .expect(200)
         .end(function (err, res) {
           if (err) return done(err);
@@ -499,7 +530,7 @@ describe('Earnings API tests.', () => {
       request(server)
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
-          .set('authorization', jwtToken)
+        .set('authorization', jwtToken)
         .attach('csv', './__tests__/api-tests/earningsFailedTestInvalidRow.csv')
         .expect(422)
         .end(function (err) {
@@ -512,7 +543,7 @@ describe('Earnings API tests.', () => {
       request(server)
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
-          .set('authorization', jwtToken)
+        .set('authorization', jwtToken)
         .attach(
           'csv',
           './__tests__/api-tests/earningsFailedTestInvalidHeader.csv',
