@@ -35,6 +35,8 @@ const earningsGetQuerySchema = Joi.object({
     'amount',
     'payment_system',
     'effective_payment_date',
+    'status',
+    'paid_at'
   ),
   order: Joi.string().valid('asc', 'desc'),
 }).unknown(false);
