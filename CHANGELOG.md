@@ -1,3 +1,15 @@
+# [1.6.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.5.0...v1.6.0) (2022-02-08)
+
+
+### Bug Fixes
+
+* add authorization header to integration tests ([5270dda](https://github.com/Greenstand/treetracker-earnings/commit/5270dda55a3ee984c741ad24da8f988a45b5f76f))
+
+
+### Features
+
+* **earnings patch:** include payment confirmed by field in processing single payment ([da0d7a0](https://github.com/Greenstand/treetracker-earnings/commit/da0d7a0c4bf551d28c34f07d943fbbc602da46f2))
+
 # [1.5.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.4.2...v1.5.0) (2022-02-03)
 
 
