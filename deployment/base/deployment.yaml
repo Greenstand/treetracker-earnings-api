@@ -18,21 +18,21 @@ spec:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
-            - matchExpressions:
-              - key: doks.digitalocean.com/node-pool
-                operator: In
-                values:
-                - microservices-node-pool
+              - matchExpressions:
+                  - key: doks.digitalocean.com/node-pool
+                    operator: In
+                    values:
+                      - microservices-node-pool
       containers:
-      - name: treetracker-earnings-api
-        image: greenstand/treetracker-earnings:TAG
-        ports:
-        - containerPort: 80
-        env:
-          - name: DATABASE_URL
-            valueFrom:
-              secretKeyRef:
-                name: database-connection
-                key: db
-          - name: DATABASE_SCHEMA
-            value: earnings
+        - name: treetracker-earnings-api
+          image: greenstand/treetracker-earnings:TAG
+          ports:
+            - containerPort: 80
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: database-connection
+                  key: db
+            - name: DATABASE_SCHEMA
+              value: earnings

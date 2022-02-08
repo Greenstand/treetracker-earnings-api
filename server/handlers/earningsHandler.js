@@ -37,7 +37,7 @@ const earningsGetQuerySchema = Joi.object({
     'payment_system',
     'effective_payment_date',
     'status',
-    'paid_at'
+    'paid_at',
   ),
   order: Joi.string().valid('asc', 'desc'),
 }).unknown(false);
@@ -73,20 +73,20 @@ const earningsPatch = async (req, res, next) => {
   const earningsRepo = new EarningsRepository(session);
 
   const authorizationHeader = req.get('authorization');
-  const adminPanelUser =  authorizationHeader ? jwt_decode(authorizationHeader) : null;
+  const adminPanelUser = authorizationHeader
+    ? jwt_decode(authorizationHeader)
+    : null;
   const isAdmin = adminPanelUser?.roleNames.includes('Admin');
 
-  if (!authorizationHeader || !isAdmin)  throw new HttpError(
-      401,
-      'Unauthorized!',
-  );
+  if (!authorizationHeader || !isAdmin)
+    throw new HttpError(401, 'Unauthorized!');
 
   try {
     await session.beginTransaction();
     const result = await updateEarnings(earningsRepo, {
       payment_confirmation_method: 'single',
       payment_confirmed_by: adminPanelUser?.id,
-      ...req.body
+      ...req.body,
     });
     await session.commitTransaction();
     res.status(200).send(result);
@@ -146,13 +146,13 @@ const earningsBatchPatch = async (req, res, next) => {
   const batchUpdateEarnings = (batch_id) => {
     let count = 0;
     const authorizationHeader = req.get('authorization');
-    const adminPanelUser =  authorizationHeader ? jwt_decode(authorizationHeader) : null;
+    const adminPanelUser = authorizationHeader
+      ? jwt_decode(authorizationHeader)
+      : null;
     const isAdmin = adminPanelUser?.roleNames.includes('Admin');
 
-    if (!authorizationHeader || !isAdmin)  throw new HttpError(
-        401,
-        'Unauthorized!',
-    );
+    if (!authorizationHeader || !isAdmin)
+      throw new HttpError(401, 'Unauthorized!');
 
     return new Promise((resolve, reject) => {
       csv()
