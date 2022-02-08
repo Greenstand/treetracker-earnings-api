@@ -1,1 +1,1 @@
-ALTER TABLE earnings.earnings ADD captures_count integer NULL;
+ALTER TABLE earnings ADD captures_count integer NULL;
