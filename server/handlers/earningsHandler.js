@@ -21,6 +21,7 @@ const earningsGetQuerySchema = Joi.object({
   earnings_status: Joi.string(),
   grower: Joi.string(),
   phone: Joi.string(),
+  organisation_id: Joi.string(),
   funder_id: Joi.string().uuid(),
   worker_id: Joi.string().uuid(),
   contract_id: Joi.string().uuid(),
@@ -69,9 +70,22 @@ const earningsPatch = async (req, res, next) => {
   const session = new Session();
   const earningsRepo = new EarningsRepository(session);
 
+  const authorizationHeader = req.get('authorization');
+  const adminPanelUser =  authorizationHeader ? jwt_decode(authorizationHeader) : null;
+  const isAdmin = adminPanelUser?.roleNames.includes('Admin');
+
+  if (!authorizationHeader || !isAdmin)  throw new HttpError(
+      401,
+      'Unauthorized!',
+  );
+
   try {
     await session.beginTransaction();
-    const result = await updateEarnings(earningsRepo, { payment_confirmation_method: 'single', ...req.body});
+    const result = await updateEarnings(earningsRepo, {
+      payment_confirmation_method: 'single',
+      payment_confirmed_by: adminPanelUser?.id,
+      ...req.body
+    });
     await session.commitTransaction();
     res.status(200).send(result);
     res.end();
