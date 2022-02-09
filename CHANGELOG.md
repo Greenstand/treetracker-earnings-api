@@ -1,3 +1,12 @@
+## [1.7.3](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.2...v1.7.3) (2022-02-09)
+
+
+### Bug Fixes
+
+* also use default node pool ([7809bd0](https://github.com/Greenstand/treetracker-earnings/commit/7809bd0fdac251d7c530f118903d2d6b683e225d))
+* do not echo database connection string ([d38c2c7](https://github.com/Greenstand/treetracker-earnings/commit/d38c2c7dc2ad87236fda2966a8c602a6f4ded36d))
+* update deployment for database migrations ([cdb32e8](https://github.com/Greenstand/treetracker-earnings/commit/cdb32e87f227fb2f181960a59d3ef9e40ed4ccc7))
+
 ## [1.7.2](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.1...v1.7.2) (2022-02-08)
 
 
