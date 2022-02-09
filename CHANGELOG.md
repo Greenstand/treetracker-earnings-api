@@ -1,3 +1,10 @@
+## [1.7.7](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.6...v1.7.7) (2022-02-09)
+
+
+### Bug Fixes
+
+* wrong image names ([63694d2](https://github.com/Greenstand/treetracker-earnings/commit/63694d2080064b18851c6a70411e759ada504762))
+
 ## [1.7.6](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.5...v1.7.6) (2022-02-09)
 
 
