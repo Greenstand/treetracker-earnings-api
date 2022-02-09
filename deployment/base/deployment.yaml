@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: treetracker-earnings-api
+  name: treetracker-api
   labels:
-    app: treetracker-earnings-api
+    app: treetracker-api
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: treetracker-earnings-api
+      app: treetracker-api
   template:
     metadata:
       labels:
-        app: treetracker-earnings-api
+        app: treetracker-api
     spec:
       affinity:
         nodeAffinity:
@@ -24,8 +24,8 @@ spec:
                     values:
                       - microservices-node-pool
       containers:
-        - name: treetracker-earnings-api
-          image: greenstand/treetracker-earnings-api:TAG
+        - name: treetracker-api
+          image: greenstand/treetracker-api:VERSION
           ports:
             - containerPort: 80
           env:
@@ -35,4 +35,9 @@ spec:
                   name: database-connection
                   key: db
             - name: DATABASE_SCHEMA
-              value: earnings
+              value: treetracker
+            - name: RABBIT_MQ_URL
+              valueFrom:
+                secretKeyRef:
+                  name: treetracker-rabbitmq-connection
+                  key: messageQueue
