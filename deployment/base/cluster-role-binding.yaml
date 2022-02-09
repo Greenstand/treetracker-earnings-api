@@ -5,7 +5,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: default
-    namespace: treetracker-api
+    namespace: earnings-api
 roleRef:
   kind: ClusterRole
   name: k8s-wait-for
