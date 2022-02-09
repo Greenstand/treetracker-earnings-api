@@ -26,7 +26,7 @@ spec:
                       - default-node-pool
       containers:
         - name: treetracker-api
-          image: greenstand/treetracker-api:VERSION
+          image: greenstand/treetracker-earnings-api:VERSION
           ports:
             - containerPort: 80
           env:
@@ -36,9 +36,4 @@ spec:
                   name: database-connection
                   key: db
             - name: DATABASE_SCHEMA
-              value: treetracker
-            - name: RABBIT_MQ_URL
-              valueFrom:
-                secretKeyRef:
-                  name: treetracker-rabbitmq-connection
-                  key: messageQueue
+              value: earnings
