@@ -1,3 +1,10 @@
+## [1.7.4](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.3...v1.7.4) (2022-02-09)
+
+
+### Bug Fixes
+
+* update deployment for database migrations ([91e7b3e](https://github.com/Greenstand/treetracker-earnings/commit/91e7b3e8ba75e24bd6c89f76b9bcb51bb11e98bf))
+
 ## [1.7.3](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.2...v1.7.3) (2022-02-09)
 
 
