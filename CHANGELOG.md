@@ -7,49 +7,43 @@
 
 ## [1.7.4](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.3...v1.7.4) (2022-02-09)
 
-
 ### Bug Fixes
 
-* update deployment for database migrations ([91e7b3e](https://github.com/Greenstand/treetracker-earnings/commit/91e7b3e8ba75e24bd6c89f76b9bcb51bb11e98bf))
+- update deployment for database migrations ([91e7b3e](https://github.com/Greenstand/treetracker-earnings/commit/91e7b3e8ba75e24bd6c89f76b9bcb51bb11e98bf))
 
 ## [1.7.3](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.2...v1.7.3) (2022-02-09)
 
-
 ### Bug Fixes
 
-* also use default node pool ([7809bd0](https://github.com/Greenstand/treetracker-earnings/commit/7809bd0fdac251d7c530f118903d2d6b683e225d))
-* do not echo database connection string ([d38c2c7](https://github.com/Greenstand/treetracker-earnings/commit/d38c2c7dc2ad87236fda2966a8c602a6f4ded36d))
-* update deployment for database migrations ([cdb32e8](https://github.com/Greenstand/treetracker-earnings/commit/cdb32e87f227fb2f181960a59d3ef9e40ed4ccc7))
+- also use default node pool ([7809bd0](https://github.com/Greenstand/treetracker-earnings/commit/7809bd0fdac251d7c530f118903d2d6b683e225d))
+- do not echo database connection string ([d38c2c7](https://github.com/Greenstand/treetracker-earnings/commit/d38c2c7dc2ad87236fda2966a8c602a6f4ded36d))
+- update deployment for database migrations ([cdb32e8](https://github.com/Greenstand/treetracker-earnings/commit/cdb32e87f227fb2f181960a59d3ef9e40ed4ccc7))
 
 ## [1.7.2](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.1...v1.7.2) (2022-02-08)
 
-
 ### Bug Fixes
 
-* update image name ([1280381](https://github.com/Greenstand/treetracker-earnings/commit/12803817120d0d000a64df368b007036c959f8ff))
+- update image name ([1280381](https://github.com/Greenstand/treetracker-earnings/commit/12803817120d0d000a64df368b007036c959f8ff))
 
 ## [1.7.1](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.0...v1.7.1) (2022-02-08)
 
-
 ### Bug Fixes
 
-* add capture count column ([c0e5c18](https://github.com/Greenstand/treetracker-earnings/commit/c0e5c184460732e60001e2391e3b8f429fa968b4))
-* move expect-runtime to dependencies ([ccda0b6](https://github.com/Greenstand/treetracker-earnings/commit/ccda0b6ea6ea96e13acca482c97e5a311a4a4536))
-* remove schema from migration ([7bbf926](https://github.com/Greenstand/treetracker-earnings/commit/7bbf92694e0f323d259350d07e21a184935c8766))
+- add capture count column ([c0e5c18](https://github.com/Greenstand/treetracker-earnings/commit/c0e5c184460732e60001e2391e3b8f429fa968b4))
+- move expect-runtime to dependencies ([ccda0b6](https://github.com/Greenstand/treetracker-earnings/commit/ccda0b6ea6ea96e13acca482c97e5a311a4a4536))
+- remove schema from migration ([7bbf926](https://github.com/Greenstand/treetracker-earnings/commit/7bbf92694e0f323d259350d07e21a184935c8766))
 
 # [1.7.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.6.0...v1.7.0) (2022-02-08)
 
-
 ### Bug Fixes
 
-* add logic to manage cors for dev env ([c56219b](https://github.com/Greenstand/treetracker-earnings/commit/c56219b3d35570e5dfe7d6e78a3fd016679217dc))
-* linted ([84d0232](https://github.com/Greenstand/treetracker-earnings/commit/84d0232710b1fd4a3bdd2eb7249e0837e88c760b))
-* update api request to stakeholder tool ([08b9819](https://github.com/Greenstand/treetracker-earnings/commit/08b98197030f63e8c8320955a9db82442475f1f7))
-
+- add logic to manage cors for dev env ([c56219b](https://github.com/Greenstand/treetracker-earnings/commit/c56219b3d35570e5dfe7d6e78a3fd016679217dc))
+- linted ([84d0232](https://github.com/Greenstand/treetracker-earnings/commit/84d0232710b1fd4a3bdd2eb7249e0837e88c760b))
+- update api request to stakeholder tool ([08b9819](https://github.com/Greenstand/treetracker-earnings/commit/08b98197030f63e8c8320955a9db82442475f1f7))
 
 ### Features
 
-* default sort by paid_at ([d90b147](https://github.com/Greenstand/treetracker-earnings/commit/d90b14788f62c084c4aadc1af13c51b8e09ff1bc))
+- default sort by paid_at ([d90b147](https://github.com/Greenstand/treetracker-earnings/commit/d90b14788f62c084c4aadc1af13c51b8e09ff1bc))
 
 # [1.6.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.5.0...v1.6.0) (2022-02-08)
 
