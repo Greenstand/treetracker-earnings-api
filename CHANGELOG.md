@@ -1,3 +1,10 @@
+## [1.7.6](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.5...v1.7.6) (2022-02-09)
+
+
+### Bug Fixes
+
+* lint ([bdb1672](https://github.com/Greenstand/treetracker-earnings/commit/bdb16726cec6e4912d95528df0aa8a0c516552aa))
+
 ## [1.7.5](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.4...v1.7.5) (2022-02-09)
 
 
