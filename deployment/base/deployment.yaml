@@ -23,6 +23,7 @@ spec:
                     operator: In
                     values:
                       - microservices-node-pool
+                      - default-node-pool
       containers:
         - name: treetracker-api
           image: greenstand/treetracker-api:VERSION
