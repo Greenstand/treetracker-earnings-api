@@ -1,7 +1,7 @@
 const HttpError = require('../utils/HttpError');
 const axios = require('axios').default;
 
-const stakeholderUrl = `${process.env.TREETRACKER_STAKEHOLDER_API_URL}/stakeholder`;
+const stakeholderUrl = `${process.env.TREETRACKER_STAKEHOLDER_API_URL}/stakeholders`;
 
 const Earning = async ({
   id,
