@@ -1,3 +1,10 @@
+## [1.7.8](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.7...v1.7.8) (2022-02-10)
+
+
+### Bug Fixes
+
+* add s3 credentials to dev env ([521e144](https://github.com/Greenstand/treetracker-earnings/commit/521e144e539790dcd4d0a8c4111c5a984f6bb920))
+
 ## [1.7.7](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.6...v1.7.7) (2022-02-09)
 
 
