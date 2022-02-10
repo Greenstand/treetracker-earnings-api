@@ -37,3 +37,15 @@ spec:
                   key: db
             - name: DATABASE_SCHEMA
               value: earnings
+            - name: TREETRACKER_STAKEHOLDER_API_URL
+              value: http://treetracker-stakeholder-api.stakeholder-api
+            - name: S3_BUCKET
+              value: payments_upload_bucket
+            - name: S3_ACCESS_KEY_ID
+              value: override in overlay
+            - name: S3_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-key
+                  key: secretAccessKey
+
