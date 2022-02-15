@@ -31,7 +31,7 @@ const Earning = async ({
     worker_id,
     grower: `${growerResponse.data.stakeholders[0]?.first_name}  ${growerResponse.data.stakeholders[0]?.last_name}`,
     funder_id,
-    funder: funderResponse.data.stakeholders[0]?.name,
+    funder: funderResponse.data.stakeholders[0]?.org_name,
     phone: growerResponse.data.stakeholders[0]?.phone,
     amount,
     currency,
