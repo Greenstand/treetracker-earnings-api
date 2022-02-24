@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: treetracker-api
+  name: treetracker-earnings-api
   labels:
-    app: treetracker-api
+    app: treetracker-earnings-api
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: treetracker-api
+      app: treetracker-earnings-api
   template:
     metadata:
       labels:
-        app: treetracker-api
+        app: treetracker-earnings-api
     spec:
       affinity:
         nodeAffinity:
@@ -25,7 +25,7 @@ spec:
                       - microservices-node-pool
                       - default-node-pool
       containers:
-        - name: treetracker-api
+        - name: treetracker-earnings-api
           image: greenstand/treetracker-earnings-api:VERSION
           ports:
             - containerPort: 80
