@@ -1,3 +1,10 @@
+## [1.7.11](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.10...v1.7.11) (2022-02-24)
+
+
+### Bug Fixes
+
+* correct the app name ([abea12f](https://github.com/Greenstand/treetracker-earnings/commit/abea12f6231f759abb6369f96eb01d5fd5959af6))
+
 ## [1.7.10](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.9...v1.7.10) (2022-02-24)
 
 
