@@ -22,7 +22,8 @@
     "test-watch-debug": "NODE_ENV=test NODE_LOG_LEVEL=debug mocha -r dotenv/config dotenv_config_path=.env.test --timeout 10000  -w -b --ignore './server/repositories/**/*.spec.js'  './server/setup.js' './server/**/*.spec.js' './__tests__/seed.spec.js' './__tests__/supertest.js'",
     "prettier-fix": "prettier ./ --write",
     "db-migrate-ci": "cd database; db-migrate up",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "db-migrate-dev": "cd database; echo \"Migrating dev\"; db-migrate --env dev up; echo \"Migrating integration\";  db-migrate --env integration up"
   },
   "keywords": [
     "ecology"
