@@ -14,7 +14,7 @@ const Earning = async ({
   consolidation_period_start,
   consolidation_period_end,
   payment_confirmation_id,
-  payment_system,
+  payment_method,
   payment_confirmed_by,
   payment_confirmation_method,
   payment_confirmed_at,
@@ -40,7 +40,7 @@ const Earning = async ({
     consolidation_period_start,
     consolidation_period_end,
     payment_confirmation_id,
-    payment_system,
+    payment_method,
     payment_confirmed_by,
     payment_confirmation_method,
     paid_at,
@@ -85,8 +85,8 @@ const FilterCriteria = ({
     case 'amount':
       orderBy = 'amount';
       break;
-    case 'payment_system':
-      orderBy = 'payment_system';
+    case 'payment_method':
+      orderBy = 'payment_method';
       break;
     case 'effective_payment_date':
       orderBy = 'calculated_at';
@@ -123,104 +123,104 @@ const QueryOptions = ({ limit = undefined, offset = undefined }) => {
 
 const getEarnings =
   (earningsRepo) =>
-  async (filterCriteria = undefined, url) => {
-    let filter = {};
-    let options = { limit: 100, offset: 0 };
-    filter = FilterCriteria({
-      ...filterCriteria,
-    });
-    options = { ...options, ...QueryOptions({ ...filterCriteria }) };
-
-    const queryFilterObjects = { ...filterCriteria };
-    queryFilterObjects.limit = options.limit;
-
-    // remove offset property, as it is calculated later
-    delete queryFilterObjects.offset;
-
-    const query = Object.keys(queryFilterObjects)
-      .map((key) => `${key}=${encodeURIComponent(queryFilterObjects[key])}`)
-      .join('&');
-
-    const urlWithLimitAndOffset = `${url}?${query}&offset=`;
-
-    const next = `${urlWithLimitAndOffset}${+options.offset + +options.limit}`;
-    let prev = null;
-    if (options.offset - +options.limit >= 0) {
-      prev = `${urlWithLimitAndOffset}${+options.offset - +options.limit}`;
-    }
-
-    const { earnings, count } = await earningsRepo.getEarnings(filter, options);
-
-    const formattedEarnings = await Promise.all(
-      earnings.map((row) => {
-        return Earning({ ...row });
-      }),
-    );
-
-    const { sort_by, order = 'asc' } = filterCriteria;
-
-    if (sort_by === 'grower') {
-      formattedEarnings.sort((a, b) => {
-        const nameA = a.grower?.toUpperCase(); // ignore upper and lowercase
-        const nameB = b.grower?.toUpperCase(); // ignore upper and lowercase
-
-        if (nameA < nameB) {
-          return order === 'asc' ? -1 : 1;
-        }
-        if (nameA > nameB) {
-          return order === 'asc' ? 1 : -1;
-        }
-        return 0;
+    async (filterCriteria = undefined, url) => {
+      let filter = {};
+      let options = { limit: 100, offset: 0 };
+      filter = FilterCriteria({
+        ...filterCriteria,
       });
-    }
-    if (filterCriteria.sort_by === 'funder') {
-      formattedEarnings.sort((a, b) => {
-        const nameA = a.funder?.toUpperCase(); // ignore upper and lowercase
-        const nameB = b.funder?.toUpperCase(); // ignore upper and lowercase
-        if (nameA < nameB) {
-          return order === 'asc' ? -1 : 1;
-        }
-        if (nameA > nameB) {
-          return order === 'asc' ? 1 : -1;
-        }
-        return 0;
-      });
-    }
+      options = { ...options, ...QueryOptions({ ...filterCriteria }) };
 
-    if (filterCriteria?.grower || filterCriteria?.phone) {
-      const filterFormattedEarnings = formattedEarnings
-        .filter(({ grower }) =>
-          filterCriteria?.grower
-            ? grower
+      const queryFilterObjects = { ...filterCriteria };
+      queryFilterObjects.limit = options.limit;
+
+      // remove offset property, as it is calculated later
+      delete queryFilterObjects.offset;
+
+      const query = Object.keys(queryFilterObjects)
+        .map((key) => `${key}=${encodeURIComponent(queryFilterObjects[key])}`)
+        .join('&');
+
+      const urlWithLimitAndOffset = `${url}?${query}&offset=`;
+
+      const next = `${urlWithLimitAndOffset}${+options.offset + +options.limit}`;
+      let prev = null;
+      if (options.offset - +options.limit >= 0) {
+        prev = `${urlWithLimitAndOffset}${+options.offset - +options.limit}`;
+      }
+
+      const { earnings, count } = await earningsRepo.getEarnings(filter, options);
+
+      const formattedEarnings = await Promise.all(
+        earnings.map((row) => {
+          return Earning({ ...row });
+        }),
+      );
+
+      const { sort_by, order = 'asc' } = filterCriteria;
+
+      if (sort_by === 'grower') {
+        formattedEarnings.sort((a, b) => {
+          const nameA = a.grower?.toUpperCase(); // ignore upper and lowercase
+          const nameB = b.grower?.toUpperCase(); // ignore upper and lowercase
+
+          if (nameA < nameB) {
+            return order === 'asc' ? -1 : 1;
+          }
+          if (nameA > nameB) {
+            return order === 'asc' ? 1 : -1;
+          }
+          return 0;
+        });
+      }
+      if (filterCriteria.sort_by === 'funder') {
+        formattedEarnings.sort((a, b) => {
+          const nameA = a.funder?.toUpperCase(); // ignore upper and lowercase
+          const nameB = b.funder?.toUpperCase(); // ignore upper and lowercase
+          if (nameA < nameB) {
+            return order === 'asc' ? -1 : 1;
+          }
+          if (nameA > nameB) {
+            return order === 'asc' ? 1 : -1;
+          }
+          return 0;
+        });
+      }
+
+      if (filterCriteria?.grower || filterCriteria?.phone) {
+        const filterFormattedEarnings = formattedEarnings
+          .filter(({ grower }) =>
+            filterCriteria?.grower
+              ? grower
                 .toLowerCase()
                 .includes(filterCriteria?.grower.toLowerCase())
-            : true,
-        )
-        .filter(({ phone }) =>
-          filterCriteria?.phone
-            ? phone.toLowerCase().includes(filterCriteria?.phone.toLowerCase())
-            : true,
-        );
+              : true,
+          )
+          .filter(({ phone }) =>
+            filterCriteria?.phone
+              ? phone.toLowerCase().includes(filterCriteria?.phone.toLowerCase())
+              : true,
+          );
+
+        return {
+          earnings: filterFormattedEarnings,
+          totalCount: filterFormattedEarnings.length,
+          links: {
+            prev,
+            next,
+          },
+        };
+      }
 
       return {
-        earnings: filterFormattedEarnings,
-        totalCount: filterFormattedEarnings.length,
+        earnings: formattedEarnings,
+        totalCount: count,
         links: {
           prev,
           next,
         },
       };
-    }
-
-    return {
-      earnings: formattedEarnings,
-      totalCount: count,
-      links: {
-        prev,
-        next,
-      },
     };
-  };
 
 const updateEarnings = async (earningsRepo, requestBody) => {
   const body = { ...requestBody };
@@ -273,18 +273,18 @@ const updateEarnings = async (earningsRepo, requestBody) => {
 
 const getBatchEarnings =
   (earningsRepo) =>
-  async (filterCriteria = undefined) => {
-    let filter = {};
-    filter = FilterCriteria({
-      ...filterCriteria,
-    });
+    async (filterCriteria = undefined) => {
+      let filter = {};
+      filter = FilterCriteria({
+        ...filterCriteria,
+      });
 
-    const earningsStream = await earningsRepo.getEarnings(filter, {
-      stream: true,
-    });
+      const earningsStream = await earningsRepo.getEarnings(filter, {
+        stream: true,
+      });
 
-    return { earningsStream };
-  };
+      return { earningsStream };
+    };
 
 module.exports = {
   getEarnings,

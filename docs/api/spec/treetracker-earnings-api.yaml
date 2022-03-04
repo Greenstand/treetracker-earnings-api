@@ -13,9 +13,9 @@ paths:
         '200':
           description: |-
             CSV 
-            Columns: earnings_id,worker_id,phone,amount,currency,status,payment_system,payment_confirmation_id,paid_at
+            Columns: earnings_id,worker_id,phone,amount,currency,status,payment_method,payment_confirmation_id,paid_at
 
-            payment_system,payment_confirmation_id, and paid_at are not populated when downloaded, they are template columns
+            payment_method,payment_confirmation_id, and paid_at are not populated when downloaded, they are template columns
           content:
             text/csv:
               schema:
@@ -153,7 +153,7 @@ paths:
           CSV
 
           Columns:
-          earnings_id,worker_id,phone,amount,currency,payment_system,payment_confirmation_id,paid_at
+          earnings_id,worker_id,phone,amount,currency,payment_method,payment_confirmation_id,paid_at
       description: |-
         Patch an multiple earnings resources with the payment confirmation information.  
         Validation: payment confirmation id and payment system are required
@@ -237,7 +237,7 @@ paths:
                 payment_confirmation_id:
                   type: string
                   format: date
-                payment_system:
+                payment_method:
                   type: string
                 paid_at:
                   type: string
@@ -298,7 +298,7 @@ paths:
                           type: string
                         payment_confirmation_id:
                           type: string
-                        payment_system:
+                        payment_method:
                           type: string
                         payment_confirmed_by:
                           type: string
@@ -387,7 +387,7 @@ paths:
               - grower
               - funder
               - amount
-              - payment_system
+              - payment_method
               - effective_payment_date
           in: query
           name: sort_by
