@@ -1,3 +1,10 @@
+## [1.7.13](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.12...v1.7.13) (2022-03-04)
+
+
+### Bug Fixes
+
+* payment system to method ([ea972b3](https://github.com/Greenstand/treetracker-earnings/commit/ea972b321e9c2bdccf501cf49715685156c8f5ac))
+
 ## [1.7.12](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.11...v1.7.12) (2022-03-04)
 
 
