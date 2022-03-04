@@ -135,9 +135,9 @@ describe('Earnings API tests.', () => {
         });
     });
 
-    it(`Should raise validation error with error code 422 -- payment_system should be required`, function (done) {
+    it(`Should raise validation error with error code 422 -- payment_method should be required`, function (done) {
       const earnings = new GenericObject({ ...earningsOne });
-      earnings.delete_property('payment_system');
+      earnings.delete_property('payment_method');
       request(server)
         .patch(`/earnings`)
         .send(earnings._object)
@@ -484,7 +484,7 @@ describe('Earnings API tests.', () => {
               'consolidation_period_start',
               'consolidation_period_end',
               'payment_confirmation_id',
-              'payment_system',
+              'payment_method',
               'payment_confirmed_by',
               'payment_confirmation_method',
               'paid_at',
@@ -494,8 +494,8 @@ describe('Earnings API tests.', () => {
             ]);
             if (
               earning.payment_confirmation_id ===
-                earnings._object.payment_confirmation_id &&
-              earning.payment_system === earnings._object.payment_system
+              earnings._object.payment_confirmation_id &&
+              earning.payment_method === earnings._object.payment_method
             ) {
               expect(earning.status).equal('paid');
               earnings_updated = true;
@@ -539,7 +539,7 @@ describe('Earnings API tests.', () => {
         });
     });
 
-    it(`Should raise validation error with error code 422 -- invalid headers; payment_system does not exist `, function (done) {
+    it(`Should raise validation error with error code 422 -- invalid headers; payment_method does not exist `, function (done) {
       request(server)
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')

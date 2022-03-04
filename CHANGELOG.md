@@ -7,52 +7,45 @@
 
 ## [1.7.11](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.10...v1.7.11) (2022-02-24)
 
-
 ### Bug Fixes
 
-* correct the app name ([abea12f](https://github.com/Greenstand/treetracker-earnings/commit/abea12f6231f759abb6369f96eb01d5fd5959af6))
+- correct the app name ([abea12f](https://github.com/Greenstand/treetracker-earnings/commit/abea12f6231f759abb6369f96eb01d5fd5959af6))
 
 ## [1.7.10](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.9...v1.7.10) (2022-02-24)
 
-
 ### Bug Fixes
 
-* force deployment ([389a59c](https://github.com/Greenstand/treetracker-earnings/commit/389a59c31710074a1c48dea0e79cc4b07ecd1638))
+- force deployment ([389a59c](https://github.com/Greenstand/treetracker-earnings/commit/389a59c31710074a1c48dea0e79cc4b07ecd1638))
 
 ## [1.7.9](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.8...v1.7.9) (2022-02-20)
 
-
 ### Bug Fixes
 
-* update deployment for test env ([338ba5e](https://github.com/Greenstand/treetracker-earnings/commit/338ba5ec3c0397ecb6420643ccfbafcd38a5083a))
+- update deployment for test env ([338ba5e](https://github.com/Greenstand/treetracker-earnings/commit/338ba5ec3c0397ecb6420643ccfbafcd38a5083a))
 
 ## [1.7.8](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.7...v1.7.8) (2022-02-10)
 
-
 ### Bug Fixes
 
-* add s3 credentials to dev env ([521e144](https://github.com/Greenstand/treetracker-earnings/commit/521e144e539790dcd4d0a8c4111c5a984f6bb920))
+- add s3 credentials to dev env ([521e144](https://github.com/Greenstand/treetracker-earnings/commit/521e144e539790dcd4d0a8c4111c5a984f6bb920))
 
 ## [1.7.7](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.6...v1.7.7) (2022-02-09)
 
-
 ### Bug Fixes
 
-* wrong image names ([63694d2](https://github.com/Greenstand/treetracker-earnings/commit/63694d2080064b18851c6a70411e759ada504762))
+- wrong image names ([63694d2](https://github.com/Greenstand/treetracker-earnings/commit/63694d2080064b18851c6a70411e759ada504762))
 
 ## [1.7.6](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.5...v1.7.6) (2022-02-09)
 
-
 ### Bug Fixes
 
-* lint ([bdb1672](https://github.com/Greenstand/treetracker-earnings/commit/bdb16726cec6e4912d95528df0aa8a0c516552aa))
+- lint ([bdb1672](https://github.com/Greenstand/treetracker-earnings/commit/bdb16726cec6e4912d95528df0aa8a0c516552aa))
 
 ## [1.7.5](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.4...v1.7.5) (2022-02-09)
 
-
 ### Bug Fixes
 
-* database migration job with correct image ([cdd35ac](https://github.com/Greenstand/treetracker-earnings/commit/cdd35ac283334437a0efa304891ab71e65b170eb))
+- database migration job with correct image ([cdd35ac](https://github.com/Greenstand/treetracker-earnings/commit/cdd35ac283334437a0efa304891ab71e65b170eb))
 
 ## [1.7.4](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.3...v1.7.4) (2022-02-09)
 
@@ -170,7 +163,7 @@
 ### Features
 
 - port earning/batch PATCH to using streams ([d109d10](https://github.com/Greenstand/treetracker-earnings/commit/d109d10f7df3087a71de730a5be1d4cc425ad701))
-- put add sorting support for id, amount, effective_payment_date, payment_system ([3c6536c](https://github.com/Greenstand/treetracker-earnings/commit/3c6536c547fdf3b288b27f0877fe2dba535be00f))
+- put add sorting support for id, amount, effective_payment_date, payment_method ([3c6536c](https://github.com/Greenstand/treetracker-earnings/commit/3c6536c547fdf3b288b27f0877fe2dba535be00f))
 - return total count ([748f993](https://github.com/Greenstand/treetracker-earnings/commit/748f99366fe567a3bf2583cba3a9b4bfd3dbe24e))
 
 ## [1.1.10](https://github.com/Greenstand/treetracker-earnings/compare/v1.1.9...v1.1.10) (2021-11-03)
