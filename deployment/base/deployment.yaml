@@ -40,7 +40,7 @@ spec:
             - name: TREETRACKER_STAKEHOLDER_API_URL
               value: http://treetracker-stakeholder-api.stakeholder-api
             - name: S3_BUCKET
-              value: payments_upload_bucket
+              value: payments-batch-upload
             - name: S3_ACCESS_KEY_ID
               value: override in overlay
             - name: S3_SECRET_ACCESS_KEY
@@ -48,4 +48,3 @@ spec:
                 secretKeyRef:
                   name: aws-key
                   key: secretAccessKey
-
