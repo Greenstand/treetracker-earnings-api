@@ -1,3 +1,10 @@
+## [1.7.12](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.11...v1.7.12) (2022-03-04)
+
+
+### Bug Fixes
+
+* s3 bucket name ([dd5ff12](https://github.com/Greenstand/treetracker-earnings/commit/dd5ff128a65d8a5f07b24c784a9441de64784e20))
+
 ## [1.7.11](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.10...v1.7.11) (2022-02-24)
 
 
