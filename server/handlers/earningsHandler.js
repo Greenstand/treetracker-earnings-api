@@ -122,7 +122,7 @@ const earningsBatchGet = async (req, res) => {
       'Content-Type': 'text/csv; charset=utf-8',
       'Content-Disposition': 'attachment; filename=batchEarnings.csv',
     });
-    csvStream.pipe(res).on('end', () => {});
+    csvStream.pipe(res).on('end', () => { });
   } catch (err) {
     console.error(err);
     throw new HttpError(422, err.message);
