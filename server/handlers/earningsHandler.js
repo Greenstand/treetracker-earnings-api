@@ -34,7 +34,7 @@ const earningsGetQuerySchema = Joi.object({
     'grower',
     'funder',
     'amount',
-    'payment_system',
+    'payment_method',
     'effective_payment_date',
     'status',
     'paid_at',
@@ -49,7 +49,7 @@ const earningsPatchSchema = Joi.object({
   amount: Joi.number().required(),
   currency: Joi.string().required(),
   payment_confirmation_id: Joi.string().required(),
-  payment_system: Joi.string().required(),
+  payment_method: Joi.string().required(),
   paid_at: Joi.date().iso(),
   phone: Joi.string(),
 }).xor('id', 'earnings_id');
@@ -122,7 +122,7 @@ const earningsBatchGet = async (req, res) => {
       'Content-Type': 'text/csv; charset=utf-8',
       'Content-Disposition': 'attachment; filename=batchEarnings.csv',
     });
-    csvStream.pipe(res).on('end', () => {});
+    csvStream.pipe(res).on('end', () => { });
   } catch (err) {
     console.error(err);
     throw new HttpError(422, err.message);

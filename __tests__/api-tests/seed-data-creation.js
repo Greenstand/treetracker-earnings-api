@@ -9,14 +9,14 @@ const earningsPaymentObject = {
   worker_id: workerId,
   amount: 700,
   payment_confirmation_id: uuid(),
-  payment_system: 'cash',
+  payment_method: 'cash',
   currency: 'USD',
   status: 'calculated',
   paid_at: new Date().toISOString(),
 };
 const earningsOne = {
   ...earningsPaymentObject,
-  payment_system: 'bike',
+  payment_method: 'bike',
   id: '915b1c8c-e1d0-44f8-a6a7-7026e2a8f04b',
 };
 const earningsTwo = {

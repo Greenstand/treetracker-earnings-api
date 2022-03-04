@@ -37,5 +37,9 @@ jobs:
           token: ${{ secrets.TEST_DIGITALOCEAN_TOKEN }}
       - name: Save DigitalOcean kubeconfig
         run: doctl kubernetes cluster kubeconfig save ${{ secrets.TEST_CLUSTER_NAME }}
+      - name: Delete completed migration jobs prior to deployment
+        run: kubectl -n ${{ secrets.K8S_NAMESPACE }} delete job --ignore-not-found=true  database-migration-job
       - name: Update kubernetes resources
         run: kustomize build deployment/overlays/test | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
+      - name: Attempt to wait for migration job to complete
+        run: kubectl wait -n ${{ secrets.K8S_NAMESPACE }} --for=condition=complete --timeout=45s job/database-migration-job
