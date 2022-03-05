@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.13...v1.8.0) (2022-03-05)
+
+
+### Features
+
+* seed tool for test ([e81cacd](https://github.com/Greenstand/treetracker-earnings/commit/e81cacd65bfce0bdb4b2d1b6e3ec4b82e10b5432))
+
 ## [1.7.13](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.12...v1.7.13) (2022-03-04)
 
 
