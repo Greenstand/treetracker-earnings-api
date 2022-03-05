@@ -4,7 +4,7 @@ const knex = require('../../server/database/knex');
 const seed = require('../../database/seed/index');
 const log = require("loglevel");
 
-describe.only("seed", () => {
+describe.skip("seed", () => {
   beforeEach(async () => {
     await knex("earnings").truncate();
   })
