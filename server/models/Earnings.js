@@ -6,6 +6,7 @@ const stakeholderUrl = `${process.env.TREETRACKER_STAKEHOLDER_API_URL}/stakehold
 const Earning = async ({
   id,
   worker_id,
+  captures_count,
   funder_id,
   amount,
   currency,
@@ -29,9 +30,10 @@ const Earning = async ({
   return Object.freeze({
     id,
     worker_id,
+    captures_count,
     grower: `${growerResponse.data.stakeholders[0]?.first_name}  ${growerResponse.data.stakeholders[0]?.last_name}`,
     funder_id,
-    funder: funderResponse.data.stakeholders[0]?.name,
+    funder: funderResponse.data.stakeholders[0]?.org_name,
     phone: growerResponse.data.stakeholders[0]?.phone,
     amount,
     currency,

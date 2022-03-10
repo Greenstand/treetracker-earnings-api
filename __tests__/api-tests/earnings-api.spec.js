@@ -474,6 +474,7 @@ describe('Earnings API tests.', () => {
               'id',
               'grower',
               'funder',
+              'captures_count',
               'phone',
               'worker_id',
               'funder_id',
