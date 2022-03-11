@@ -1,3 +1,15 @@
+# [1.10.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.9.0...v1.10.0) (2022-03-11)
+
+
+### Bug Fixes
+
+* sub org column be able null ([c10f6da](https://github.com/Greenstand/treetracker-earnings/commit/c10f6dabad5958a9707586cc73eb988ff62fb5a0))
+
+
+### Features
+
+* sub org column ([7278619](https://github.com/Greenstand/treetracker-earnings/commit/72786192821ba5cb36b75c82f80463322532e83c))
+
 # [1.9.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.8.0...v1.9.0) (2022-03-10)
 
 
