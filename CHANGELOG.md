@@ -1,3 +1,17 @@
+# [1.11.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.10.0...v1.11.0) (2022-03-12)
+
+
+### Bug Fixes
+
+* eslint ([f3d427c](https://github.com/Greenstand/treetracker-earnings/commit/f3d427c48ae725b982c16dbe13fce23bd38da08c))
+* fail the seed cli ([a46b369](https://github.com/Greenstand/treetracker-earnings/commit/a46b3692b05fdd1708b59f364b6f9e18e6051bcd))
+
+
+### Features
+
+* cli improvement ([6c47500](https://github.com/Greenstand/treetracker-earnings/commit/6c475007febf7253f338768ff2bf36a087832629))
+* commander ([f4d6b0f](https://github.com/Greenstand/treetracker-earnings/commit/f4d6b0f455e6d4ded82ee7aabb9dd8f29516531c))
+
 # [1.10.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.9.0...v1.10.0) (2022-03-11)
 
 
