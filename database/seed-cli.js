@@ -24,9 +24,14 @@ program.command('earnings')
       options.captures_count
     )
       .then(() => {
+        log.warn("done!");
         process.exit(0);
+      }).catch(e => {
+        log.error("error", e);
+        log.warn("seed failed!");
+        process.exit(1);
       })
-    log.warn("done");
+    log.warn("executed...");
   });
 
 program.parse();
