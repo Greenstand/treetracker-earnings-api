@@ -1,6 +1,7 @@
 const log = require("loglevel");
-const seed = require('./seed/index');
 const { Command } = require('commander');
+const seed = require('./seed/index');
+
 const program = new Command();
 
 program
