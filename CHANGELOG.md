@@ -1,3 +1,23 @@
+# [1.10.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.9.0...v1.10.0) (2022-03-11)
+
+
+### Bug Fixes
+
+* sub org column be able null ([c10f6da](https://github.com/Greenstand/treetracker-earnings/commit/c10f6dabad5958a9707586cc73eb988ff62fb5a0))
+
+
+### Features
+
+* sub org column ([7278619](https://github.com/Greenstand/treetracker-earnings/commit/72786192821ba5cb36b75c82f80463322532e83c))
+
+# [1.9.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.8.0...v1.9.0) (2022-03-10)
+
+
+### Features
+
+* **earnings model:** initialize funder field based on org_name instead of name field ([89d19b5](https://github.com/Greenstand/treetracker-earnings/commit/89d19b59b6666a6c47855a778d0b2296ea2e35c4))
+* **meanings model:** include captures_count field ([7de6322](https://github.com/Greenstand/treetracker-earnings/commit/7de6322da86e90e8e2810a3dfafb9508c8d3ae7f)), closes [#11](https://github.com/Greenstand/treetracker-earnings/issues/11)
+
 # [1.8.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.7.13...v1.8.0) (2022-03-05)
 
 
