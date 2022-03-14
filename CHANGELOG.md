@@ -1,3 +1,10 @@
+## [1.11.2](https://github.com/Greenstand/treetracker-earnings/compare/v1.11.1...v1.11.2) (2022-03-14)
+
+
+### Bug Fixes
+
+* seed problem ([48af58f](https://github.com/Greenstand/treetracker-earnings/commit/48af58fff85cba7a37b358c2c8f3c0d1828c785a))
+
 ## [1.11.1](https://github.com/Greenstand/treetracker-earnings/compare/v1.11.0...v1.11.1) (2022-03-12)
 
 
