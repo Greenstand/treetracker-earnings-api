@@ -11,15 +11,15 @@ exports.seed = async (
   if (multiplier > 1) {
     multiplier = 1
   }
-  console.warn("multiplier ", multiplier)
+  console.warn("multiplier:", multiplier)
   const maxPayout = 1200000
   const amount = multiplier * maxPayout
   await knex("earnings").insert({
     worker_id,
     amount,
-    payment_confirmation_id: uuid(),
+    payment_confirmation_id: null,
     payment_method: null,
-    currency: 'USD',
+    currency: 'SLL',
     status: 'calculated',
     paid_at: null,
     contract_id: '483a1f4e-0c52-4b53-b917-5ff4311ded26',
