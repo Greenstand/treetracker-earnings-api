@@ -473,7 +473,6 @@ describe('Earnings API tests.', () => {
             expect(earning).to.have.keys([
               'id',
               'grower',
-              'funder',
               'captures_count',
               'phone',
               'worker_id',
@@ -653,6 +652,7 @@ describe('Earnings API tests.', () => {
     });
 
     it(`Successful batch request`, function (done) {
+
       request(server)
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
