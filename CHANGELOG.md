@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.11.2...v1.12.0) (2022-03-15)
+
+
+### Features
+
+* add capture_count ([48e7e17](https://github.com/Greenstand/treetracker-earnings/commit/48e7e170c87850a99b76228e03e79dcce7d5d69a))
+
 ## [1.11.2](https://github.com/Greenstand/treetracker-earnings/compare/v1.11.1...v1.11.2) (2022-03-14)
 
 
