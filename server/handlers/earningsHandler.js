@@ -47,6 +47,7 @@ const earningsPatchSchema = Joi.object({
   earnings_id: Joi.string().uuid(),
   worker_id: Joi.string().uuid().required(),
   amount: Joi.number().required(),
+  captures_count: Joi.number().required(),
   currency: Joi.string().required(),
   payment_confirmation_id: Joi.string().required(),
   payment_method: Joi.string().required(),

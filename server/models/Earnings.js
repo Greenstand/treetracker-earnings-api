@@ -226,7 +226,7 @@ const getEarnings =
 
 const updateEarnings = async (earningsRepo, requestBody) => {
   const body = { ...requestBody };
-  const { worker_id, currency, amount } = body;
+  const { worker_id, currency, amount, captures_count } = body;
 
   // If data is coming from csv file
   if (body.earnings_id) {
@@ -260,6 +260,15 @@ const updateEarnings = async (earningsRepo, requestBody) => {
       409,
       'The amount specified does not match that of the earning',
     );
+
+  if (+earnings.captures_count !== +captures_count) {
+    console.error("earnings", earnings);
+    console.error("captures_count", captures_count);
+    throw new HttpError(
+      409,
+      'The captures_count specified does not match that of the earning',
+    );
+  }
 
   await earningsRepo.update({
     ...body,

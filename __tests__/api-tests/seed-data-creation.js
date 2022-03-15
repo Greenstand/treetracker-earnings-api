@@ -8,6 +8,7 @@ const workerId = '71be6266-81fe-476f-a563-9bc1c61fc037';
 const earningsPaymentObject = {
   worker_id: workerId,
   amount: 700,
+  captures_count: 22,
   payment_confirmation_id: uuid(),
   payment_method: 'cash',
   currency: 'USD',
@@ -59,14 +60,14 @@ before(async () => {
   await knex.raw(`
 
     INSERT INTO earnings(
-      id, worker_id, funder_id, amount, currency, calculated_at, consolidation_rule_id, consolidation_period_start, consolidation_period_end, payment_confirmed_by, payment_confirmation_method, status, active, contract_id)
+      id, worker_id, funder_id, amount, captures_count, currency, calculated_at, consolidation_rule_id, consolidation_period_start, consolidation_period_end, payment_confirmed_by, payment_confirmation_method, status, active, contract_id)
 	    VALUES 
-        ('${earningsOne.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), 1,'single', '${earningsOne.status}', true, '${uuid()}'),
-        ('${earningsTwo.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), 1,'single', '${earningsTwo.status}', true, '${uuid()}'),
-        ('${earningsThree.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), 1,'single', '${earningsThree.status}', true, '${uuid()}'),
-        ('${earningsFour.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), 1,'batch', '${earningsFour.status}', true, '${uuid()}'),
-        ('${earningsWithCancelledStatus.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), 1,'single', '${earningsWithCancelledStatus.status}', true, '${uuid()}'),
-        ('${earningsWithPaidStatus.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), 1,'single', '${earningsWithPaidStatus.status}', true, '${uuid()}');
+        ('${earningsOne.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}', '${earningsPaymentObject.captures_count}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), 1,'single', '${earningsOne.status}', true, '${uuid()}'),
+        ('${earningsTwo.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}','${earningsPaymentObject.captures_count}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), 1,'single', '${earningsTwo.status}', true, '${uuid()}'),
+        ('${earningsThree.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}','${earningsPaymentObject.captures_count}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), 1,'single', '${earningsThree.status}', true, '${uuid()}'),
+        ('${earningsFour.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}','${earningsPaymentObject.captures_count}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), 1,'batch', '${earningsFour.status}', true, '${uuid()}'),
+        ('${earningsWithCancelledStatus.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}','${earningsPaymentObject.captures_count}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), 1,'single', '${earningsWithCancelledStatus.status}', true, '${uuid()}'),
+        ('${earningsWithPaidStatus.id}','${workerId}', '${uuid()}', '${earningsPaymentObject.amount}','${earningsPaymentObject.captures_count}', '${earningsPaymentObject.currency}', now(), '${uuid()}', now(), now(), 1,'single', '${earningsWithPaidStatus.status}', true, '${uuid()}');
   `);
 });
 
