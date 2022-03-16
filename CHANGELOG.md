@@ -1,3 +1,10 @@
+## [1.12.5](https://github.com/Greenstand/treetracker-earnings/compare/v1.12.4...v1.12.5) (2022-03-16)
+
+
+### Bug Fixes
+
+* exclusive date ([527266b](https://github.com/Greenstand/treetracker-earnings/commit/527266b2fc5ad9dbb0556c09f6b4b8d32ba3aaac))
+
 ## [1.12.4](https://github.com/Greenstand/treetracker-earnings/compare/v1.12.3...v1.12.4) (2022-03-16)
 
 
