@@ -1,3 +1,11 @@
+## [1.12.1](https://github.com/Greenstand/treetracker-earnings/compare/v1.12.0...v1.12.1) (2022-03-16)
+
+
+### Bug Fixes
+
+* fix sealed secret ([633c79d](https://github.com/Greenstand/treetracker-earnings/commit/633c79d94fa9779f7e04b255cf514889010ebf7d))
+* use dotenv ([ff6ccbd](https://github.com/Greenstand/treetracker-earnings/commit/ff6ccbdab0ef9f783572716b9a76e85d6b970d1d))
+
 # [1.12.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.11.2...v1.12.0) (2022-03-15)
 
 
