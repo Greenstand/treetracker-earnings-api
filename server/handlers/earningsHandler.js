@@ -35,7 +35,7 @@ const earningsGetQuerySchema = Joi.object({
     'funder',
     'amount',
     'payment_method',
-    'effective_payment_date',
+    'calculated_at',
     'status',
     'paid_at',
   ),
