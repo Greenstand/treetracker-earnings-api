@@ -27,7 +27,7 @@ const earningsGetQuerySchema = Joi.object({
   contract_id: Joi.string().uuid(),
   start_date: Joi.date().iso(),
   end_date: Joi.date().iso(),
-  limit: Joi.number().integer().greater(0).less(101),
+  limit: Joi.number().integer().greater(0).less(100000),
   offset: Joi.number().integer().greater(-1),
   sort_by: Joi.string().valid(
     'id',

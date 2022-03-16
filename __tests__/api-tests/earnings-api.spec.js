@@ -378,11 +378,11 @@ describe('Earnings API tests.', () => {
         });
     });
 
-    it(`Should raise validation error with error code 422 -- 'limit' query parameter should be less than 101  `, function (done) {
+    it(`Should raise validation error with error code 422 -- 'limit' query parameter should be less than 1000000  `, function (done) {
       request(server)
         .get(`/earnings`)
         .query({
-          limit: 101,
+          limit: 1000000+1,
         })
         .set('Accept', 'application/json')
         .set('Authorization', jwtToken)
