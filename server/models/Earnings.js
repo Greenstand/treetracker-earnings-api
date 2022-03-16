@@ -237,8 +237,9 @@ const updateEarnings = async (earningsRepo, requestBody) => {
 
   const earnings = await earningsRepo.getById(body.id);
 
+
   if (earnings.status !== 'calculated')
-    throw new HttpError(409, 'Earnings have either been paid or cancelled');
+    throw new HttpError(409, 'There are some earning records in this file have been paid or canceled');
 
   if (earnings.payment_confirmation_id)
     throw new HttpError(409, 'Earnings already have a payment_confirmation_id');
