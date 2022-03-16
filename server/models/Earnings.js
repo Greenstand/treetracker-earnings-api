@@ -90,7 +90,7 @@ const FilterCriteria = ({
     case 'payment_method':
       orderBy = 'payment_method';
       break;
-    case 'effective_payment_date':
+    case 'calculated_at':
       orderBy = 'calculated_at';
       break;
     default:

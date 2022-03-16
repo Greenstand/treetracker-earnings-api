@@ -388,7 +388,7 @@ paths:
               - funder
               - amount
               - payment_method
-              - effective_payment_date
+              - calculated_at
           in: query
           name: sort_by
           description: column with which to sort by
