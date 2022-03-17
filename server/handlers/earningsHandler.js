@@ -40,6 +40,7 @@ const earningsGetQuerySchema = Joi.object({
     'paid_at',
   ),
   order: Joi.string().valid('asc', 'desc'),
+  sub_organization: Joi.string().uuid(),
 }).unknown(false);
 
 const earningsPatchSchema = Joi.object({

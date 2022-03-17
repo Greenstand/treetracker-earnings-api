@@ -84,6 +84,7 @@ const FilterCriteria = ({
   end_date = undefined,
   sort_by = undefined,
   order = 'asc',
+  sub_organization = undefined,
 }) => {
   let orderBy = '';
 
@@ -108,6 +109,7 @@ const FilterCriteria = ({
     status: earnings_status,
     worker_id,
     funder_id,
+    sub_organization,
     contract_id,
     calculated_at_end: end_date ? new Date(end_date) : end_date,
     calculated_at_start: start_date ? new Date(start_date) : start_date,
