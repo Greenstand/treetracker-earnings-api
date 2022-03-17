@@ -22,10 +22,15 @@ const Earning = async ({
   paid_at,
   status,
   batch_id,
+  sub_organization,
 }) => {
   const consolidation_rule = `CONSOLIDATION_RULE_${consolidation_rule_id}`;
   const growerResponse = await axios.get(`${stakeholderUrl}?id=${worker_id}`);
   const funderResponse = await axios.get(`${stakeholderUrl}?id=${funder_id}`);
+  let subOrganizationResponse;
+  if(sub_organization){
+    subOrganizationResponse = await axios.get(`${stakeholderUrl}?id=${sub_organization}`);
+  }
 
   return Object.freeze({
     id,
@@ -49,6 +54,8 @@ const Earning = async ({
     payment_confirmed_at,
     status,
     batch_id,
+    sub_organization,
+    sub_organization_name: subOrganizationResponse?.data.stakeholders[0]?.org_name,
   });
 };
 
