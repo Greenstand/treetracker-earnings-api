@@ -53,8 +53,8 @@ To do the test, we need some test data for example, the organization and grower/
 
 - The major organization
 
-  - Organization name: Greenstand
-  - Organization ID: 792a4eee-8e18-4750-a56f-91bdec383aa6
+  - Organization name: FCC
+  - Organization ID: ae7faf5d-46e2-4944-a6f9-5e65986b2e03
 
 - The grower accounts 1
 
@@ -64,6 +64,16 @@ To do the test, we need some test data for example, the organization and grower/
 - The grower accounts 2
   - Grower account name: Grower Two
   - ID: 90eef52b-ad55-4953-ace9-6a324ae6cec2
+
+- Sub organization
+  
+  -- Organization: FCCABC
+  -- ID: 8b353fbe-0ad7-46a6-ad43-27e304a95757
+
+- Sub organization
+  
+  -- Organization: FCCDEF
+  -- ID: ce14d9b7-92c3-450b-9779-2bb731c5aefc
 
 ## For the test environment
 
