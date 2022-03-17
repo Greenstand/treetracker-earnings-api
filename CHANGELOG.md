@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.13.0...v1.14.0) (2022-03-17)
+
+
+### Features
+
+* search by sub org ([e03233b](https://github.com/Greenstand/treetracker-earnings/commit/e03233bce8f8bf2d388f14e5e3a6ee8f48ee2a10))
+
 # [1.13.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.12.5...v1.13.0) (2022-03-17)
 
 
