@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.15.0...v1.16.0) (2022-03-17)
+
+
+### Features
+
+* test tool for test env ([95a4861](https://github.com/Greenstand/treetracker-earnings/commit/95a4861433428a05e022127665005bff4498b543))
+
 # [1.15.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.14.0...v1.15.0) (2022-03-17)
 
 
