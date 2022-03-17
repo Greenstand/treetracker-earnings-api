@@ -15,6 +15,7 @@ program.command('earnings')
   .requiredOption('-f, --funder_id <string>', 'set up the funder id')
   .requiredOption('-g, --grower_id <string>', 'set up the grower id')
   .requiredOption('-c, --captures_count <string>', 'the number of captures')
+  .requiredOption('-s, --sub_organization <string>', 'the id of sub organization')
   .action((options) => {
     // const limit = options.first ? 1 : undefined;
     // console.log(str.split(options.separator, limit));
@@ -22,7 +23,8 @@ program.command('earnings')
     seed.seed(
       options.funder_id,
       options.grower_id,
-      options.captures_count
+      options.captures_count,
+      options.sub_organization,
     )
       .then(() => {
         log.warn("done!");

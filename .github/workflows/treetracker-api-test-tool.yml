@@ -12,6 +12,9 @@ on:
       growerId:
         description: 'The grower id'
         required: true
+      subOrganizationId:
+        description: 'The sub organization id'
+        required: true
 
 env:
   project-directory: ./
@@ -32,7 +35,7 @@ jobs:
       - name: Save DigitalOcean kubeconfig
         run: doctl kubernetes cluster kubeconfig save ${{ secrets.DEV_CLUSTER_NAME }}
       - name: List pods in microservice
-        run: kubectl -n ${{ secrets.K8S_NAMESPACE }} exec deployment/treetracker-earnings-api -- npm run seed-cli -- earnings --funder_id ${{ github.event.inputs.funderId}} -c ${{ github.event.inputs.captureCount}} -g ${{ github.event.inputs.growerId}}
+        run: kubectl -n ${{ secrets.K8S_NAMESPACE }} exec deployment/treetracker-earnings-api -- npm run seed-cli -- earnings --funder_id ${{ github.event.inputs.funderId}} -c ${{ github.event.inputs.captureCount}} -g ${{ github.event.inputs.growerId}} -s ${{github.event.inputs.subOrganizationId}}
       # - name: Update kubernetes resources
       #   run: kustomize build deployment/overlays/development | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
       # - name: Attempt to wait for migration job to complete

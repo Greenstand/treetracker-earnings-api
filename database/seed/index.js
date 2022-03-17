@@ -5,6 +5,7 @@ exports.seed = async (
   funder_id,
   worker_id,
   captures_count,
+  sub_organization,
 ) => {
 
   let multiplier = (100 - 100 % 100) / 10 / 100;
@@ -29,6 +30,7 @@ exports.seed = async (
     consolidation_period_start: new Date().toISOString(),
     consolidation_period_end: new Date().toISOString(),
     captures_count,
+    sub_organization,
   });
 
 }
