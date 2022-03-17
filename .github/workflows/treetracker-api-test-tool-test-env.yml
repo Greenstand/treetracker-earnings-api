@@ -1,4 +1,4 @@
-name: Test Tool for Dev ENV
+name: Test Tool for Test ENV
 
 on:
   workflow_dispatch:
@@ -31,9 +31,9 @@ jobs:
       - name: Install doctl for kubernetes
         uses: digitalocean/action-doctl@v2
         with:
-          token: ${{ secrets.DEV_DIGITALOCEAN_TOKEN }}
+          token: ${{ secrets.TEST_DIGITALOCEAN_TOKEN }}
       - name: Save DigitalOcean kubeconfig
-        run: doctl kubernetes cluster kubeconfig save ${{ secrets.DEV_CLUSTER_NAME }}
+        run: doctl kubernetes cluster kubeconfig save ${{ secrets.TEST_CLUSTER_NAME }}
       - name: List pods in microservice
         run: kubectl -n ${{ secrets.K8S_NAMESPACE }} exec deployment/treetracker-earnings-api -- npm run seed-cli -- earnings --funder_id ${{ github.event.inputs.funderId}} -c ${{ github.event.inputs.captureCount}} -g ${{ github.event.inputs.growerId}} -s ${{github.event.inputs.subOrganizationId}}
       # - name: Update kubernetes resources
