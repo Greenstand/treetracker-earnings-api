@@ -491,7 +491,8 @@ describe('Earnings API tests.', () => {
               'payment_confirmed_at',
               'status',
               'batch_id',
-            ]);
+              'sub_organization',
+             ]);
             if (
               earning.payment_confirmation_id ===
               earnings._object.payment_confirmation_id &&
