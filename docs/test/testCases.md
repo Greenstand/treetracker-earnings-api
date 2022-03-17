@@ -77,7 +77,7 @@ To do the test, we need some test data for example, the organization and grower/
 
 ## For the test environment
 
-- The major organization
+- The major organization /funder
 
   - Organization name: FCC
   - Organization ID: df12ea71-65e6-4059-b4f5-60c675764497
@@ -94,13 +94,13 @@ To do the test, we need some test data for example, the organization and grower/
 
 - The sub-organization
 
-  - Sub-organization name: Org5
-  - Sub-organization ID:0b437447-2957-4188-b0c1-c4fc32046df1
+  - Sub-organization name: FCCDEF
+  - Sub-organization ID: d523df4e-7fcd-4cd3-acb7-05b48e0939b8
 
 - The sub-organization
 
-  - Sub-organization name: Org3
-  - Sub-organization ID: c41387fb-230b-4e16-8cdd-3a406c937750
+  - Sub-organization name: FCCABC
+  - Sub-organization ID: 894e4a9a-3a85-46ea-ba8c-6c00689503f3
 
 ## For the test environment
 
