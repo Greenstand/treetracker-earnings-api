@@ -1,3 +1,45 @@
+## [1.16.7](https://github.com/Greenstand/treetracker-earnings/compare/v1.16.6...v1.16.7) (2022-03-28)
+
+
+### Bug Fixes
+
+* cors test ([e4e580d](https://github.com/Greenstand/treetracker-earnings/commit/e4e580d9655fa3f977d82f4c47a0861f814a704d))
+
+## [1.16.6](https://github.com/Greenstand/treetracker-earnings/compare/v1.16.5...v1.16.6) (2022-03-28)
+
+
+### Bug Fixes
+
+* update test case data ([16c0030](https://github.com/Greenstand/treetracker-earnings/commit/16c0030d1d2a8e13a3e40911888045b02a5f9dd5))
+
+## [1.16.5](https://github.com/Greenstand/treetracker-earnings/compare/v1.16.4...v1.16.5) (2022-03-28)
+
+
+### Bug Fixes
+
+* cors test ([ac97dd2](https://github.com/Greenstand/treetracker-earnings/commit/ac97dd2323a4c0190f3af7a733b010311dbe8d1a))
+
+## [1.16.4](https://github.com/Greenstand/treetracker-earnings/compare/v1.16.3...v1.16.4) (2022-03-28)
+
+
+### Bug Fixes
+
+* cors test ([8f40ce9](https://github.com/Greenstand/treetracker-earnings/commit/8f40ce92f86adc72fc8521e184f5e66d90258ed7))
+
+## [1.16.3](https://github.com/Greenstand/treetracker-earnings/compare/v1.16.2...v1.16.3) (2022-03-28)
+
+
+### Bug Fixes
+
+* test tool permision ([245b9bd](https://github.com/Greenstand/treetracker-earnings/commit/245b9bd4becf9d513bd47c6ada5438ac7b3c0eb8))
+
+## [1.16.2](https://github.com/Greenstand/treetracker-earnings/compare/v1.16.1...v1.16.2) (2022-03-28)
+
+
+### Bug Fixes
+
+* give permission to test tool ([bd51533](https://github.com/Greenstand/treetracker-earnings/commit/bd51533a2ffc28d76f2f0f25846dffd413cdc830))
+
 ## [1.16.1](https://github.com/Greenstand/treetracker-earnings/compare/v1.16.0...v1.16.1) (2022-03-17)
 
 

@@ -16,6 +16,8 @@ on:
         description: 'The sub organization id'
         required: true
 
+permissions: read-all
+
 env:
   project-directory: ./
 

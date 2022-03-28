@@ -10,11 +10,10 @@ const { errorHandler, handlerWrapper } = require('./utils/utils');
 
 const app = express();
 
-// TODO CORS is open
-// if (process.env.NODE_ENV === 'development') {
-log.info('disable cors');
-app.use(cors());
-// }
+if (process.env.NODE_ENV === 'development') {
+  log.info('disable cors');
+  app.use(cors());
+}
 
 Sentry.init({ dsn: sentryDSN });
 
