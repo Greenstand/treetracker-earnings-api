@@ -1,6 +1,7 @@
 const express = require('express');
 const Sentry = require('@sentry/node');
 const cors = require('cors');
+const log = require('loglevel');
 const HttpError = require('./utils/HttpError');
 
 const router = require('./routes');
@@ -11,8 +12,8 @@ const app = express();
 
 // TODO CORS is open
 // if (process.env.NODE_ENV === 'development') {
-  console.log('disable cors');
-  app.use(cors());
+log.info('disable cors');
+app.use(cors());
 // }
 
 Sentry.init({ dsn: sentryDSN });
@@ -43,7 +44,7 @@ app.use(
         );
       }
     }
-    next();
+    return next();
   }),
 );
 

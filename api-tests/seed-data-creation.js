@@ -1,8 +1,9 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const { v4: uuid } = require('uuid');
 const sinon = require('sinon');
-const knex = require('../../server/database/knex');
-const s3 = require('../../server/services/s3');
 const axios = require('axios').default;
+const knex = require('../server/database/knex');
+const s3 = require('../server/services/s3');
 
 const workerId = '71be6266-81fe-476f-a563-9bc1c61fc037';
 const earningsPaymentObject = {
@@ -82,9 +83,12 @@ after(async () => {
 });
 
 // should not be in the PATCH request body
-const { status, ...earnings } = earningsOne;
-const { status: status2, ...earningsPaid } = earningsWithPaidStatus;
-const { status: status3, ...earningsCancelled } = earningsWithCancelledStatus;
+const earnings = { ...earningsOne };
+delete earnings.status;
+const earningsPaid = { ...earningsWithPaidStatus };
+delete earningsPaid.status;
+const earningsCancelled = { ...earningsWithCancelledStatus };
+delete earningsCancelled.status;
 
 module.exports = {
   earnings,
