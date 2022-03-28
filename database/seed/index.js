@@ -8,7 +8,7 @@ exports.seed = async (
   sub_organization,
 ) => {
 
-  let multiplier = (100 - 100 % 100) / 10 / 100;
+  let multiplier = (captures_count - captures_count % 100) / 10 / 100;
   if (multiplier > 1) {
     multiplier = 1
   }
