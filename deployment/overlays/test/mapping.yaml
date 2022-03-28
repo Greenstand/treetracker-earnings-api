@@ -1,0 +1,14 @@
+---
+apiVersion: getambassador.io/v2
+kind: Mapping
+metadata:
+  name: treetracker-earnings-api
+spec:
+  cors:
+    cors:
+    origins: 'https://test-admin.treetracker.org'
+    headers:
+      - Content-Type
+      - Authorization
+    methods:
+      - 'GET, POST, PATCH, PUT, OPTIONS, DELETE'
