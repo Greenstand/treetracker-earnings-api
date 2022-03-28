@@ -1,3 +1,10 @@
+## [1.16.3](https://github.com/Greenstand/treetracker-earnings/compare/v1.16.2...v1.16.3) (2022-03-28)
+
+
+### Bug Fixes
+
+* test tool permision ([245b9bd](https://github.com/Greenstand/treetracker-earnings/commit/245b9bd4becf9d513bd47c6ada5438ac7b3c0eb8))
+
 ## [1.16.2](https://github.com/Greenstand/treetracker-earnings/compare/v1.16.1...v1.16.2) (2022-03-28)
 
 
