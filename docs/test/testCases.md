@@ -43,6 +43,11 @@ https://dev-admin.treetracker.org/earnings
 
 ![](https://dadior.s3.ap-northeast-1.amazonaws.com/20220312162425.png)
 
+
+**A demo video**
+
+https://dadior.s3.ap-northeast-1.amazonaws.com/Screen%20Recording%202022-03-28%20at%204.27.19%20PM.mp4
+
 # Test Story
 
 # Test Cases
@@ -79,28 +84,28 @@ To do the test, we need some test data for example, the organization and grower/
 
 - The major organization /funder
 
-  - Organization name: FCC
-  - Organization ID: df12ea71-65e6-4059-b4f5-60c675764497
+  - Organization name: Greenstand
+  - Organization ID: 792a4eee-8e18-4750-a56f-91bdec383aa6
 
 - The grower accounts 1
 
-  - Grower account name: Freetown A
-  - ID: 9d582e43-7a7a-44b4-8d40-848b6b490bf0
+  - Grower account name: Grower One
+  - ID: 35a23de8-f1ab-4409-be79-3c6a158d5bde
 
 - The grower accounts 2
 
-  - Grower account name: Selmer Bauch
-  - ID: f5a17d5a-e6e0-4ae9-b700-1c6fe62a5ffa
+  - Grower account name: Grower Two
+  - ID: 90eef52b-ad55-4953-ace9-6a324ae6cec2
 
 - The sub-organization
 
-  - Sub-organization name: FCCDEF
-  - Sub-organization ID: d523df4e-7fcd-4cd3-acb7-05b48e0939b8
+  - Sub-organization name: Child One
+  - Sub-organization ID: 1a05ec87-3c38-4395-b9f3-aa15becedc31
 
 - The sub-organization
 
-  - Sub-organization name: FCCABC
-  - Sub-organization ID: 894e4a9a-3a85-46ea-ba8c-6c00689503f3
+  - Sub-organization name: Child Two
+  - Sub-organization ID: 1d2fb06e-e8f7-40de-8e13-ed3eba1abb3a
 
 ## For the test environment
 
