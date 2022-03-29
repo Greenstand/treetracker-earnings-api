@@ -1,3 +1,10 @@
+## [1.16.8](https://github.com/Greenstand/treetracker-earnings/compare/v1.16.7...v1.16.8) (2022-03-29)
+
+
+### Bug Fixes
+
+* grower name search ([58e9713](https://github.com/Greenstand/treetracker-earnings/commit/58e97130f79c8b20a8c45f69250ee10fb5f74ead))
+
 ## [1.16.7](https://github.com/Greenstand/treetracker-earnings/compare/v1.16.6...v1.16.7) (2022-03-28)
 
 
