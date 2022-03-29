@@ -28,7 +28,7 @@ const Earning = async ({
   const growerResponse = await axios.get(`${stakeholderUrl}?id=${worker_id}`);
   const funderResponse = await axios.get(`${stakeholderUrl}?id=${funder_id}`);
   let subOrganizationResponse;
-  if(sub_organization){
+  if (sub_organization) {
     subOrganizationResponse = await axios.get(`${stakeholderUrl}?id=${sub_organization}`);
   }
 
@@ -36,7 +36,7 @@ const Earning = async ({
     id,
     worker_id,
     captures_count,
-    grower: `${growerResponse.data.stakeholders[0]?.first_name}  ${growerResponse.data.stakeholders[0]?.last_name}`,
+    grower: `${growerResponse.data.stakeholders[0]?.first_name} ${growerResponse.data.stakeholders[0]?.last_name}`,
     funder_id,
     funder: funderResponse.data.stakeholders[0]?.org_name,
     phone: growerResponse.data.stakeholders[0]?.phone,
