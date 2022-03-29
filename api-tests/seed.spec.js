@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { expect } = require('chai');
 const log = require('loglevel');
-const knex = require('../server/database/knex');
+const knex = require('../server/infra/database/knex');
 const seed = require('../database/seed/index');
 
 describe('seed', () => {

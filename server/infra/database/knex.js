@@ -2,7 +2,7 @@ const expect = require('expect-runtime');
 const log = require('loglevel');
 const knex = require('knex');
 
-const connection = require('../../config/config').connectionString;
+const connection = require('../../../config/config').connectionString;
 
 expect(connection).to.match(/^postgresql:\//);
 

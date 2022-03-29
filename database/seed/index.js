@@ -1,6 +1,6 @@
 const log = require('loglevel');
 const { v4: uuid } = require('uuid');
-const knex = require('../../server/database/knex');
+const knex = require('../../server/infra/database/knex');
 
 exports.seed = async (
   funder_id,

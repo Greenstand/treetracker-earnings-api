@@ -2,8 +2,8 @@
 const { v4: uuid } = require('uuid');
 const sinon = require('sinon');
 const axios = require('axios').default;
-const knex = require('../server/database/knex');
-const s3 = require('../server/services/s3');
+const knex = require('../server/infra/database/knex');
+const s3 = require('../server/infra/S3/s3');
 
 const workerId = '71be6266-81fe-476f-a563-9bc1c61fc037';
 const earningsPaymentObject = {
