@@ -3,7 +3,7 @@ const fs = require('fs');
 const { v4: uuid } = require('uuid');
 const Batch = require('../models/Batch');
 const Earnings = require('../models/Earnings');
-const Session = require('../models/Session');
+const Session = require('../database/Session');
 const { uploadCsv } = require('./aws');
 
 class EarningsService {
