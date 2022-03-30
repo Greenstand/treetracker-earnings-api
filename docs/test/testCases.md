@@ -117,7 +117,7 @@ To do the test, we need some test data for example, the organization and grower/
 
    - Grower name
    - Funder name
-   - Sub organization name
+   - Sub organization name (please note, sub org will not be shown in the list, it was shown in the detail panel, and **NOTE** the title of the sub org is actually `Organization`, the sub org is an concept internaly.)
    - Amount
    - Captures count
    - Effective Date
