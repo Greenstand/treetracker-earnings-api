@@ -4,7 +4,7 @@ const { v4: uuid } = require('uuid');
 const Batch = require('../models/Batch');
 const Earnings = require('../models/Earnings');
 const Session = require('../infra/database/Session');
-const { uploadCsv } = require('../infra/S3');
+const { uploadCsv } = require('./S3Service');
 
 class EarningsService {
   constructor() {
