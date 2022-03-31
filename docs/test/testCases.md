@@ -25,7 +25,7 @@
 To generate new record of earnings for testing:
 
 - Go to this url:
-  https://github.com/Greenstand/treetracker-earnings-api/actions/workflows/treetracker-api-test-tool.yml
+  https://github.com/Greenstand/treetracker-earnings-api/actions/workflows/treetracker-api-test-tool-test-env.yml
 
 - Click the button "Run workflow"
 
