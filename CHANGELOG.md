@@ -1,3 +1,15 @@
+## [1.16.11](https://github.com/Greenstand/treetracker-earnings/compare/v1.16.10...v1.16.11) (2022-04-06)
+
+
+### Bug Fixes
+
+* add infra folder ([1ef424a](https://github.com/Greenstand/treetracker-earnings/commit/1ef424a151a0540962ca7e1c1f3ce5bdd3aa00b4))
+* add s3 to services ([ab5255b](https://github.com/Greenstand/treetracker-earnings/commit/ab5255bd22628ff7d49a0319d6cdb3f5d6dd7def))
+* change session file location ([58ad4b5](https://github.com/Greenstand/treetracker-earnings/commit/58ad4b540e89107beb4000facb71545a1aabc058))
+* merge conflicts ([57cc0e6](https://github.com/Greenstand/treetracker-earnings/commit/57cc0e65f77c3412b9e1d15ca99c39b641f15972))
+* merge request ([ffbd98b](https://github.com/Greenstand/treetracker-earnings/commit/ffbd98b0221800eb99d8bbc51801290b829e647e))
+* refactoring ([53c58e8](https://github.com/Greenstand/treetracker-earnings/commit/53c58e846cfe680e5277e4ca9b26900646744b58))
+
 ## [1.16.10](https://github.com/Greenstand/treetracker-earnings/compare/v1.16.9...v1.16.10) (2022-04-06)
 
 
