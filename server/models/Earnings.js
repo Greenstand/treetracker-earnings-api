@@ -34,6 +34,9 @@ class Earnings {
       case 'calculated_at':
         orderBy = 'calculated_at';
         break;
+      case 'paid_at':
+        orderBy = 'paid_at';
+        break;
       default:
         orderBy = undefined;
         break;
@@ -135,8 +138,8 @@ class Earnings {
 
   async getEarnings(filter, limitOptions) {
     const filterCriteria = this.constructor.FilterCriteria({ ...filter });
-    const sortBy = filterCriteria?.sort_by;
-    const order = filterCriteria?.order;
+    const sortBy = filter.sort_by;
+    const { order } = filter;
     const { earnings, count } = await this._earningsRepository.getEarnings(
       filterCriteria,
       limitOptions,
@@ -152,8 +155,8 @@ class Earnings {
 
     if (sortBy === 'grower') {
       formattedEarnings.sort((a, b) => {
-        const nameA = a.grower?.toUpperCase(); // ignore upper and lowercase
-        const nameB = b.grower?.toUpperCase(); // ignore upper and lowercase
+        const nameA = a.grower?.toUpperCase() || ""; // ignore upper and lowercase
+        const nameB = b.grower?.toUpperCase() || "";  // ignore upper and lowercase
 
         if (nameA < nameB) {
           return order === 'asc' ? -1 : 1;
@@ -166,8 +169,8 @@ class Earnings {
     }
     if (sortBy === 'funder') {
       formattedEarnings.sort((a, b) => {
-        const nameA = a.funder?.toUpperCase(); // ignore upper and lowercase
-        const nameB = b.funder?.toUpperCase(); // ignore upper and lowercase
+        const nameA = a.funder?.toUpperCase() || ""; // ignore upper and lowercase
+        const nameB = b.funder?.toUpperCase() || ""; // ignore upper and lowercase
         if (nameA < nameB) {
           return order === 'asc' ? -1 : 1;
         }
