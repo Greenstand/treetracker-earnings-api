@@ -5,6 +5,7 @@ const Batch = require('../models/Batch');
 const Earnings = require('../models/Earnings');
 const Session = require('../infra/database/Session');
 const { uploadCsv } = require('./S3Service');
+const HttpError = require('../utils/HttpError');
 
 class EarningsService {
   constructor() {
@@ -34,6 +35,12 @@ class EarningsService {
     const key = `treetracker_earnings/${new Date().toISOString()}_${uuid()}.csv`;
     const fileBuffer = await fs.promises.readFile(file.path);
     const csvReadStream = fs.createReadStream(file.path);
+
+    // check the first line, headers of fields
+    const firstLine = fileBuffer.toString().split('\n')[0];
+    if (!firstLine.match(/.*earnings_id.*,.*worker_id.*,.*phone.*,.*currency.*,.*amount.*,.*captures_count.*,.*payment_confirmation_id.*,.*payment_method.*,.*paid_at.*/)) {
+      throw new HttpError(422, 'Seems the CVS file is not in the correct format, make sure the CSS file has fields: "earnings_id", "worker_id", "phone", "currency", "amount", "captures_count", "payment_confirmation_id", "payment_method", "paid_at", and the fields is separated by a comma');
+    }
 
     // Don't want to roll back batch creation if it errors out
     const batchSession = new Session();
