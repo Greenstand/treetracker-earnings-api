@@ -1,3 +1,10 @@
+## [1.16.12](https://github.com/Greenstand/treetracker-earnings/compare/v1.16.11...v1.16.12) (2022-04-06)
+
+
+### Bug Fixes
+
+* upload bad file ([2b36956](https://github.com/Greenstand/treetracker-earnings/commit/2b3695689c5ee61696ba62a717923e6e79400304))
+
 ## [1.16.11](https://github.com/Greenstand/treetracker-earnings/compare/v1.16.10...v1.16.11) (2022-04-06)
 
 
