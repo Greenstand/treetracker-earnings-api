@@ -1,321 +1,275 @@
+const log = require('loglevel');
+const EarningsRepository = require('../repositories/EarningsRepository');
 const HttpError = require('../utils/HttpError');
-const axios = require('axios').default;
+const { getStakeholderById } = require('../services/StakeholderService');
 
-const stakeholderUrl = `${process.env.TREETRACKER_STAKEHOLDER_API_URL}/stakeholders`;
-
-const Earning = async ({
-  id,
-  worker_id,
-  captures_count,
-  funder_id,
-  amount,
-  currency,
-  calculated_at,
-  consolidation_rule_id,
-  consolidation_period_start,
-  consolidation_period_end,
-  payment_confirmation_id,
-  payment_method,
-  payment_confirmed_by,
-  payment_confirmation_method,
-  payment_confirmed_at,
-  paid_at,
-  status,
-  batch_id,
-  sub_organization,
-}) => {
-  const consolidation_rule = `CONSOLIDATION_RULE_${consolidation_rule_id}`;
-  const growerResponse = await axios.get(`${stakeholderUrl}?id=${worker_id}`);
-  const funderResponse = await axios.get(`${stakeholderUrl}?id=${funder_id}`);
-  let subOrganizationResponse;
-  if (sub_organization) {
-    subOrganizationResponse = await axios.get(`${stakeholderUrl}?id=${sub_organization}`);
+class Earnings {
+  constructor(session) {
+    this._earningsRepository = new EarningsRepository(session);
   }
 
-  return Object.freeze({
+  static FilterCriteria({
+    earnings_status = undefined,
+    funder_id = undefined,
+    worker_id = undefined,
+    contract_id = undefined,
+    start_date = undefined,
+    end_date = undefined,
+    sort_by = undefined,
+    order = 'asc',
+    sub_organization = undefined,
+  }) {
+    let orderBy = '';
+
+    switch (sort_by) {
+      case 'id':
+        orderBy = 'id';
+        break;
+      case 'amount':
+        orderBy = 'amount';
+        break;
+      case 'payment_method':
+        orderBy = 'payment_method';
+        break;
+      case 'calculated_at':
+        orderBy = 'calculated_at';
+        break;
+      default:
+        orderBy = undefined;
+        break;
+    }
+    return Object.entries({
+      status: earnings_status,
+      worker_id,
+      funder_id,
+      sub_organization,
+      contract_id,
+      calculated_at_end: end_date ? new Date(end_date) : end_date,
+      calculated_at_start: start_date ? new Date(start_date) : start_date,
+      orderBy,
+      order,
+    })
+      .filter((entry) => entry[1] !== undefined)
+      .reduce((result, item) => {
+        const resultCopy = { ...result };
+        const [key, value] = item;
+        resultCopy[key] = value;
+        return resultCopy;
+      }, {});
+  }
+
+  static async Earning({
     id,
     worker_id,
     captures_count,
-    grower: `${growerResponse.data.stakeholders[0]?.first_name} ${growerResponse.data.stakeholders[0]?.last_name}`,
     funder_id,
-    funder: funderResponse.data.stakeholders[0]?.org_name,
-    phone: growerResponse.data.stakeholders[0]?.phone,
     amount,
     currency,
     calculated_at,
-    consolidation_rule,
+    consolidation_rule_id,
     consolidation_period_start,
     consolidation_period_end,
     payment_confirmation_id,
     payment_method,
     payment_confirmed_by,
     payment_confirmation_method,
-    paid_at,
     payment_confirmed_at,
+    paid_at,
     status,
     batch_id,
     sub_organization,
-    sub_organization_name: subOrganizationResponse?.data.stakeholders[0]?.org_name,
-  });
-};
+  }) {
+    const consolidation_rule = `CONSOLIDATION_RULE_${consolidation_rule_id}`;
+    const growerResponse = await getStakeholderById(worker_id);
+    const funderResponse = await getStakeholderById(funder_id);
 
-const BatchEarning = async ({ id, worker_id, amount, currency, status }) => {
-  // Get the phone value from the entities API
-  const response = await axios.get(
-    `${stakeholderUrl}?stakeholder_uuid=${worker_id}`,
-  );
+    let subOrganizationResponse;
+    if (sub_organization) {
+      subOrganizationResponse = await getStakeholderById(sub_organization);
+    }
 
-  return Object.freeze({
-    earnings_id: id,
-    worker_id,
-    phone: response.data.stakeholders[0]?.phone,
-    currency,
-    amount,
-    status,
-  });
-};
-
-const FilterCriteria = ({
-  earnings_status = undefined,
-  funder_id = undefined,
-  worker_id = undefined,
-  contract_id = undefined,
-  start_date = undefined,
-  end_date = undefined,
-  sort_by = undefined,
-  order = 'asc',
-  sub_organization = undefined,
-}) => {
-  let orderBy = '';
-
-  switch (sort_by) {
-    case 'id':
-      orderBy = 'id';
-      break;
-    case 'amount':
-      orderBy = 'amount';
-      break;
-    case 'payment_method':
-      orderBy = 'payment_method';
-      break;
-    case 'calculated_at':
-      orderBy = 'calculated_at';
-      break;
-    default:
-      orderBy = undefined;
-      break;
+    return Object.freeze({
+      id,
+      worker_id,
+      captures_count,
+      grower: `${growerResponse?.first_name} ${growerResponse?.last_name}`,
+      funder_id,
+      funder: funderResponse?.org_name,
+      phone: growerResponse?.phone,
+      amount,
+      currency,
+      calculated_at,
+      consolidation_rule,
+      consolidation_period_start,
+      consolidation_period_end,
+      payment_confirmation_id,
+      payment_method,
+      payment_confirmed_by,
+      payment_confirmation_method,
+      paid_at,
+      payment_confirmed_at,
+      status,
+      batch_id,
+      sub_organization,
+      sub_organization_name: subOrganizationResponse?.org_name,
+    });
   }
-  return Object.entries({
-    status: earnings_status,
-    worker_id,
-    funder_id,
-    sub_organization,
-    contract_id,
-    calculated_at_end: end_date ? new Date(end_date) : end_date,
-    calculated_at_start: start_date ? new Date(start_date) : start_date,
-    orderBy,
-    order,
-  })
-    .filter((entry) => entry[1] !== undefined)
-    .reduce((result, item) => {
-      result[item[0]] = item[1];
-      return result;
-    }, {});
-};
 
-const QueryOptions = ({ limit = undefined, offset = undefined }) => {
-  return Object.entries({ limit, offset })
-    .filter((entry) => entry[1] !== undefined)
-    .reduce((result, item) => {
-      result[item[0]] = item[1];
-      return result;
-    }, {});
-};
+  static async BatchEarning({ id, worker_id, amount, currency, status }) {
+    // Get the phone value from the entities API
+    const response = await getStakeholderById(worker_id);
 
-const getEarnings =
-  (earningsRepo) =>
-    async (filterCriteria = undefined, url) => {
-      let filter = {};
-      let options = { limit: 100, offset: 0 };
-      filter = FilterCriteria({
-        ...filterCriteria,
+    return Object.freeze({
+      earnings_id: id,
+      worker_id,
+      phone: response?.phone,
+      currency,
+      amount,
+      status,
+    });
+  }
+
+  async _response(earning) {
+    return this.constructor.Earning(earning);
+  }
+
+  async getEarnings(filter, limitOptions) {
+    const filterCriteria = this.constructor.FilterCriteria({ ...filter });
+    const sortBy = filterCriteria?.sort_by;
+    const order = filterCriteria?.order;
+    const { earnings, count } = await this._earningsRepository.getEarnings(
+      filterCriteria,
+      limitOptions,
+    );
+
+    let formattedEarnings = await Promise.all(
+      earnings.map((row) => {
+        return this._response({ ...row });
+      }),
+    );
+
+    const initialLength = formattedEarnings.length;
+
+    if (sortBy === 'grower') {
+      formattedEarnings.sort((a, b) => {
+        const nameA = a.grower?.toUpperCase(); // ignore upper and lowercase
+        const nameB = b.grower?.toUpperCase(); // ignore upper and lowercase
+
+        if (nameA < nameB) {
+          return order === 'asc' ? -1 : 1;
+        }
+        if (nameA > nameB) {
+          return order === 'asc' ? 1 : -1;
+        }
+        return 0;
       });
-      options = { ...options, ...QueryOptions({ ...filterCriteria }) };
+    }
+    if (sortBy === 'funder') {
+      formattedEarnings.sort((a, b) => {
+        const nameA = a.funder?.toUpperCase(); // ignore upper and lowercase
+        const nameB = b.funder?.toUpperCase(); // ignore upper and lowercase
+        if (nameA < nameB) {
+          return order === 'asc' ? -1 : 1;
+        }
+        if (nameA > nameB) {
+          return order === 'asc' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
 
-      const queryFilterObjects = { ...filterCriteria };
-      queryFilterObjects.limit = options.limit;
+    if (filter?.grower) {
+      formattedEarnings = formattedEarnings.filter(({ grower }) =>
+        grower.toLowerCase().includes(filter?.grower.toLowerCase()),
+      );
+    }
 
-      // remove offset property, as it is calculated later
-      delete queryFilterObjects.offset;
+    if (filter?.phone) {
+      formattedEarnings = formattedEarnings.filter(({ phone }) =>
+        phone.toLowerCase().includes(filter?.phone.toLowerCase()),
+      );
+    }
 
-      const query = Object.keys(queryFilterObjects)
-        .map((key) => `${key}=${encodeURIComponent(queryFilterObjects[key])}`)
-        .join('&');
+    // after grower and phone filters have been applied
+    const newLength = formattedEarnings.length;
 
-      const urlWithLimitAndOffset = `${url}?${query}&offset=`;
+    // get the number of items removed and subtract from total count
+    const noOfItemsRemoved = initialLength - newLength;
 
-      const next = `${urlWithLimitAndOffset}${+options.offset + +options.limit}`;
-      let prev = null;
-      if (options.offset - +options.limit >= 0) {
-        prev = `${urlWithLimitAndOffset}${+options.offset - +options.limit}`;
-      }
+    return { earnings: formattedEarnings, count: count - noOfItemsRemoved };
+  }
 
-      const { earnings, count } = await earningsRepo.getEarnings(filter, options);
+  async getBatchEarnings(filter = {}) {
+    const filterCriteria = this.constructor.FilterCriteria({
+      ...filter,
+    });
 
-      const formattedEarnings = await Promise.all(
-        earnings.map((row) => {
-          return Earning({ ...row });
-        }),
+    const earningsStream = await this._earningsRepository.getEarnings(
+      filterCriteria,
+      { stream: true },
+    );
+
+    return earningsStream;
+  }
+
+  async updateEarnings(requestBody) {
+    const body = { ...requestBody };
+    const { worker_id, currency, amount, captures_count } = body;
+
+    // If data is coming from csv file
+    if (body.earnings_id) {
+      body.id = body.earnings_id;
+      delete body.earnings_id;
+    }
+    delete body.phone;
+
+    const earnings = await this._earningsRepository.getById(body.id);
+
+    if (earnings.status !== 'calculated')
+      throw new HttpError(
+        409,
+        'There are some earning records in this file have been paid or canceled',
       );
 
-      const { sort_by, order = 'asc' } = filterCriteria;
+    if (earnings.payment_confirmation_id)
+      throw new HttpError(
+        409,
+        'Earnings already have a payment_confirmation_id',
+      );
 
-      if (sort_by === 'grower') {
-        formattedEarnings.sort((a, b) => {
-          const nameA = a.grower?.toUpperCase(); // ignore upper and lowercase
-          const nameB = b.grower?.toUpperCase(); // ignore upper and lowercase
+    if (earnings.worker_id !== worker_id)
+      throw new HttpError(
+        409,
+        'The worker id specified does not match that of the earning',
+      );
 
-          if (nameA < nameB) {
-            return order === 'asc' ? -1 : 1;
-          }
-          if (nameA > nameB) {
-            return order === 'asc' ? 1 : -1;
-          }
-          return 0;
-        });
-      }
-      if (filterCriteria.sort_by === 'funder') {
-        formattedEarnings.sort((a, b) => {
-          const nameA = a.funder?.toUpperCase(); // ignore upper and lowercase
-          const nameB = b.funder?.toUpperCase(); // ignore upper and lowercase
-          if (nameA < nameB) {
-            return order === 'asc' ? -1 : 1;
-          }
-          if (nameA > nameB) {
-            return order === 'asc' ? 1 : -1;
-          }
-          return 0;
-        });
-      }
+    if (earnings.currency !== currency)
+      throw new HttpError(
+        409,
+        'The currency specified does not match that of the earning',
+      );
 
-      if (filterCriteria?.grower || filterCriteria?.phone) {
-        const filterFormattedEarnings = formattedEarnings
-          .filter(({ grower }) => {
-            if (!grower && filterCriteria?.grower) {
-              return false;
-            }
-            return filterCriteria?.grower
-              ? grower
-                .toLowerCase()
-                .includes(filterCriteria?.grower.toLowerCase())
-              : true
-          })
-          .filter(({ phone }) => {
-            if (!phone && filterCriteria?.phone) {
-              return false;
-            }
-            return filterCriteria?.phone
-              ? phone.toLowerCase().includes(filterCriteria?.phone.toLowerCase())
-              : true
-          });
+    if (+earnings.amount !== +amount)
+      throw new HttpError(
+        409,
+        'The amount specified does not match that of the earning',
+      );
 
-        return {
-          earnings: filterFormattedEarnings,
-          totalCount: filterFormattedEarnings.length,
-          links: {
-            prev,
-            next,
-          },
-        };
-      }
+    if (+earnings.captures_count !== +captures_count) {
+      log.debug('earnings', earnings);
+      log.debug('captures_count', captures_count);
+      throw new HttpError(
+        409,
+        'The captures_count specified does not match that of the earning',
+      );
+    }
 
-      return {
-        earnings: formattedEarnings,
-        totalCount: count,
-        links: {
-          prev,
-          next,
-        },
-      };
-    };
-
-const updateEarnings = async (earningsRepo, requestBody) => {
-  const body = { ...requestBody };
-  const { worker_id, currency, amount, captures_count } = body;
-
-  // If data is coming from csv file
-  if (body.earnings_id) {
-    body.id = body.earnings_id;
-    delete body.earnings_id;
+    await this._earningsRepository.update({
+      ...body,
+      status: 'paid',
+      payment_confirmed_at: new Date(),
+    });
   }
-  delete body.phone;
+}
 
-  const earnings = await earningsRepo.getById(body.id);
-
-
-  if (earnings.status !== 'calculated')
-    throw new HttpError(409, 'There are some earning records in this file have been paid or canceled');
-
-  if (earnings.payment_confirmation_id)
-    throw new HttpError(409, 'Earnings already have a payment_confirmation_id');
-
-  if (earnings.worker_id !== worker_id)
-    throw new HttpError(
-      409,
-      'The worker id specified does not match that of the earning',
-    );
-
-  if (earnings.currency !== currency)
-    throw new HttpError(
-      409,
-      'The currency specified does not match that of the earning',
-    );
-
-  if (+earnings.amount !== +amount)
-    throw new HttpError(
-      409,
-      'The amount specified does not match that of the earning',
-    );
-
-  if (+earnings.captures_count !== +captures_count) {
-    console.error("earnings", earnings);
-    console.error("captures_count", captures_count);
-    throw new HttpError(
-      409,
-      'The captures_count specified does not match that of the earning',
-    );
-  }
-
-  await earningsRepo.update({
-    ...body,
-    status: 'paid',
-    payment_confirmed_at: new Date(),
-  });
-
-  return {
-    status: 'completed',
-    count: 1,
-  };
-};
-
-const getBatchEarnings =
-  (earningsRepo) =>
-    async (filterCriteria = undefined) => {
-      let filter = {};
-      filter = FilterCriteria({
-        ...filterCriteria,
-      });
-
-      const earningsStream = await earningsRepo.getEarnings(filter, {
-        stream: true,
-      });
-
-      return { earningsStream };
-    };
-
-module.exports = {
-  getEarnings,
-  updateEarnings,
-  getBatchEarnings,
-  BatchEarning,
-};
+module.exports = Earnings;

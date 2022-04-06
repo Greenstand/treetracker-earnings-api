@@ -2,7 +2,7 @@ require('dotenv').config();
 const request = require('supertest');
 const { expect } = require('chai');
 const { v4: uuid } = require('uuid');
-const server = require('../../server/app');
+const server = require('../server/app');
 const {
   earnings: earningsOne,
   earningsPaid: earningsWithPaidStatus,
@@ -202,7 +202,7 @@ describe('Earnings API tests.', () => {
         .set('Accept', 'application/json')
         .set('Authorization', jwtToken)
         .expect(409)
-        .end(function (err, res) {
+        .end(function (err) {
           if (err) return done(err);
           return done();
         });
@@ -382,7 +382,7 @@ describe('Earnings API tests.', () => {
       request(server)
         .get(`/earnings`)
         .query({
-          limit: 1000000+1,
+          limit: 1000000 + 1,
         })
         .set('Accept', 'application/json')
         .set('Authorization', jwtToken)
@@ -461,15 +461,15 @@ describe('Earnings API tests.', () => {
         .expect(200)
         .end(function (err, res) {
           if (err) return done(err);
-          expect(res.body).to.have.keys(['earnings', 'links', 'totalCount']);
+          expect(res.body).to.have.keys(['earnings', 'links', 'query']);
           expect(res.body.links).to.have.keys(['prev', 'next']);
-          expect(res.body.totalCount).to.eq(6);
+          expect(res.body.query.count).to.eq(6);
 
           // test if surveys were added successfully
           const earnings = new GenericObject(earningsOne);
 
           let earnings_updated = false;
-          for (const earning of res.body.earnings) {
+          res.body.earnings.forEach((earning) => {
             expect(earning).to.have.keys([
               'id',
               'grower',
@@ -492,16 +492,16 @@ describe('Earnings API tests.', () => {
               'status',
               'batch_id',
               'sub_organization',
-             ]);
+            ]);
             if (
               earning.payment_confirmation_id ===
-              earnings._object.payment_confirmation_id &&
+                earnings._object.payment_confirmation_id &&
               earning.payment_method === earnings._object.payment_method
             ) {
               expect(earning.status).equal('paid');
               earnings_updated = true;
             }
-          }
+          });
 
           expect(earnings_updated).to.be.true;
 
@@ -518,9 +518,9 @@ describe('Earnings API tests.', () => {
         .expect(200)
         .end(function (err, res) {
           if (err) return done(err);
-          expect(res.body).to.have.keys(['earnings', 'links', 'totalCount']);
+          expect(res.body).to.have.keys(['earnings', 'links', 'query']);
           expect(res.body.links).to.have.keys(['prev', 'next']);
-          expect(res.body.totalCount).to.eq(2);
+          expect(res.body.query.count).to.eq(2);
           return done();
         });
     });
@@ -532,7 +532,7 @@ describe('Earnings API tests.', () => {
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
         .set('authorization', jwtToken)
-        .attach('csv', './__tests__/api-tests/earningsFailedTestInvalidRow.csv')
+        .attach('csv', './api-tests/earningsFailedTestInvalidRow.csv')
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -545,10 +545,7 @@ describe('Earnings API tests.', () => {
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
         .set('authorization', jwtToken)
-        .attach(
-          'csv',
-          './__tests__/api-tests/earningsFailedTestInvalidHeader.csv',
-        )
+        .attach('csv', './api-tests/earningsFailedTestInvalidHeader.csv')
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -561,10 +558,7 @@ describe('Earnings API tests.', () => {
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
         .set('authorization', jwtToken)
-        .attach(
-          'csv',
-          './__tests__/api-tests/earningsFailedTestInvalidHeader2.csv',
-        )
+        .attach('csv', './api-tests/earningsFailedTestInvalidHeader2.csv')
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -577,10 +571,7 @@ describe('Earnings API tests.', () => {
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
         .set('authorization', jwtToken)
-        .attach(
-          'csv',
-          './__tests__/api-tests/earningsFailedTestInvalidHeader3.csv',
-        )
+        .attach('csv', './api-tests/earningsFailedTestInvalidHeader3.csv')
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -593,10 +584,7 @@ describe('Earnings API tests.', () => {
         .patch(`/earnings/batch`)
         .set('authorization', jwtToken)
         .set('Accept', 'multipart/form-data')
-        .attach(
-          'csv',
-          './__tests__/api-tests/earningsFailedTestInvalidHeader4.csv',
-        )
+        .attach('csv', './api-tests/earningsFailedTestInvalidHeader4.csv')
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -609,10 +597,7 @@ describe('Earnings API tests.', () => {
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
         .set('authorization', jwtToken)
-        .attach(
-          'csv',
-          './__tests__/api-tests/earningsFailedTestInvalidHeader5.csv',
-        )
+        .attach('csv', './api-tests/earningsFailedTestInvalidHeader5.csv')
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -625,10 +610,7 @@ describe('Earnings API tests.', () => {
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
         .set('authorization', jwtToken)
-        .attach(
-          'csv',
-          './__tests__/api-tests/earningsFailedTestInvalidHeader6.csv',
-        )
+        .attach('csv', './api-tests/earningsFailedTestInvalidHeader6.csv')
         .expect(422)
         .end(function (err) {
           if (err) return done(err);
@@ -643,7 +625,7 @@ describe('Earnings API tests.', () => {
         .set('authorization', jwtToken)
         .attach(
           'csv',
-          './__tests__/api-tests/earningsFailedTestRowWithNotCalculatedStatus.csv',
+          './api-tests/earningsFailedTestRowWithNotCalculatedStatus.csv',
         )
         .expect(409)
         .end(function (err) {
@@ -653,12 +635,11 @@ describe('Earnings API tests.', () => {
     });
 
     it(`Successful batch request`, function (done) {
-
       request(server)
         .patch(`/earnings/batch`)
         .set('Accept', 'multipart/form-data')
         .set('authorization', jwtToken)
-        .attach('csv', './__tests__/api-tests/earningsSuccessfulTest.csv')
+        .attach('csv', './api-tests/earningsSuccessfulTest.csv')
         .expect(200)
         .end(function (err, res) {
           expect(res.body).eql({

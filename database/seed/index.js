@@ -1,5 +1,6 @@
-const knex = require('../../server/database/knex');
+const log = require('loglevel');
 const { v4: uuid } = require('uuid');
+const knex = require('../../server/infra/database/knex');
 
 exports.seed = async (
   funder_id,
@@ -7,15 +8,14 @@ exports.seed = async (
   captures_count,
   sub_organization,
 ) => {
-
-  let multiplier = (captures_count - captures_count % 100) / 10 / 100;
+  let multiplier = (captures_count - (captures_count % 100)) / 10 / 100;
   if (multiplier > 1) {
-    multiplier = 1
+    multiplier = 1;
   }
-  console.warn("multiplier:", multiplier)
-  const maxPayout = 1200000
-  const amount = multiplier * maxPayout
-  await knex("earnings").insert({
+  log.warn('multiplier:', multiplier);
+  const maxPayout = 1200000;
+  const amount = multiplier * maxPayout;
+  await knex('earnings').insert({
     worker_id,
     amount,
     payment_confirmation_id: null,
@@ -32,5 +32,4 @@ exports.seed = async (
     captures_count,
     sub_organization,
   });
-
-}
+};

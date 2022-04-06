@@ -10,16 +10,17 @@ const {
   earningsBatchGet,
   earningsBatchPatch,
 } = require('./handlers/earningsHandler');
-
+const { adminMiddleware } = require('./utils/helper');
 const { handlerWrapper } = require('./utils/utils');
 
 router.get('/earnings', handlerWrapper(earningsGet));
-router.patch('/earnings', handlerWrapper(earningsPatch));
+router.patch('/earnings', adminMiddleware, handlerWrapper(earningsPatch));
 
 router.get('/earnings/batch', handlerWrapper(earningsBatchGet));
 router.patch(
   '/earnings/batch',
   upload.single('csv'),
+  adminMiddleware,
   handlerWrapper(earningsBatchPatch),
 );
 

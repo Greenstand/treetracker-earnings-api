@@ -1,5 +1,4 @@
-const log = require("loglevel");
-const s3 = require('./s3');
+const s3 = require('../infra/S3/s3');
 
 const uploadCsv = async (csv, Key) => {
   const params = {
@@ -9,8 +8,6 @@ const uploadCsv = async (csv, Key) => {
     Body: csv,
     ACL: 'private',
   };
-
-  log.info("setting for s3:", params)
 
   const uploadPromise = s3.upload(params).promise();
   return uploadPromise;

@@ -1,6 +1,7 @@
 const express = require('express');
 const Sentry = require('@sentry/node');
 const cors = require('cors');
+const log = require('loglevel');
 const HttpError = require('./utils/HttpError');
 
 const router = require('./routes');
@@ -10,7 +11,7 @@ const { errorHandler, handlerWrapper } = require('./utils/utils');
 const app = express();
 
 if (process.env.NODE_ENV === 'development') {
-  console.log('disable cors');
+  log.info('disable cors');
   app.use(cors());
 }
 
@@ -42,7 +43,7 @@ app.use(
         );
       }
     }
-    next();
+    return next();
   }),
 );
 
