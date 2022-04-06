@@ -1,3 +1,10 @@
+## [1.16.13](https://github.com/Greenstand/treetracker-earnings/compare/v1.16.12...v1.16.13) (2022-04-06)
+
+
+### Bug Fixes
+
+* order by fields ([d2546d8](https://github.com/Greenstand/treetracker-earnings/commit/d2546d87a1175eed68d574f1cb3739eccd975d7b))
+
 ## [1.16.12](https://github.com/Greenstand/treetracker-earnings/compare/v1.16.11...v1.16.12) (2022-04-06)
 
 
