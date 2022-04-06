@@ -137,6 +137,11 @@ const earningsBatchPatch = async (req, res, next) => {
 
   const key = `treetracker_earnings/${new Date().toISOString()}_${uuid()}.csv`;
   const fileBuffer = await fs.promises.readFile(req.file.path);
+  // check the first line, headers of fields
+  const firstLine = fileBuffer.toString().split('\n')[0];
+  if (!firstLine.match(/.*earnings_id.*,.*worker_id.*,.*phone.*,.*currency.*,.*amount.*,.*captures_count.*,.*payment_confirmation_id.*,.*payment_method.*,.*paid_at.*/)) {
+    throw new HttpError(422, 'Seems the CVS file is not in the correct format, make sure the CSS file has fields: "earnings_id", "worker_id", "phone", "currency", "amount", "captures_count", "payment_confirmation_id", "payment_method", "paid_at", and the fields is separated by a comma');
+  }
   const csvReadStream = fs.createReadStream(req.file.path);
   const session = new Session();
   // Don't want to roll back batch updates if system errors out
