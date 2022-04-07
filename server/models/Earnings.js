@@ -37,6 +37,9 @@ class Earnings {
       case 'paid_at':
         orderBy = 'paid_at';
         break;
+      case 'status':
+        orderBy = 'status';
+        break;
       default:
         orderBy = undefined;
         break;
