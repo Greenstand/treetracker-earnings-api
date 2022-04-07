@@ -1,3 +1,10 @@
+## [1.16.16](https://github.com/Greenstand/treetracker-earnings/compare/v1.16.15...v1.16.16) (2022-04-07)
+
+
+### Bug Fixes
+
+* tolowercase ([075c581](https://github.com/Greenstand/treetracker-earnings/commit/075c581c85fd587603260fb3d8ef08f1fe2e4ba1))
+
 ## [1.16.15](https://github.com/Greenstand/treetracker-earnings/compare/v1.16.14...v1.16.15) (2022-04-07)
 
 
