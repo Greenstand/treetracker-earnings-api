@@ -185,15 +185,21 @@ class Earnings {
     }
 
     if (filter?.grower) {
-      formattedEarnings = formattedEarnings.filter(({ grower }) =>
-        grower.toLowerCase().includes(filter?.grower.toLowerCase()),
-      );
+      formattedEarnings = formattedEarnings.filter(({ grower }) => {
+        if (!grower) {
+          return false;
+        }
+        return grower.toLowerCase().includes(filter?.grower.toLowerCase());
+      });
     }
 
     if (filter?.phone) {
-      formattedEarnings = formattedEarnings.filter(({ phone }) =>
-        phone.toLowerCase().includes(filter?.phone.toLowerCase()),
-      );
+      formattedEarnings = formattedEarnings.filter(({ phone }) => {
+        if (!phone) {
+          return false;
+        }
+        return phone.toLowerCase().includes(filter?.phone.toLowerCase());
+      });
     }
 
     // after grower and phone filters have been applied
