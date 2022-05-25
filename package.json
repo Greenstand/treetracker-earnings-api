@@ -24,7 +24,9 @@
     "db-migrate-ci": "cd database; db-migrate up",
     "prepare": "husky install",
     "db-migrate-dev": "cd database; echo \"Migrating dev\"; db-migrate --env dev up; echo \"Migrating integration\";  db-migrate --env integration up",
-    "seed-cli": "node ./database/seed-cli.js"
+    "seed-cli": "node ./database/seed-cli.js",
+    "seed-dev": "NODE_ENV=development knex seed:run",
+    "seed-test": "NODE_ENV=test knex seed:run"
   },
   "keywords": [
     "ecology"
