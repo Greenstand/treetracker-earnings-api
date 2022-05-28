@@ -29,5 +29,13 @@ jobs:
           git commit -am "chore: bump docker image tag ${{ github.event.inputs.environment }})} [skip ci]"
       - name: Push changes
         uses: ad-m/github-push-action@master
+        run: (cd deployment/overlays/production && ../../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{ github.event.inputs.environment }})
+      - name: Commit prod kustomization file with new app version
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -am "chore: bump docker image tag ${{ steps.export_bumped_version.outputs.bumped_version }} [skip ci]"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
