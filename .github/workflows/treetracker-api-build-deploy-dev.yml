@@ -80,38 +80,26 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: greenstand/${{ github.event.repository.name }}:${{ steps.package-version.outputs.current-version }}
-
       - id: export_bumped_version
         run: |
           export BUMPED_VERSION="${{ steps.package-version.outputs.current-version }}"
           echo "::set-output name=bumped_version::${BUMPED_VERSION}"
 
-    outputs:
-      bumped_version: ${{ steps.export_bumped_version.outputs.bumped_version }}
-
-  deploy:
-    name: Deploy to dev env
-    runs-on: ubuntu-latest
-    needs: release
-    if: |
-      !contains(github.event.head_commit.message, 'skip-ci') &&
-      github.event_name == 'push' &&
-      github.repository == "Greenstand/${{ github.event.repository.name }}"
-    steps:
-      - uses: actions/checkout@v2
       - name: Install kustomize
         run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+
       - name: Run kustomize
-        run: (cd deployment/base && ../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{ needs.release.outputs.bumped_version }} )
-      - name: Install doctl for kubernetes
-        uses: digitalocean/action-doctl@v2
+        run: (cd deployment/overlays/development && ../../../kustomize edit set image greenstand/${{ github.event.repository.name }}:${{ steps.export_bumped_version.outputs.bumped_version }} )
+
+      - name: Commit dev kustomization file with new app version
+        if: |
+          !contains(github.event.head_commit.message, 'chore')
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -am "chore: bump docker image tag ${{ steps.export_bumped_version.outputs.bumped_version }} [skip ci]"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
         with:
-          token: ${{ secrets.DEV_DIGITALOCEAN_TOKEN }}
-      - name: Save DigitalOcean kubeconfig
-        run: doctl kubernetes cluster kubeconfig save ${{ secrets.DEV_CLUSTER_NAME }}
-      - name: Delete completed migration jobs prior to deployment
-        run: kubectl -n ${{ secrets.K8S_NAMESPACE }} delete job --ignore-not-found=true  database-migration-job
-      - name: Update kubernetes resources
-        run: kustomize build deployment/overlays/development | kubectl apply -n ${{ secrets.K8S_NAMESPACE }} --wait -f -
-      - name: Attempt to wait for migration job to complete
-        run: kubectl wait -n ${{ secrets.K8S_NAMESPACE }} --for=condition=complete --timeout=45s job/database-migration-job
+          github_token: ${{ secrets.GITHUB_TOKEN }}
