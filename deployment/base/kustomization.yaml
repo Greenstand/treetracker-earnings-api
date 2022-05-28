@@ -6,6 +6,5 @@ resources:
   - cluster-role-binding.yaml
   - cluster-role.yaml
   - database-migration-job.yaml
-  - greenstand-docker-pull-sealed-secret.yaml
   - database-migration-connection-sealed-secret.yaml
   - aws-key-sealed-secret.yaml
