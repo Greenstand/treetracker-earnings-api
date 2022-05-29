@@ -48,5 +48,5 @@ spec:
                 secretKeyRef:
                   name: aws-key
                   key: secretAccessKey
-      imagePullSecrets:
-        - name: greenstand-docker-secret
+#       imagePullSecrets:
+#         - name: greenstand-docker-secret
