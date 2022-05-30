@@ -1,3 +1,10 @@
+# [1.17.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.16.16...v1.17.0) (2022-05-30)
+
+
+### Features
+
+* official s3 bucket name ([7fbcdd6](https://github.com/Greenstand/treetracker-earnings/commit/7fbcdd6d70be9bf193f09965c56ae87b731f20dd))
+
 ## [1.16.16](https://github.com/Greenstand/treetracker-earnings/compare/v1.16.15...v1.16.16) (2022-04-07)
 
 
