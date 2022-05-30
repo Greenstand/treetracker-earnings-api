@@ -12,4 +12,5 @@ spec:
           env:
             - name: S3_ACCESS_KEY_ID
               value: CHANGE_ME
-
+            - name: S3_BUCKET
+              value: payments-batch-upload-for-prod
