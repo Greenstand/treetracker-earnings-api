@@ -1,3 +1,10 @@
+## [1.18.9](https://github.com/Greenstand/treetracker-earnings/compare/v1.18.8...v1.18.9) (2022-05-31)
+
+
+### Bug Fixes
+
+* bypass the s3 ([1dad22d](https://github.com/Greenstand/treetracker-earnings/commit/1dad22db9b64be4559c61fcfb0f61eed8f3b82f6))
+
 ## [1.18.8](https://github.com/Greenstand/treetracker-earnings/compare/v1.18.7...v1.18.8) (2022-05-31)
 
 
