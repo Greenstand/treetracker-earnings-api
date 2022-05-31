@@ -1,3 +1,10 @@
+## [1.18.4](https://github.com/Greenstand/treetracker-earnings/compare/v1.18.3...v1.18.4) (2022-05-31)
+
+
+### Bug Fixes
+
+* deploy test ([c0f27f9](https://github.com/Greenstand/treetracker-earnings/commit/c0f27f9cbf54001693f9960638532a9564c82eb0))
+
 ## [1.18.3](https://github.com/Greenstand/treetracker-earnings/compare/v1.18.2...v1.18.3) (2022-05-31)
 
 
