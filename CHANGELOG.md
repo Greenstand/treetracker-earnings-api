@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.17.0...v1.18.0) (2022-05-31)
+
+
+### Features
+
+* set aws s3 secret ([2a34b0e](https://github.com/Greenstand/treetracker-earnings/commit/2a34b0ee1953f9d3ee7af263d675dfd06e836271))
+
 # [1.17.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.16.16...v1.17.0) (2022-05-30)
 
 
