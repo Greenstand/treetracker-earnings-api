@@ -1,4 +1,5 @@
 patchesStrategicMerge:
+- aws-key-sealed-secret.yaml
 - mapping.yaml
 - deployment.yaml
 - database-connection-sealed-secret.yaml
