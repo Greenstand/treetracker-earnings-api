@@ -13,7 +13,7 @@ const knexConfig = {
   client: 'pg',
   debug: process.env.NODE_LOG_LEVEL === 'debug',
   connection,
-  pool: { min: 0, max: 20 },
+  pool: { min: 0, max: 10 },
 };
 
 log.debug(process.env.DATABASE_SCHEMA);
