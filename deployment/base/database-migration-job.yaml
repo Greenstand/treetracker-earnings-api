@@ -2,13 +2,16 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: database-migration-job
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
 spec:
   backoffLimit: 1 # allow for one re-try of the migration
   template:
     spec:
       containers:
         - name: migration
-          image: greenstand/treetracker-earnings-api:TAG
+          image: greenstand/treetracker-earnings-api:latest
           env:
             - name: DATABASE_URL
               valueFrom:

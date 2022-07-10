@@ -26,7 +26,7 @@ spec:
                       - default-node-pool
       containers:
         - name: treetracker-earnings-api
-          image: greenstand/treetracker-earnings-api:VERSION
+          image: greenstand/treetracker-earnings-api:latest
           ports:
             - containerPort: 80
           env:
@@ -40,7 +40,7 @@ spec:
             - name: TREETRACKER_STAKEHOLDER_API_URL
               value: http://treetracker-stakeholder-api.stakeholder-api
             - name: S3_BUCKET
-              value: payments-batch-upload
+              value: bucket-not-exist
             - name: S3_ACCESS_KEY_ID
               value: override in overlay
             - name: S3_SECRET_ACCESS_KEY
@@ -48,3 +48,5 @@ spec:
                 secretKeyRef:
                   name: aws-key
                   key: secretAccessKey
+#       imagePullSecrets:
+#         - name: greenstand-docker-secret

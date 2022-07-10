@@ -1,3 +1,101 @@
+## [1.18.12](https://github.com/Greenstand/treetracker-earnings/compare/v1.18.11...v1.18.12) (2022-06-02)
+
+
+### Bug Fixes
+
+* deploy test ([c83ae43](https://github.com/Greenstand/treetracker-earnings/commit/c83ae433b0c2dcd7814f154f817511abe2f296f7))
+
+## [1.18.11](https://github.com/Greenstand/treetracker-earnings/compare/v1.18.10...v1.18.11) (2022-06-01)
+
+
+### Bug Fixes
+
+* deploy test ([50d24d9](https://github.com/Greenstand/treetracker-earnings/commit/50d24d9509f6b53060b4b7f83cac702ef9a3c387))
+
+## [1.18.10](https://github.com/Greenstand/treetracker-earnings/compare/v1.18.9...v1.18.10) (2022-06-01)
+
+
+### Bug Fixes
+
+* deploy test ([2f9eac5](https://github.com/Greenstand/treetracker-earnings/commit/2f9eac58b26b94caeace8333aa051c3804b70234))
+
+## [1.18.9](https://github.com/Greenstand/treetracker-earnings/compare/v1.18.8...v1.18.9) (2022-05-31)
+
+
+### Bug Fixes
+
+* bypass the s3 ([1dad22d](https://github.com/Greenstand/treetracker-earnings/commit/1dad22db9b64be4559c61fcfb0f61eed8f3b82f6))
+
+## [1.18.8](https://github.com/Greenstand/treetracker-earnings/compare/v1.18.7...v1.18.8) (2022-05-31)
+
+
+### Bug Fixes
+
+* deploy test ([e24d194](https://github.com/Greenstand/treetracker-earnings/commit/e24d19476f83f3bf62ce745e1c7de1a19269300f))
+
+## [1.18.7](https://github.com/Greenstand/treetracker-earnings/compare/v1.18.6...v1.18.7) (2022-05-31)
+
+
+### Bug Fixes
+
+* deploy test ([2f1acbb](https://github.com/Greenstand/treetracker-earnings/commit/2f1acbb93300d13a25c4ef061851a24f662458a7))
+
+## [1.18.6](https://github.com/Greenstand/treetracker-earnings/compare/v1.18.5...v1.18.6) (2022-05-31)
+
+
+### Bug Fixes
+
+* deploy test ([1cfb8d2](https://github.com/Greenstand/treetracker-earnings/commit/1cfb8d2235a99311378df0c0291854007ce13665))
+
+## [1.18.5](https://github.com/Greenstand/treetracker-earnings/compare/v1.18.4...v1.18.5) (2022-05-31)
+
+
+### Bug Fixes
+
+* deploy test ([d0f8f03](https://github.com/Greenstand/treetracker-earnings/commit/d0f8f03e49cf75b377cf33071d705bb4d2f984d2))
+
+## [1.18.4](https://github.com/Greenstand/treetracker-earnings/compare/v1.18.3...v1.18.4) (2022-05-31)
+
+
+### Bug Fixes
+
+* deploy test ([c0f27f9](https://github.com/Greenstand/treetracker-earnings/commit/c0f27f9cbf54001693f9960638532a9564c82eb0))
+
+## [1.18.3](https://github.com/Greenstand/treetracker-earnings/compare/v1.18.2...v1.18.3) (2022-05-31)
+
+
+### Bug Fixes
+
+* deploy test ([abcd983](https://github.com/Greenstand/treetracker-earnings/commit/abcd983318083ff586c5bd02966c1ee6cc32b02a))
+
+## [1.18.2](https://github.com/Greenstand/treetracker-earnings/compare/v1.18.1...v1.18.2) (2022-05-31)
+
+
+### Bug Fixes
+
+* deploy test ([1b55ed6](https://github.com/Greenstand/treetracker-earnings/commit/1b55ed6e07e79b7d7b88be2fcd6d2966b8c681a5))
+
+## [1.18.1](https://github.com/Greenstand/treetracker-earnings/compare/v1.18.0...v1.18.1) (2022-05-31)
+
+
+### Bug Fixes
+
+* deploy test ([14b8d56](https://github.com/Greenstand/treetracker-earnings/commit/14b8d562e0ec7edd75903aad6c240b7f8508dd11))
+
+# [1.18.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.17.0...v1.18.0) (2022-05-31)
+
+
+### Features
+
+* set aws s3 secret ([2a34b0e](https://github.com/Greenstand/treetracker-earnings/commit/2a34b0ee1953f9d3ee7af263d675dfd06e836271))
+
+# [1.17.0](https://github.com/Greenstand/treetracker-earnings/compare/v1.16.16...v1.17.0) (2022-05-30)
+
+
+### Features
+
+* official s3 bucket name ([7fbcdd6](https://github.com/Greenstand/treetracker-earnings/commit/7fbcdd6d70be9bf193f09965c56ae87b731f20dd))
+
 ## [1.16.16](https://github.com/Greenstand/treetracker-earnings/compare/v1.16.15...v1.16.16) (2022-04-07)
 
 

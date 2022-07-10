@@ -13,4 +13,4 @@ spec:
             - name: S3_ACCESS_KEY_ID
               value: AKIAQYWVSSHAHDJKENBO
             - name: S3_BUCKET
-              value: payments-batch-upload-for-dev
+              value: payments-batch-upload-for-prod
