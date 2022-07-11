@@ -16,7 +16,7 @@ module.exports = {
     searchPath: [process.env.DATABASE_SCHEMA, 'public'],
     pool: {
       min: 1,
-      max: 100,
+      max: 10,
     },
     seeds: {
       directory: path.join(__dirname, 'database', 'seeds'),
@@ -29,7 +29,7 @@ module.exports = {
     searchPath: [process.env.DATABASE_SCHEMA, 'public'],
     pool: {
       min: 1,
-      max: 100,
+      max: 10,
     },
     seeds: {
       directory: path.join(__dirname, 'database', 'seeds'),
