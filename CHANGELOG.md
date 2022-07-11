@@ -1,3 +1,14 @@
+## [1.18.13](https://github.com/Greenstand/treetracker-earnings/compare/v1.18.12...v1.18.13) (2022-07-11)
+
+
+### Bug Fixes
+
+* db max pool ([589d8ae](https://github.com/Greenstand/treetracker-earnings/commit/589d8ae4e42ef965908d63e760c4fcbfa6e89fb3))
+* db url check ([76384b3](https://github.com/Greenstand/treetracker-earnings/commit/76384b34e6e641d09633505a45959c8aa90a172b))
+* dependency issue ([105cf32](https://github.com/Greenstand/treetracker-earnings/commit/105cf327affd9d25804616ea0950134b360170ed))
+* package.json ([e206153](https://github.com/Greenstand/treetracker-earnings/commit/e2061533ae9303eedd5fcf797ee2a92eb744b15b))
+* reduce db max pool ([addaacb](https://github.com/Greenstand/treetracker-earnings/commit/addaacbc4ae28e28e1d12be8665799cbb1f27ad8))
+
 ## [1.18.12](https://github.com/Greenstand/treetracker-earnings/compare/v1.18.11...v1.18.12) (2022-06-02)
 
 
