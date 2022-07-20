@@ -92,7 +92,7 @@ class EarningsService {
 
       await this._session.beginTransaction();
 
-      const count = await batchUpdateEarnings(null);
+      const count = await batchUpdateEarnings(createdBatch.id);
 
       // delete temp file
       await fs.promises.unlink(file.path);
