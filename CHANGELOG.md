@@ -1,3 +1,11 @@
+## [1.18.14](https://github.com/Greenstand/treetracker-earnings/compare/v1.18.13...v1.18.14) (2022-07-20)
+
+
+### Bug Fixes
+
+* add seed ([059a82a](https://github.com/Greenstand/treetracker-earnings/commit/059a82abbe42e955fc20bc96a96ab6fa22bc05db))
+* update max pool ([3da2309](https://github.com/Greenstand/treetracker-earnings/commit/3da2309ed670ffad6665661465e5b53c5352d452))
+
 ## [1.18.13](https://github.com/Greenstand/treetracker-earnings/compare/v1.18.12...v1.18.13) (2022-07-11)
 
 
