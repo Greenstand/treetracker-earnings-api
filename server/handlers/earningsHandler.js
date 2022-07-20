@@ -120,8 +120,9 @@ const earningsBatchPatch = async (req, res) => {
     throw new HttpError(406, 'Only text/csv is supported');
 
   const validateRow = async (row) => {
-    await earningsPatchSchema.validateAsync(row, {
+    return earningsPatchSchema.validateAsync(row, {
       abortEarly: false,
+      stripUnknown: true,
     });
   };
 

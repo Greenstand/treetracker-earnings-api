@@ -38,8 +38,15 @@ class EarningsService {
 
     // check the first line, headers of fields
     const firstLine = fileBuffer.toString().split('\n')[0];
-    if (!firstLine.match(/.*earnings_id.*,.*worker_id.*,.*phone.*,.*currency.*,.*amount.*,.*captures_count.*,.*payment_confirmation_id.*,.*payment_method.*,.*paid_at.*/)) {
-      throw new HttpError(422, 'Seems the CVS file is not in the correct format, make sure the CSS file has fields: "earnings_id", "worker_id", "phone", "currency", "amount", "captures_count", "payment_confirmation_id", "payment_method", "paid_at", and the fields is separated by a comma');
+    if (
+      !firstLine.match(
+        /.*earnings_id.*,.*worker_id.*,.*phone.*,.*currency.*,.*amount.*,.*captures_count.*,.*payment_confirmation_id.*,.*payment_method.*,.*paid_at.*/,
+      )
+    ) {
+      throw new HttpError(
+        422,
+        'Seems the CSV file is not in the correct format, make sure the CSV file has fields: "earnings_id", "worker_id", "phone", "currency", "amount", "captures_count", "payment_confirmation_id", "payment_method", "paid_at", and the fields is separated by a comma',
+      );
     }
 
     // Don't want to roll back batch creation if it errors out
@@ -54,8 +61,8 @@ class EarningsService {
           csv()
             .fromStream(csvReadStream)
             .subscribe(
-              async (json) => {
-                await validateRow(json);
+              async (row) => {
+                const json = await validateRow(row);
                 await this._earnings.updateEarnings({
                   ...json,
                   batch_id,
