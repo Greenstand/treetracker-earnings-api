@@ -1,3 +1,11 @@
+## [1.18.15](https://github.com/Greenstand/treetracker-earnings/compare/v1.18.14...v1.18.15) (2022-07-20)
+
+
+### Bug Fixes
+
+* minor fix ([e9c12c4](https://github.com/Greenstand/treetracker-earnings/commit/e9c12c480d462a150998d4a98be2685deab17f89))
+* remove unknown for batch update ([75ea682](https://github.com/Greenstand/treetracker-earnings/commit/75ea6822480da08d68e36d08e3e123dd0edb6677))
+
 ## [1.18.14](https://github.com/Greenstand/treetracker-earnings/compare/v1.18.13...v1.18.14) (2022-07-20)
 
 
