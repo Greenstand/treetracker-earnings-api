@@ -2,7 +2,7 @@ const axios = require('axios').default;
 
 const TREETRACKER_STAKEHOLDER_API_URL =
   `${process.env.TREETRACKER_STAKEHOLDER_API_URL}/stakeholders` ||
-  'http://treetracker-stakeholder-api.stakeholder-api/stakeholders';
+  'hthttps://dev-k8s.treetracker.org/stakeholder/stakeholders';
 
 const getStakeholderById = async (id) => {
   const response = await axios.get(
