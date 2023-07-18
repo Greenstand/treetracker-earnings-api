@@ -13,13 +13,14 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     if: |
-      !contains(github.event.head_commit.message, 'skip-ci')
+      !contains(github.event.head_commit.message, 'skip-ci') &&
+      github.repository == "Greenstand/${{ github.event.repository.name }}"
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 16.x
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v1
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - name: npm clean install
         run: npm ci
         working-directory: ${{ env.project-directory }}
@@ -41,10 +42,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Node.js 16.x
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v1
         with:
-          node-version: '16.x'
+          node-version: '18.x'
 
       - name: npm clean install
         run: npm ci
