@@ -1,3 +1,13 @@
+## [1.18.16](https://github.com/Greenstand/treetracker-earnings/compare/v1.18.15...v1.18.16) (2023-07-18)
+
+
+### Bug Fixes
+
+* correct stakeholder API url ([48e720e](https://github.com/Greenstand/treetracker-earnings/commit/48e720ea5e36c3cba400eb0a96975c82045e0c1e))
+* stakeholder url ([979ea75](https://github.com/Greenstand/treetracker-earnings/commit/979ea756a054584c8785a9ce0ec622378c4934fe))
+* undo change to StakeholderService.js ([c7b39d9](https://github.com/Greenstand/treetracker-earnings/commit/c7b39d9ba1ca873e232f2068d30b1f220884033d))
+* update stakeholder query URL ([6e36f58](https://github.com/Greenstand/treetracker-earnings/commit/6e36f58d0bd9cf954d5a3d5bd3d0a2d3a459c52b))
+
 ## [1.18.15](https://github.com/Greenstand/treetracker-earnings/compare/v1.18.14...v1.18.15) (2022-07-20)
 
 
