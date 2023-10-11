@@ -1,384 +1,111 @@
-openapi: 3.1.0
+openapi: 3.0.0
 info:
-  title: earningss API
-  version: '1.0'
+  title: Treetracker Earnings API
+  version: '1.18.16'
+  description: 'The Earnings API of Greenstand for managing grower payments.'
+  contact:
+    name: Greenstand Support
+    email: admin@greenstand.com
+  license:
+    name: GPL 3.0
+    url: 'https://www.gnu.org/licenses/gpl-3.0.en.html'
 servers:
-  - url: 'http://localhost:3000'
+  - url: https://{environment}-k8s.treetracker.org/earnings
+    variables:
+      environment:
+        default: dev
+        enum:
+          - dev     # Development server
+          - test    # Test server
+          - prod    # Production server
 paths:
-  /earnings/batch:
+  '/earnings':
     get:
-      summary: Your GET endpoint
-      tags: []
-      responses:
-        '200':
-          description: |-
-            CSV 
-            Columns: earnings_id,worker_id,phone,amount,currency,status,payment_method,payment_confirmation_id,paid_at
-
-            payment_method,payment_confirmation_id, and paid_at are not populated when downloaded, they are template columns
-          content:
-            text/csv:
-              schema:
-                type: CSV
-              examples:
-                columns: 'earnings_id,worker_id,phone,amount,currency,status'
-        '400':
-          description: Bad Request - invalid query parameters
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  code:
-                    type: integer
-                  message:
-                    type: string
-      operationId: get-earningss-batch
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: earnings_status
-        - schema:
-            type: string
-          in: query
-          name: funder_id
-          description: The stackholder id that is funding these earnings via the contract
-        - schema:
-            type: string
-          in: query
-          name: worker_id
-          description: The stackholder id that is being paid (a person normally)
-        - schema:
-            type: string
-          in: query
-          name: contract_id
-          description: A reference to a contract in the contract microservice
-        - schema:
-            type: string
-          in: query
-          name: start_date
-        - schema:
-            type: string
-          in: query
-          name: end_date
-      description: Get a CSV of earnings resources
-    patch:
-      summary: ''
-      operationId: patch-earningss-batch
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    enum:
-                      - completed
-                      - queued
-                    description: we will add 'queued' later when we implement a pipeline
-                  count:
-                    type: number
-                    description: the number of rows processed
-              examples:
-                example-1:
-                  value:
-                    status: completed
-                    count: 0
-        '400':
-          description: |
-            Validation:  payment confirmation id and payment system are required
-            Validation:  status must not be cancelled or paid for the earnings id of the request
-            Validation:  worker_id, amount, or currency in request must match those found in the database for the earnings id
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  code:
-                    type: number
-                  message:
-                    type: string
-                  row_errors:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                        message:
-                          type: string
-        '406':
-          description: Bad file or wrong headers
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  code:
-                    type: number
-                  message:
-                    type: string
-        '409':
-          description: Earnings resource already has a payment confirmation.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  code:
-                    type: number
-                  message:
-                    type: string
-                  row_errors:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                        message:
-                          type: string
-      requestBody:
-        content:
-          text/csv:
-            schema:
-              type: CSV
-            examples:
-              columns: 'earnings_id,worker_id,phone,amount,currency,earnings_system,earnings_confirmation_id'
-        description: |-
-          CSV
-
-          Columns:
-          earnings_id,worker_id,phone,amount,currency,payment_method,payment_confirmation_id,paid_at
-      description: |-
-        Patch an multiple earnings resources with the payment confirmation information.  
-        Validation: payment confirmation id and payment system are required
-        Validation:  status must not be cancelled or paid for the earnings id of the request
-        Validation:  worker_id, amount, or currency in request must match those found in the database for the earnings id
-    parameters: []
-  /earnings:
-    patch:
-      summary: ''
-      operationId: patch-earnings
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    enum:
-                      - completed
-                      - queued
-                    description: we will add 'queued' later when we implement a pipeline
-                  count:
-                    type: number
-                    description: the number of rows processed
-              examples: {}
-        '400':
-          description: |
-            Validation:  payment confirmation id and payment system are required
-            Validation:  status must not be cancelled or paid for the earnings id of the request
-            Validation:  worker_id, amount, or currency in request must match those found in the database for the earnings id
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  code:
-                    type: number
-                  message:
-                    type: string
-        '406':
-          description: Bad file or wrong headers
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  code:
-                    type: number
-                  message:
-                    type: string
-        '409':
-          description: Earnings resource already has a payment confirmation.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  code:
-                    type: number
-                  message:
-                    type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                id:
-                  type: string
-                  format: uuid
-                worker_id:
-                  type: string
-                  format: uuid
-                amount:
-                  type: number
-                currency:
-                  type: string
-                payment_confirmation_id:
-                  type: string
-                  format: date
-                payment_method:
-                  type: string
-                paid_at:
-                  type: string
-              required:
-                - id
-                - worker_id
-                - amount
-                - currency
-                - payment_confirmation_id
-            examples: {}
-        description: 'Patch an earnings resource with the payment confirmation information.  '
-      description: |-
-        Patch an multiple earnings resources with the payment confirmation information.  
-        Validation:  payment confirmation id and payment system are required
-        Validation:  status must not be cancelled or paid for the earnings id of the request
-        Validation:  worker_id, amount, or currency in request must match those found in the database for the earnings id
-    parameters: []
-    get:
-      summary: Get list of earnings
+      tags:
+        - Earnings
       operationId: get-earnings
-      produces:
-        - text/csv
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type:
-                  - object
-                properties:
-                  earnings:
-                    type: array
-                    uniqueItems: true
-                    minItems: 1
-                    items:
-                      type: object
-                      properties:
-                        worker_id:
-                          type: string
-                        grower:
-                          type: string
-                        funder_id:
-                          type: string
-                        funder:
-                          type: string
-                        amount:
-                          type: number
-                        currency:
-                          type: string
-                        calculated_at:
-                          type: string
-                        consolidation_rule:
-                          type: string
-                        consolidation_period_start:
-                          type: string
-                        consolidation_period_end:
-                          type: string
-                        payment_confirmation_id:
-                          type: string
-                        payment_method:
-                          type: string
-                        payment_confirmed_by:
-                          type: string
-                          format: uuid
-                        payment_confirmation_method:
-                          type: string
-                        paid_at:
-                          type: string
-                        payment_confirmed_at:
-                          type: string
-                        status:
-                          type: string
-                        batch_id:
-                          type: string
-                  totalCount:
-                    type: number
-                  links:
-                    type: object
-                    required:
-                      - prev
-                      - next
-                    properties:
-                      prev:
-                        type: string
-                        minLength: 1
-                        description: Complete link with query string to the previous page of earnings
-                      next:
-                        type: string
-                        minLength: 1
-                        description: Complete link with query string to the next page of earnings
-              examples: {}
-        '400':
-          description: Bad Request - Invalid query parameters
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  code:
-                    type: number
-                  message:
-                    type: string
-      description: Get a list of earnings resources using the appropriate filters
+      deprecated: false
+      summary: 'Get list of earnings'
+      description: 'Get a list of earnings resources using the appropriate filters.'
       parameters:
         - schema:
-            type: string
+            $ref: '#/components/schemas/earningStatus'
           in: query
+          style: form
+          explode: true
           name: earnings_status
         - schema:
             type: string
+            format: uuid
+            example: ae7faf5d-46e2-4944-a6f9-5e65986b2e03
           in: query
+          style: form
+          explode: true
           name: funder_id
-          description: The stackholder id that is funding these earnings via the contract
+          description: 'The stakeholder ID that is funding these earnings via the contract (typically an organization)'
         - schema:
             type: string
+            format: uuid
+            example: f6d19e49-2d1a-4c1a-90d1-8f651bdaeaa5
           in: query
+          style: form
+          explode: true
           name: worker_id
-          description: The stackholder id that is being paid (a person normally)
+          description: 'The stakeholder ID that is being paid (typically an individual)'
         - schema:
             type: string
+            format: uuid
+            example: 483a1f4e-0c52-4b53-b917-5ff4311ded26
           in: query
+          style: form
+          explode: true
           name: contract_id
-          description: A reference to a contract in the contract microservice
+          description: 'A reference to a contract in the contract microservice'
         - schema:
             type: string
+            format: uuid
+            example: 8b353fbe-0ad7-46a6-ad43-27e304a95757
           in: query
+          style: form
+          explode: true
+          name: sub_organization
+          description: 'The sub-organization ID'
+        - schema:
+            type: string
+            format: date
+            example: 2023-09-12
+          in: query
+          style: form
+          explode: true
           name: start_date
-          description: Spans calculated_at
+          description: 'Earnings that happened after this date'
         - schema:
             type: string
+            format: date
+            example: 2023-09-20
           in: query
+          style: form
+          explode: true
           name: end_date
-          description: Spans calculated_at
+          description: 'Earnings that happened before this date'
         - schema:
-            type: string
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 99999
+            example: 25
           in: query
+          style: form
+          explode: true
           name: limit
         - schema:
-            type: string
+            type: integer
+            format: int32
+            minimum: 0
+            example: 0
           in: query
+          style: form
+          explode: true
           name: offset
         - schema:
             type: string
@@ -389,22 +116,543 @@ paths:
               - amount
               - payment_method
               - calculated_at
+              - status
+              - paid_at
+            example: grower
           in: query
+          style: form
+          explode: true
           name: sort_by
-          description: column with which to sort by
+          description: 'Column with which to sort by'
         - schema:
             type: string
             enum:
               - asc
               - desc
             default: asc
+            example: asc
           in: query
+          style: form
+          explode: true
           name: order
-          description: order by which sorting is done
+          description: 'Order by which sorting is done'
+      responses:
+        '200':
+          description: 'Successfully retrieve the list of earnings that match the query parameters.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  earnings:
+                    type: array
+                    uniqueItems: true
+                    items:
+                      $ref: '#/components/schemas/earning'
+                  links:
+                    description: 'HATEOAS links for pagination'
+                    type: object
+                    required:
+                      - prev
+                      - next
+                    properties:
+                      next:
+                        description: 'Complete link with query string to the next page of earnings'
+                        type: string
+                        example: earnings?limit=1&offset=1
+                      prev:
+                        description: 'Complete link with query string to the previous page of earnings'
+                        type: string
+                        example: earnings?limit=1&offset=0
+                  query:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                        format: int32
+                        example: 10
+                      limit:
+                        type: integer
+                        format: int32
+                        example: 1
+                      offset:
+                        type: integer
+                        format: int32
+                        example: 0
+        '422':
+          $ref: '#/components/responses/InvalidQueryParametersUUID'
+    patch:
+      tags:
+        - Earnings
+      operationId: patch-earnings
+      deprecated: false
+      summary: 'Patch an earning resource'
+      description: |-
+        Patch an earnings resources with the payment confirmation information.  
+        * Validation:  payment confirmation ID and payment system are required.
+        * Validation:  `status` must not be `cancelled` or `paid` for the earnings ID of the request.
+        * Validation:  `worker_id`, `amount`, or `currency` in request must match those found in the database for the earnings ID.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/earningsPatchSchema'
+            examples:
+              withID:
+                summary: 'Using ID'
+                value:
+                  id: c8a83576-cdcd-489d-a565-d9e86df733cc
+                  worker_id: 4e7e89d2-6b6c-4d36-a75d-32528a94489a
+                  amount: 240000
+                  captures_count: 250
+                  currency: SLL
+                  payment_confirmation_id: abc123
+                  payment_method: Visa
+                  paid_at: '2023-08-01T10:00:00Z'
+                  phone: 1234567890
+              withEarningsID:
+                summary: 'Using Earnings ID'
+                value:
+                  earnings_id: 2a3b580e-93bd-4f7e-b06f-b8bbadfba096
+                  worker_id: 4e7e89d2-6b6c-4d36-a75d-32528a94489a
+                  amount: 240000
+                  captures_count: 250
+                  currency: SLL
+                  payment_confirmation_id: abc123
+                  payment_method: Visa
+                  paid_at: '2023-08-01T10:00:00Z'
+                  phone: 1234567890
+      responses:
+        '200':
+          description: 'Successfully updated the earnings record.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - completed
+                      - queued
+                    example: completed
+                    description: 'The status of the request (`queued` will be added in the future when a pipeline is implemented).'
+                  count:
+                    type: integer
+                    format: int32
+                    description: 'The number of rows processed'
+                    example: 1
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/ConflictError'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeJson'
+        '422':
+          $ref: '#/components/responses/InvalidRequestBody'
+  '/earnings/batch':
+    get:
+      tags:
+        - Earnings
+      operationId: get-earnings-batch
+      deprecated: false
+      summary: 'Get earnings as a CSV file'
+      description: 'Download a CSV file of the earnings resources.'
+      parameters:
+        - schema:
+            $ref: '#/components/schemas/earningStatus'
+          in: query
+          style: form
+          explode: true
+          name: earnings_status
+        - schema:
+            type: string
+            format: uuid
+            example: ae7faf5d-46e2-4944-a6f9-5e65986b2e03
+          in: query
+          style: form
+          explode: true
+          name: funder_id
+          description: 'The stakeholder ID that is funding these earnings via the contract (typically an organization)'
+        - schema:
+            type: string
+            format: uuid
+            example: f6d19e49-2d1a-4c1a-90d1-8f651bdaeaa5
+          in: query
+          style: form
+          explode: true
+          name: worker_id
+          description: 'The stakeholder ID that is being paid (typically an individual)'
+        - schema:
+            type: string
+            format: uuid
+            example: 483a1f4e-0c52-4b53-b917-5ff4311ded26
+          in: query
+          style: form
+          explode: true
+          name: contract_id
+          description: 'A reference to a contract in the contract microservice'
+        - schema:
+            type: string
+            format: uuid
+            example: 8b353fbe-0ad7-46a6-ad43-27e304a95757
+          in: query
+          style: form
+          explode: true
+          name: sub_organization
+          description: 'The sub-organization ID'
+        - schema:
+            type: string
+            format: date
+            example: 2023-09-12
+          in: query
+          style: form
+          explode: true
+          name: start_date
+          description: 'Earnings that happened after this date'
+        - schema:
+            type: string
+            format: date
+            example: 2023-09-20
+          in: query
+          style: form
+          explode: true
+          name: end_date
+          description: 'Earnings that happened before this date'
+        - schema:
+            type: string
+            enum:
+              - id
+              - grower
+              - funder
+              - amount
+              - payment_method
+              - calculated_at
+              - status
+              - paid_at
+            example: grower
+          in: query
+          style: form
+          explode: true
+          name: sort_by
+          description: 'Column with which to sort by'
+        - schema:
+            type: string
+            enum:
+              - asc
+              - desc
+            default: asc
+            example: asc
+          in: query
+          style: form
+          explode: true
+          name: order
+          description: 'Order by which sorting is done'
+      responses:
+        '200':
+          description: |-
+            A CSV file with the following columns: 
+            `earnings_id`, `worker_id`, `phone`, `amount`, `currency`, `status`, `payment_method`, `payment_confirmation_id`, `paid_at`.
+
+            `payment_method`, `payment_confirmation_id`, and `paid_at` are not populated when downloaded, they are template columns.
+            
+            The file will be downloaded as `batchEarnings.csv`.
+          content:
+            text/csv:
+              schema:
+                type: string
+                example: |
+                  earnings_id,worker_id,phone,currency,amount,status 
+                  f5846d9b-6689-40b1-97f4-104b332eeb94,f6d19e49-2d1a-4c1a-90d1-8f651bdaeaa5,,SLL,240000,paid 
+                  c8a83576-cdcd-489d-a565-d9e86df733cc,c7284720-f232-4c42-a977-d50bea58ca4a,,SLL,240000,paid
+        '422':
+          $ref: '#/components/responses/InvalidQueryParametersUUID'
+    patch:
+      tags:
+        - Earnings
+      operationId: patch-earnings-batch
+      deprecated: false
+      summary: 'Upload a CSV file to update multiple earnings resources'
+      description: |-
+        Patch multiple earnings resources with the payment confirmation information, uploaded as a CSV.  
+        Validation: payment confirmation ID and payment system are required.
+        Validation:  `status` must not be `cancelled` or `paid` for the earnings ID of the request.
+        Validation:  `worker_id`, `amount`, or `currency` in request must match those found in the database for the earnings ID.
+      requestBody:
+        content:
+          text/csv:
+            schema:
+              type: string
+            example: |-
+              earnings_id, worker_id, phone, currency, amount, captures_count, payment_confirmation_id, payment_method, paid_at
+              c8a83576-cdcd-489d-a565-d9e86df733cc, 4e7e89d2-6b6c-4d36-a75d-32528a94489a, 1234567890, SLL, 240000, 250, abc123, Visa, 2023-08-01T10:00:00Z
+        description: |-
+          A CSV file with the following columns:\
+          `earnings_id`, `worker_id`, `phone`, `currency`, `amount`, `captures_count`, `payment_confirmation_id`, `payment_method`, `paid_at`.
+      responses:
+        '200':
+          description: 'Successfully update the earnings records.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - completed
+                      - queued
+                    example: completed
+                    description: 'The status of the request (`queued` will be added in the future when a pipeline is implemented).'
+                  count:
+                    type: integer
+                    format: int32
+                    description: 'The number of rows processed'
+                    example: 1
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '406':
+          $ref: '#/components/responses/InvalidFileFormat'
+        '409':
+          $ref: '#/components/responses/ConflictError'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeMultipart'
+        '422':
+          $ref: '#/components/responses/InvalidRequestBody'
 components:
-  schemas: {}
+  schemas:
+    earning:
+      title: 'Earning'
+      description: 'Earning object'
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: c8a83576-cdcd-489d-a565-d9e86df733cc
+        worker_id:
+          type: string
+          format: uuid
+          example: c7284720-f232-4c42-a977-d50bea58ca4a
+        captures_count:
+          type: integer
+          format: int32
+          example: 250
+        grower:
+          type: string
+          example: "John Smith"
+        funder_id:
+          type: string
+          format: uuid
+          example: ae7faf5d-46e2-4944-a6f9-5e65986b2e03
+        funder:
+          type: string
+          example: FCC
+        phone:
+          type: string
+          example: 1234567890
+        amount:
+          type: number
+          example: 24000
+        currency:
+          type: string
+          example: SLL
+        calculated_at:
+          type: string
+          format: date-time
+          example: 2022-05-31T08:47:31.997Z
+        consolidation_rule:
+          type: string
+          example: CONSOLIDATION_RULE_bd139094-71f4-4609-bc8a-5b7ae65b242b
+        consolidation_period_start:
+          type: string
+          format: date-time
+          example: 2022-05-31T08:47:31.998Z
+        consolidation_period_end:
+          type: string
+          format: date-time
+          example: 2022-05-31T08:47:31.997Z
+        payment_confirmation_id:
+          type: string
+          example: xyz123
+        payment_method:
+          type: string
+          example: Visa
+        payment_confirmed_by:
+          type: integer
+          format: int32
+          example: 1234
+        payment_confirmation_method:
+          $ref: '#/components/schemas/paymentConfirmationMethod'
+        paid_at:
+          type: string
+          format: date-time
+          example: 2022-05-30T00:00:00.000Z
+        payment_confirmed_at:
+          type: string
+          format: date-time
+          example: 2022-05-31T08:50:45.846Z
+        status:
+          $ref: '#/components/schemas/earningStatus'
+        batch_id:
+          type: string
+          format: uuid
+          example: d17f6ae9-3a2f-43bd-b384-06bd9ef3f735
+        sub_organization:
+          type: string
+          format: uuid
+          example: ce14d9b7-92c3-450b-9779-2bb731c5aefc
+        sub_organization_name:
+          type: string
+          example: FCCDEF
+    earningsPatchSchema:
+      title: Earnings Patch Request
+      description: 'Patch an earnings resource with the payment confirmation information.'
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        earnings_id:
+          type: string
+          format: uuid
+        worker_id:
+          type: string
+          format: uuid
+        amount:
+          type: integer
+          format: int32
+        captures_count:
+          type: integer
+          format: int32
+        currency:
+          type: string
+        payment_confirmation_id:
+          type: string
+        payment_method:
+          type: string
+        paid_at:
+          type: string
+          format: date-time
+        phone:
+          type: string
+      required:
+        - worker_id
+        - amount
+        - captures_count
+        - currency
+        - payment_confirmation_id
+        - payment_method
+      oneOf:
+        - required:
+            - id
+        - required:
+            - earnings_id
+    earningStatus:
+      title: 'Earning Status'
+      type: string
+      enum:
+        - cancelled
+        - calculated
+        - paid
+      example: paid
+    errorResponse:
+      title: 'Error Response'
+      description: 'Error response'
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+    paymentConfirmationMethod:
+      title: 'Payment Confirmation Method'
+      type: string
+      enum:
+        - single
+        - batch
+      example: single
+  responses:
+    ConflictError:
+      description: 'Conflict. Some issue(s) prevented the record update.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorResponse'
+          example:
+            code: 409
+            example: 'There are some earning records in this file have been paid or canceled'
+    InvalidFileFormat:
+      description: 'Invalid format for uploaded file.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorResponse'
+          example:
+            code: 406
+            message: 'Only text/csv is supported'
+    InvalidQueryParametersUUID:
+      description: 'Invalid query parameters'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorResponse'
+          example:
+            code: 422
+            message: '"funder_id" must be a valid UUID'
+    InvalidRequestBody:
+      description: 'Invalid field(s) in the request.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorResponse'
+          example:
+            code: 422
+            message: '"worker_id" must be a valid UUID'
+    NotFound:
+      description: 'Resource not found.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorResponse'
+          example:
+            code: 404
+            message: 'Can not found earnings.earnings by id:761b56dd-6680-43eb-9960-8823017a9f69'
+    Unauthorized:
+      description: 'Missing Admin role for this user.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorResponse'
+          example:
+            code: 401
+            message: 'Unauthorized!'
+    UnsupportedMediaTypeJson:
+      description: 'The content type is invalid.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorResponse'
+          example:
+            code: 415
+            message: 'Invalid content type. API only supports application/json'
+    UnsupportedMediaTypeMultipart:
+      description: 'The content type is invalid.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorResponse'
+          example:
+            code: 415
+            message: 'Invalid content type. Endpoint only supports multipart/form-data'
   securitySchemes:
-    Bearer Token:
+    BearerToken:
       name: API Key
       type: apiKey
       in: header
+security:
+  - BearerToken: []
